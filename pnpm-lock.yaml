@@ -7,6 +7,7 @@ specifiers:
   '@supabase/supabase-js': ^1.29.4
   '@vitejs/plugin-vue': ^2.0.0
   '@vue/compiler-sfc': ^3.2.29
+  '@vueuse/core': ^7.5.5
   autoprefixer: ^10.4.2
   pinia: ^2.0.10
   postcss: ^8.4.5
@@ -22,6 +23,7 @@ specifiers:
 dependencies:
   '@headlessui/vue': 1.4.3_vue@3.2.29
   '@supabase/supabase-js': 1.29.4
+  '@vueuse/core': 7.5.5_vue@3.2.29
   autoprefixer: 10.4.2_postcss@8.4.5
   pinia: 2.0.10_typescript@4.5.5+vue@3.2.29
   postcss: 8.4.5
@@ -384,6 +386,37 @@ packages:
 
   /@vue/shared/3.2.29:
     resolution: {integrity: sha512-BjNpU8OK6Z0LVzGUppEk0CMYm/hKDnZfYdjSmPOs0N+TR1cLKJAkDwW8ASZUvaaSLEi6d3hVM7jnWnX+6yWnHw==}
+
+  /@vueuse/core/7.5.5_vue@3.2.29:
+    resolution: {integrity: sha512-RBDqmIoGfak4h3xdXa/Av+ibkb8NY044wEy6+PG2FAWNaID8/FkqmSFjbxogrbmpSX1yZ1PBHrM8DUp/FrIpbg==}
+    peerDependencies:
+      '@vue/composition-api': ^1.1.0
+      vue: ^2.6.0 || ^3.2.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+      vue:
+        optional: true
+    dependencies:
+      '@vueuse/shared': 7.5.5_vue@3.2.29
+      vue: 3.2.29
+      vue-demi: 0.12.1_vue@3.2.29
+    dev: false
+
+  /@vueuse/shared/7.5.5_vue@3.2.29:
+    resolution: {integrity: sha512-mzzTsotHQRPnPAChy8iCv6ek/90CKYhAFyMRgNsMxpT0afZJkbMO/X0OaOu/1NuGbgb8UVjlsWKmCUgKTOF5hA==}
+    peerDependencies:
+      '@vue/composition-api': ^1.1.0
+      vue: ^2.6.0 || ^3.2.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+      vue:
+        optional: true
+    dependencies:
+      vue: 3.2.29
+      vue-demi: 0.12.1_vue@3.2.29
+    dev: false
 
   /acorn-node/1.8.2:
     resolution: {integrity: sha512-8mt+fslDufLYntIoPAaIMUe/lrbrehIiwmR3t2k9LljIzoigEPF27eLk2hy8zSGzmR/ogr7zbRKINMo1u0yh5A==}
