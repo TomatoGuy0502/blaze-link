@@ -50,7 +50,7 @@
       </Disclosure>
     </nav>
     <div class="flex mt-auto">
-      <IconMockAvatar class="w-16 h-16 rounded-l-lg" />
+      <MockAvatar class="w-16 h-16 rounded-l-lg" />
       <div
         class="flex flex-col justify-between flex-1 px-4 py-2 leading-none border-2 border-l-0 border-gray-200 rounded-r-lg"
       >
@@ -64,7 +64,7 @@
 <script setup lang="ts">
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import IconBrand from '@/assets/brand-white.svg'
-import IconMockAvatar from '@/assets/mock-avatar.svg'
+import MockAvatar from '@/assets/mock-avatar.svg'
 import IconCursorClick from '~icons/heroicons-solid/cursor-click/'
 import IconSparkles from '~icons/heroicons-solid/sparkles'
 import IconChevronDown from '~icons/heroicons-solid/chevron-down/'
