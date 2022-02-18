@@ -6,16 +6,18 @@ import path from 'path'
 
 export default defineConfig({
   plugins: [
-    vue(),
+    vue({
+      reactivityTransform: true
+    }),
     svgLoader(),
     Icons({
       autoInstall: true,
-      compiler: 'vue3',
-    }),
+      compiler: 'vue3'
+    })
   ],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
+      '@': path.resolve(__dirname, './src')
+    }
+  }
 })

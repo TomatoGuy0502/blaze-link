@@ -9,6 +9,7 @@
   "dependencies": {
     "@headlessui/vue": "^1.4.3",
     "@supabase/supabase-js": "^1.29.4",
+    "@tailwindcss/forms": "^0.4.0",
     "@vueuse/core": "^7.5.5",
     "autoprefixer": "^10.4.2",
     "pinia": "^2.0.10",
@@ -22,6 +23,8 @@
     "@iconify-json/heroicons-solid": "^1.0.2",
     "@vitejs/plugin-vue": "^2.0.0",
     "@vue/compiler-sfc": "^3.2.29",
+    "prettier": "^2.5.1",
+    "prettier-plugin-tailwindcss": "^0.1.7",
     "typescript": "^4.4.4",
     "unplugin-icons": "^0.13.0",
     "vite": "^2.7.2",
