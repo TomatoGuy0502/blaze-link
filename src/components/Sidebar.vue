@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-full w-72 flex-col bg-gray-100 p-4">
+  <div class="flex h-full w-72 flex-none flex-col bg-gray-100 p-4">
     <IconBrand class="mx-auto mb-8 w-48 fill-brand-1" />
     <nav>
       <Disclosure defaultOpen v-slot="{ open }">

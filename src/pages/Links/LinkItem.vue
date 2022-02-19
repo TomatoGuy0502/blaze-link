@@ -12,14 +12,14 @@
           @keypress.enter="titleIsEditing = false"
         />
         <p
-          class="cursor-pointer font-bold"
+          class="cursor-pointer truncate font-bold"
           :class="[!title && 'text-gray-500']"
           @click="editTitle"
           v-show="!titleIsEditing"
         >
           {{ title || 'Title' }}
         </p>
-        <IconPencilAlt class="cursor-pointer text-gray-300" @click="editTitle" v-show="!titleIsEditing" />
+        <IconPencilAlt class="flex-none cursor-pointer text-gray-300" @click="editTitle" v-show="!titleIsEditing" />
       </div>
       <div class="relative flex items-center gap-x-2">
         <input
@@ -31,10 +31,10 @@
           @blur="urlIsEditing = false"
           @keypress.enter="urlIsEditing = false"
         />
-        <p class="cursor-pointer" :class="[!url && 'text-gray-500']" @click="editUrl" v-show="!urlIsEditing">
+        <p class="cursor-pointer truncate" :class="[!url && 'text-gray-500']" @click="editUrl" v-show="!urlIsEditing">
           {{ url || 'Url' }}
         </p>
-        <IconPencilAlt class="cursor-pointer text-gray-300" @click="editUrl" v-show="!urlIsEditing" />
+        <IconPencilAlt class="flex-none cursor-pointer text-gray-300" @click="editUrl" v-show="!urlIsEditing" />
       </div>
     </div>
     <div>
