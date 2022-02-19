@@ -1,14 +1,23 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Links from '../pages/Links/Links.vue'
-import Appearance from '../pages/Appearance.vue'
+const Home = () => import('../pages/Home.vue')
+const Links = () => import('../pages/Dashboard/Links/Links.vue')
+const Appearance = () => import('../pages/Dashboard/Appearance.vue')
+const Dashboard = () => import('../pages/Dashboard/Dashboard.vue')
 
 const routes = [
-  { path: '/links', component: Links, alias: '/', name: 'Links', meta: { headingChinese: '連結' } },
+  { path: '/', component: Home, name: 'Home' },
   {
-    path: '/appearance',
-    component: Appearance,
-    name: 'Appearance',
-    meta: { headingChinese: '外觀' }
+    path: '/dashboard',
+    component: Dashboard,
+    children: [
+      { path: 'links', component: Links, alias: '', name: 'Links', meta: { headingChinese: '連結' } },
+      {
+        path: 'appearance',
+        component: Appearance,
+        name: 'Appearance',
+        meta: { headingChinese: '外觀' }
+      }
+    ]
   }
 ]
 

@@ -11,7 +11,7 @@
           <IconChevronDown class="h-8 w-8 transition" :class="[!open && 'rotate-180 transform']" />
         </DisclosureButton>
         <DisclosurePanel as="ul" class="flex flex-col gap-y-2 text-gray-500">
-          <router-link to="/links" custom v-slot="{ navigate, isActive }">
+          <router-link :to="{ name: 'Links' }" custom v-slot="{ navigate, isActive }">
             <li
               class="group flex cursor-pointer items-center gap-x-4 whitespace-nowrap rounded-lg p-3 transition hover:bg-brand-1/10 hover:text-brand-1"
               :class="[isActive && 'bg-brand-1/10 text-brand-1']"
@@ -23,7 +23,7 @@
               </p>
             </li>
           </router-link>
-          <router-link to="/appearance" custom v-slot="{ navigate, isActive }">
+          <router-link :to="{ name: 'Appearance' }" custom v-slot="{ navigate, isActive }">
             <li
               class="group flex cursor-pointer items-center gap-x-4 whitespace-nowrap rounded-lg p-3 transition hover:bg-brand-1/10 hover:text-brand-1"
               :class="[isActive && 'bg-brand-1/10 text-brand-1']"
