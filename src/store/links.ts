@@ -19,7 +19,9 @@ export const useLinksStore = defineStore('links', {
     },
     deleteLink(linkId: number) {
       const index = this.links.findIndex((link) => link.id === linkId)
-      this.links.splice(index, 1)
+      if (index > -1) {
+        this.links.splice(index, 1)
+      }
     }
   }
 })

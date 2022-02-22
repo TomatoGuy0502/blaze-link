@@ -38,7 +38,7 @@
       </div>
     </div>
     <div class="flex-none">
-      <IconTrash class="cursor-pointer text-gray-300 hover:text-red-500 transition" @click="deleteLink(id)"/>
+      <IconTrash class="cursor-pointer text-gray-300 hover:text-red-500 transition" @click="openModal(() => deleteLink(id))"/>
     </div>
   </div>
 </template>
@@ -49,10 +49,13 @@ import { useVModels } from '@vueuse/core'
 import IconPencilAlt from '~icons/heroicons-solid/pencil-alt/'
 import IconTrash from '~icons/heroicons-outline/trash/'
 import { useLinksStore } from '../../../store/links'
+import { useConfirmModal } from '../../../composables/useConfirmModal'
 
+// store
 const store = useLinksStore()
 const { deleteLink } = store
 
+// bind props to v-model
 const props = defineProps({
   title: { type: String, required: true },
   url: { type: String, required: true },
@@ -61,6 +64,7 @@ const props = defineProps({
 const emits = defineEmits(['update:title', 'update:url'])
 const { title, url } = useVModels(props, emits)
 
+// edit title & url
 const titleInputRef = ref<HTMLInputElement | null>(null)
 const urlInputRef = ref<HTMLInputElement | null>(null)
 
@@ -75,6 +79,9 @@ const editUrl = () => {
   isUrlEditing.value = true
   urlInputRef.value?.focus()
 }
+
+// dialog
+const { openModal } = useConfirmModal()
 </script>
 
 <style></style>

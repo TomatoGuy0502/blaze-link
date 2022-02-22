@@ -9,12 +9,17 @@
       </div>
     </div>
   </div>
+  <template>
+    <ConfirmModal />
+  </template>
 </template>
 
 <script setup lang="ts">
 import Sidebar from '@/components/Sidebar.vue'
 import Navbar from '@/components/Navbar.vue'
 import Preview from '@/components/Preview.vue'
+
+import ConfirmModal from '../../components/ConfirmModal.vue'
 </script>
 
 <style></style>
