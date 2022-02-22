@@ -1,4 +1,5 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
+const plugin = require('tailwindcss/plugin')
 
 module.exports = {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
@@ -15,5 +16,24 @@ module.exports = {
       }
     }
   },
-  plugins: []
+  plugins: [
+    plugin(function({ addUtilities }) {
+      addUtilities({
+        '.scrollbar-hide': {
+          '-ms-overflow-style': 'none', /* IE and Edge */
+          'scrollbar-width': 'none',    /* Firefox */
+          '&::-webkit-scrollbar': {     /* Safari and Chrome */
+            display: 'none'
+          }
+        },
+        '.scrollbar-default': {
+          '-ms-overflow-style': 'auto', /* IE and Edge */
+          'scrollbar-width': 'auto',    /* Firefox */
+          '&::-webkit-scrollbar': {     /* Safari and Chrome */
+            display: 'block'
+          }
+        },
+      })
+    })
+  ]
 }

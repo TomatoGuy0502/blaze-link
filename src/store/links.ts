@@ -15,7 +15,7 @@ export const useLinksStore = defineStore('links', {
   actions: {
     addLink() {
       const newLink = { title: '', url: '', id: new Date().getTime() }
-      this.links.push(newLink)
+      this.links.unshift(newLink)
     },
     deleteLink(linkId: number) {
       const index = this.links.findIndex((link) => link.id === linkId)

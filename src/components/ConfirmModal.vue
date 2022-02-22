@@ -20,7 +20,7 @@
         leave-from="opacity-100 scale-100"
         leave-to="opacity-0 scale-95"
       >
-        <div class="max-w-sm transform rounded-2xl bg-white p-6 py-4 shadow transition-all">
+        <div class="max-w-sm transform rounded-xl bg-white p-4 shadow transition-all">
           <DialogTitle class="mb-2 text-lg font-medium leading-6 text-gray-900"> 刪除連結 </DialogTitle>
           <DialogDescription class="mb-4 text-sm text-gray-500"> 此連結將會永久消失，確定要刪除嗎？ </DialogDescription>
           <div class="flex flex-row-reverse gap-x-2">

@@ -3,3 +3,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;    /* Firefox */
+  }
+  .scrollbar-hide::-webkit-scrollbar {     /* Safari and Chrome */
+    display: none
+  }
+  .scrollbar-default {
+    -ms-overflow-style: auto; /* IE and Edge */
+    scrollbar-width: auto;    /* Firefox */
+  }
+  .scrollbar-default::-webkit-scrollbar {     /* Safari and Chrome */
+    display: block
+  }
+}

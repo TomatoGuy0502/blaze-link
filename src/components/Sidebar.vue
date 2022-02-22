@@ -10,32 +10,41 @@
           <span>Pages</span>
           <IconChevronDown class="h-8 w-8 transition" :class="[!open && 'rotate-180 transform']" />
         </DisclosureButton>
-        <DisclosurePanel as="ul" class="flex flex-col gap-y-2 text-gray-500">
-          <router-link :to="{ name: 'Links' }" custom v-slot="{ navigate, isActive }">
-            <li
-              class="group flex cursor-pointer items-center gap-x-4 whitespace-nowrap rounded-lg p-3 transition hover:bg-brand-1/10 hover:text-brand-1"
-              :class="[isActive && 'bg-brand-1/10 text-brand-1']"
-              @click="navigate"
-            >
-              <IconCursorClick class="h-6 w-6" />
-              <p class="flex items-center gap-x-2 text-lg font-bold leading-none">
-                連結<span class="inline-block text-base font-normal">Links</span>
-              </p>
-            </li>
-          </router-link>
-          <router-link :to="{ name: 'Appearance' }" custom v-slot="{ navigate, isActive }">
-            <li
-              class="group flex cursor-pointer items-center gap-x-4 whitespace-nowrap rounded-lg p-3 transition hover:bg-brand-1/10 hover:text-brand-1"
-              :class="[isActive && 'bg-brand-1/10 text-brand-1']"
-              @click="navigate"
-            >
-              <IconSparkles class="h-6 w-6" />
-              <p class="flex items-center gap-x-2 text-lg font-bold leading-none">
-                外觀<span class="inline-block text-base font-normal">Appearance</span>
-              </p>
-            </li>
-          </router-link>
-        </DisclosurePanel>
+        <transition
+          enter-active-class="duration-300 ease-out origin-center"
+          enter-from-class="transform opacity-0 -translate-y-2"
+          enter-to-class=""
+          leave-active-class="duration-100 ease-out origin-center"
+          leave-from-class=""
+          leave-to-class="transform opacity-0 -translate-y-2"
+        >
+          <DisclosurePanel as="ul" class="flex flex-col gap-y-2 text-gray-500">
+            <router-link :to="{ name: 'Links' }" custom v-slot="{ navigate, isActive }">
+              <li
+                class="group flex cursor-pointer items-center gap-x-4 whitespace-nowrap rounded-lg p-3 transition hover:bg-brand-1/10 hover:text-brand-1"
+                :class="[isActive && 'bg-brand-1/10 text-brand-1']"
+                @click="navigate"
+              >
+                <IconCursorClick class="h-6 w-6" />
+                <p class="flex items-center gap-x-2 text-lg font-bold leading-none">
+                  連結<span class="inline-block text-base font-normal">Links</span>
+                </p>
+              </li>
+            </router-link>
+            <router-link :to="{ name: 'Appearance' }" custom v-slot="{ navigate, isActive }">
+              <li
+                class="group flex cursor-pointer items-center gap-x-4 whitespace-nowrap rounded-lg p-3 transition hover:bg-brand-1/10 hover:text-brand-1"
+                :class="[isActive && 'bg-brand-1/10 text-brand-1']"
+                @click="navigate"
+              >
+                <IconSparkles class="h-6 w-6" />
+                <p class="flex items-center gap-x-2 text-lg font-bold leading-none">
+                  外觀<span class="inline-block text-base font-normal">Appearance</span>
+                </p>
+              </li>
+            </router-link>
+          </DisclosurePanel>
+        </transition>
       </Disclosure>
     </nav>
     <div class="mt-auto flex">
