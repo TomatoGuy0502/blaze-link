@@ -1,44 +1,44 @@
 <template>
-  <div class="w-full rounded-xl bg-white p-4 shadow-sm">
-    <div class="flex flex-col gap-y-2">
+  <div class="w-full rounded-xl bg-white p-4 shadow-sm flex">
+    <div class="flex flex-col gap-y-2 flex-1">
       <div class="relative flex items-center gap-x-2">
         <input
           type="text"
           class="w-full font-bold focus:outline-none"
-          :class="[titleIsEditing ? 'relative z-0 opacity-100' : 'absolute -z-10 opacity-0']"
+          :class="[isTitleEditing ? 'relative z-0 opacity-100' : 'absolute -z-10 opacity-0']"
           ref="titleInputRef"
           v-model.trim="title"
-          @blur="titleIsEditing = false"
-          @keypress.enter="titleIsEditing = false"
+          @blur="isTitleEditing = false"
+          @keypress.enter="isTitleEditing = false"
         />
         <p
           class="cursor-pointer truncate font-bold"
           :class="[!title && 'text-gray-500']"
           @click="editTitle"
-          v-show="!titleIsEditing"
+          v-show="!isTitleEditing"
         >
           {{ title || 'Title' }}
         </p>
-        <IconPencilAlt class="flex-none cursor-pointer text-gray-300" @click="editTitle" v-show="!titleIsEditing" />
+        <IconPencilAlt class="flex-none cursor-pointer text-gray-300" @click="editTitle" v-show="!isTitleEditing" />
       </div>
       <div class="relative flex items-center gap-x-2">
         <input
           type="text"
           class="w-full focus:outline-none"
-          :class="[urlIsEditing ? 'relative z-0 opacity-100' : 'absolute -z-10 opacity-0']"
+          :class="[isUrlEditing ? 'relative z-0 opacity-100' : 'absolute -z-10 opacity-0']"
           ref="urlInputRef"
           v-model.trim="url"
-          @blur="urlIsEditing = false"
-          @keypress.enter="urlIsEditing = false"
+          @blur="isUrlEditing = false"
+          @keypress.enter="isUrlEditing = false"
         />
-        <p class="cursor-pointer truncate" :class="[!url && 'text-gray-500']" @click="editUrl" v-show="!urlIsEditing">
+        <p class="cursor-pointer truncate" :class="[!url && 'text-gray-500']" @click="editUrl" v-show="!isUrlEditing">
           {{ url || 'Url' }}
         </p>
-        <IconPencilAlt class="flex-none cursor-pointer text-gray-300" @click="editUrl" v-show="!urlIsEditing" />
+        <IconPencilAlt class="flex-none cursor-pointer text-gray-300" @click="editUrl" v-show="!isUrlEditing" />
       </div>
     </div>
-    <div>
-      <!-- save / delete / more -->
+    <div class="flex-none">
+      <IconTrash class="cursor-pointer text-gray-300 hover:text-red-500 transition" @click="deleteLink(id)"/>
     </div>
   </div>
 </template>
@@ -47,10 +47,16 @@
 import { ref } from 'vue'
 import { useVModels } from '@vueuse/core'
 import IconPencilAlt from '~icons/heroicons-solid/pencil-alt/'
+import IconTrash from '~icons/heroicons-outline/trash/'
+import { useLinksStore } from '../../../store/links'
+
+const store = useLinksStore()
+const { deleteLink } = store
 
 const props = defineProps({
   title: { type: String, required: true },
-  url: { type: String, required: true }
+  url: { type: String, required: true },
+  id: { type: Number, required: true }
 })
 const emits = defineEmits(['update:title', 'update:url'])
 const { title, url } = useVModels(props, emits)
@@ -58,15 +64,15 @@ const { title, url } = useVModels(props, emits)
 const titleInputRef = ref<HTMLInputElement | null>(null)
 const urlInputRef = ref<HTMLInputElement | null>(null)
 
-const titleIsEditing = ref(false)
-const urlIsEditing = ref(false)
+const isTitleEditing = ref(false)
+const isUrlEditing = ref(false)
 
 const editTitle = () => {
-  titleIsEditing.value = true
+  isTitleEditing.value = true
   titleInputRef.value?.focus()
 }
 const editUrl = () => {
-  urlIsEditing.value = true
+  isUrlEditing.value = true
   urlInputRef.value?.focus()
 }
 </script>
