@@ -19,5 +19,19 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src')
     }
+  },
+  build: {
+    rollupOptions: {
+      // https://rollupjs.org/guide/en/#outputmanualchunks
+      output: {
+        manualChunks: {
+          dashboard: [
+            './src/pages/Dashboard/Links/Links',
+            './src/pages/Dashboard/Appearance',
+            './src/pages/Dashboard/Dashboard'
+          ]
+        }
+      }
+    }
   }
 })
