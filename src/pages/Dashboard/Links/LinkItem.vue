@@ -1,6 +1,6 @@
 <template>
-  <div class="w-full rounded-xl bg-white p-4 shadow-sm flex">
-    <div class="flex flex-col gap-y-2 flex-1">
+  <div class="flex w-full overflow-hidden rounded-xl bg-white p-4 shadow-sm gap-x-4 leading-none">
+    <div class="flex flex-1 flex-col gap-y-2 overflow-hidden">
       <div class="relative flex items-center gap-x-2">
         <input
           type="text"
