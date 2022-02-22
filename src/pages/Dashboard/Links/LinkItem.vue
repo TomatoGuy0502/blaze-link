@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full overflow-hidden rounded-xl bg-white p-4 shadow-sm gap-x-4 leading-none">
+  <div class="flex w-full gap-x-4 overflow-hidden rounded-xl bg-white p-4 shadow-sm">
     <div class="flex flex-1 flex-col gap-y-2 overflow-hidden">
       <div class="relative flex items-center gap-x-2">
         <input
@@ -19,7 +19,11 @@
         >
           {{ title || 'Title' }}
         </p>
-        <IconPencilAlt class="flex-none cursor-pointer text-gray-300" @click="editTitle" v-show="!isTitleEditing" />
+        <IconPencilAlt
+          class="h-5 w-5 flex-none cursor-pointer text-gray-300"
+          @click="editTitle"
+          v-show="!isTitleEditing"
+        />
       </div>
       <div class="relative flex items-center gap-x-2">
         <input
@@ -34,11 +38,14 @@
         <p class="cursor-pointer truncate" :class="[!url && 'text-gray-500']" @click="editUrl" v-show="!isUrlEditing">
           {{ url || 'Url' }}
         </p>
-        <IconPencilAlt class="flex-none cursor-pointer text-gray-300" @click="editUrl" v-show="!isUrlEditing" />
+        <IconPencilAlt class="h-5 w-5 flex-none cursor-pointer text-gray-300" @click="editUrl" v-show="!isUrlEditing" />
       </div>
     </div>
     <div class="flex-none">
-      <IconTrash class="cursor-pointer text-gray-300 hover:text-red-500 transition" @click="openModal(() => deleteLink(id))"/>
+      <IconTrash
+        class="mt-[2px] h-5 w-5 cursor-pointer text-gray-300 transition hover:text-red-500"
+        @click="openModal(() => deleteLink(id))"
+      />
     </div>
   </div>
 </template>

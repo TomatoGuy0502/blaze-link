@@ -1,7 +1,7 @@
 <template>
   <div class="flex h-full flex-auto flex-col gap-y-4 overflow-hidden rounded-t-2xl bg-gray-100 py-4 px-6">
     <h2 class="text-xl font-bold text-gray-600">Edit</h2>
-    <TransitionGroup tag="ul" name="fade" class="relative space-y-4 overflow-hidden">
+    <TransitionGroup tag="ul" name="fade" class="relative space-y-4">
       <LinkItem v-for="link in links" v-model:title="link.title" v-model:url="link.url" :key="link.id" :id="link.id" />
       <button class="w-full rounded-lg bg-brand-2 py-2 text-white" @click="addLink" key="BUTTON">Add new link</button>
     </TransitionGroup>
