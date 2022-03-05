@@ -3,6 +3,8 @@ const Home = () => import('../pages/Home.vue')
 const Links = () => import('../pages/Dashboard/Links/Links.vue')
 const Appearance = () => import('../pages/Dashboard/Appearance.vue')
 const Dashboard = () => import('../pages/Dashboard/Dashboard.vue')
+const Login = () => import('../pages/Login.vue')
+const Register = () => import('../pages/Register.vue')
 
 const routes = [
   { path: '/', component: Home, name: 'Home' },
@@ -18,7 +20,9 @@ const routes = [
         meta: { headingChinese: '外觀' }
       }
     ]
-  }
+  },
+  { path: '/login', component: Login, name: 'Login' },
+  { path: '/register', component: Register, name: 'Register' }
 ]
 
 const router = createRouter({
