@@ -7,6 +7,7 @@ const Appearance = () => import('../pages/Dashboard/Appearance.vue')
 const Dashboard = () => import('../pages/Dashboard/Dashboard.vue')
 const Register = () => import('../pages/Register.vue')
 const Login = () => import('../pages/Login.vue')
+const Provider = () => import('../pages/Provider.vue')
 
 const routes = [
   { path: '/', component: Home, name: 'Home' },
@@ -28,7 +29,8 @@ const routes = [
     ]
   },
   { path: '/login', component: Login, name: 'Login' },
-  { path: '/register', component: Register, name: 'Register' }
+  { path: '/register', component: Register, name: 'Register' },
+  { path: '/auth/provider', component: Provider, name: 'Provider' }
 ]
 
 const router = createRouter({
@@ -38,9 +40,8 @@ const router = createRouter({
 
 router.beforeEach(async (to) => {
   const authStore = useAuthStore()
-  const { supabase } = useSupabase()
   console.log(`進入${to.name as string}, authStore.isLoggedIn:`, authStore.isLoggedIn)
-  console.log('supabase user:', supabase.auth.user())
+
   if (!authStore.isLoggedIn && to.matched.some((record) => record.meta.requiresAuth)) {
     return { name: 'Login' }
   }

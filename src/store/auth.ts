@@ -32,7 +32,7 @@ export const useAuthStore = defineStore('auth', {
     async loginWithGoogle() {
       const { user, session, error } = await supabase.auth.signIn(
         { provider: 'google' },
-        { redirectTo: `${window.location.origin}/dashboard` }
+        { redirectTo: `${window.location.origin}/auth/provider` }
       )
       if (error) throw error
       return { user, session }
