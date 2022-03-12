@@ -44,7 +44,7 @@
     <div class="flex-none">
       <IconTrash
         class="mt-[2px] h-5 w-5 cursor-pointer text-gray-300 transition hover:text-red-500"
-        @click="openModal(() => deleteLink(id))"
+        @click="handleDeleteLink(id)"
       />
     </div>
   </div>
@@ -89,6 +89,17 @@ const editUrl = () => {
 
 // dialog
 const { openModal } = useConfirmModal()
+
+const handleDeleteLink = (id: number) => {
+  openModal(() => {
+    deleteLink(id)
+  }, {
+    title: '刪除連結',
+    description: '此連結將會永久消失，確定要刪除嗎？',
+    confirm: '刪除',
+    cancel: '取消'
+  })
+}
 </script>
 
 <style></style>

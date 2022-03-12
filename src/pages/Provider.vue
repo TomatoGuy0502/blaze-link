@@ -1,6 +1,6 @@
 <template>
   <div class="pattern flex h-screen flex-col items-center justify-center">
-    <div class="flex flex-col items-center gap-y-12 rounded-xl bg-white p-8 text-center shadow-md">
+    <div class="flex flex-col items-center gap-y-12 rounded-xl bg-white/90 p-8 text-center shadow-md">
       <div class="flex items-center gap-x-4 text-5xl font-bold text-brand-2">
         <IconCheck />
         <h1>Authorized</h1>
