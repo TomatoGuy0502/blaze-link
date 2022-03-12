@@ -1,7 +1,8 @@
 import { reactive, ref } from 'vue'
 
 const isShow = ref(false)
-const callback = ref<Function>()
+const isLoading = ref(false)
+const callback = ref<Function>(() => {})
 
 const templateText = reactive({
   title: '再次確認',
@@ -27,15 +28,23 @@ export const useConfirmModal = () => {
     templateText.confirm = confirm || '確定'
     templateText.cancel = cancel || '取消'
   }
-  const confirm = () => {
-    callback.value!()
+  const confirm = async () => {
+    try {
+      isLoading.value = true
+      await callback.value()
+    } catch (error) {
+      alert(error)
+    } finally {
+      isLoading.value = false
+    }
     isShow.value = false
   }
   const cancel = () => {
-    isShow.value = false
+    !isLoading.value && (isShow.value = false)
   }
   return {
     isShow,
+    isLoading,
     templateText,
     openModal,
     confirm,
