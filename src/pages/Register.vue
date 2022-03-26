@@ -96,14 +96,9 @@ const register = async () => {
     const res = await authStore.register({
       email: formData.email,
       password: formData.password,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
+      name: formData.name
     })
-    console.info(res)
-    // router.push({
-    //   name: 'Home',
-    //   query: { email: formData.email }
-    // })
+    router.push({ name: 'Dashboard' })
   } catch (error) {
     console.error(error)
   } finally {

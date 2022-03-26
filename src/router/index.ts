@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '../store/auth'
-import { useSupabase } from '../composables/useSupabase'
 const Home = () => import('../pages/Home.vue')
 const Links = () => import('../pages/Dashboard/Links/Links.vue')
 const Appearance = () => import('../pages/Dashboard/Appearance.vue')
@@ -15,11 +14,12 @@ const routes = [
     path: '/dashboard',
     component: Dashboard,
     name: 'Dashboard',
+    redirect: { name: 'Links' },
     meta: {
       requiresAuth: true
     },
     children: [
-      { path: 'links', component: Links, alias: '', name: 'Links', meta: { headingChinese: '連結' } },
+      { path: 'links', component: Links, name: 'Links', meta: { headingChinese: '連結' } },
       {
         path: 'appearance',
         component: Appearance,
@@ -40,7 +40,6 @@ const router = createRouter({
 
 router.beforeEach(async (to) => {
   const authStore = useAuthStore()
-  console.log(`進入${to.name as string}, authStore.isLoggedIn:`, authStore.isLoggedIn)
 
   if (!authStore.isLoggedIn && to.matched.some((record) => record.meta.requiresAuth)) {
     return { name: 'Login' }

@@ -10,15 +10,17 @@ export const useAuthStore = defineStore('auth', {
     }
   },
   actions: {
-    async register({ email, password, ...meta }: { email: string; password: string; [x: string]: any }) {
+    async register({ email, password, name }: { email: string; password: string; name: string }) {
       const { user, session, error } = await supabase.auth.signUp(
         { email, password },
         {
-          data: meta,
+          data: { name },
           redirectTo: `${window.location.origin}/dashboard`
         }
       )
       if (error) throw error
+      const { error: updateError } = await supabase.from('profiles').update({ user_name: name }).match({ id: user?.id })
+      if (updateError) throw updateError
       return { user, session }
     },
     async login({ email, password }: { email: string; password: string }) {
@@ -54,6 +56,9 @@ export const useAuthStore = defineStore('auth', {
   getters: {
     isLoggedIn(state) {
       return !!state.user
+    },
+    userName(state) {
+      return state.user?.user_metadata.name || 'My friend'
     }
   }
 })
