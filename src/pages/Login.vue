@@ -80,7 +80,6 @@ const login = async () => {
       email: formData.email,
       password: formData.password
     })
-    console.log(res)
     router.push({
       name: 'Links',
       query: { email: formData.email }

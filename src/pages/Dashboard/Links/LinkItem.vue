@@ -91,8 +91,8 @@ const editUrl = () => {
 const { openModal } = useConfirmModal()
 
 const handleDeleteLink = (id: number) => {
-  openModal(() => {
-    deleteLink(id)
+  openModal(async () => {
+    await deleteLink(id)
   }, {
     title: '刪除連結',
     description: '此連結將會永久消失，確定要刪除嗎？',
