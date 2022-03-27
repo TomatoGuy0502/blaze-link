@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { useSupabase } from '../composables/useSupabase'
+import { useLinksStore } from './links'
 
 const { supabase } = useSupabase()
 
@@ -40,8 +41,10 @@ export const useAuthStore = defineStore('auth', {
       return { user, session }
     },
     async logout() {
+      const linksStore = useLinksStore()
       const { error } = await supabase.auth.signOut()
       if (error) throw error
+      linksStore.links = []
     },
     async sendResetEmail(email: string) {
       const { data, error } = await supabase.auth.api.resetPasswordForEmail(email)

@@ -1,27 +1,47 @@
 import { defineStore } from 'pinia'
+import { useSupabase } from '../composables/useSupabase'
+import { useAuthStore } from './auth'
+
+const { supabase } = useSupabase()
+
+export type RootState = {
+  links: any[]
+}
 
 export const useLinksStore = defineStore('links', {
-  state: () => {
-    return {
-      links: [
-        { title: '', url: '', id: 1 },
-        { title: '', url: '', id: 2 },
-        { title: '', url: '', id: 3 },
-        { title: '', url: '', id: 4 },
-        { title: '', url: '', id: 5 }
-      ]
-    }
-  },
+  state: () =>
+    ({
+      links: []
+    } as RootState),
   actions: {
-    addLink() {
-      const newLink = { title: '', url: '', id: new Date().getTime() }
-      this.links.unshift(newLink)
+    async addLink() {
+      const authStore = useAuthStore()
+      const { data, error } = await supabase.from('links').insert([{ user_id: authStore.user?.id, title: '', url: '' }])
+      if (error) throw error
+      this.links.unshift({
+        id: data[0].id,
+        title: data[0].title,
+        url: data[0].url
+      })
     },
-    deleteLink(linkId: number) {
-      const index = this.links.findIndex((link) => link.id === linkId)
-      if (index > -1) {
-        this.links.splice(index, 1)
-      }
+    async deleteLink(linkId: number) {
+      const { error } = await supabase
+        .from('links')
+        .delete()
+        .match({ id: linkId })
+      if (error) throw error
+      const deleteIndex = this.links.findIndex(link => link.id === linkId)
+      this.links.splice(deleteIndex, 1)
+    },
+    async getLinks() {
+      if (this.links.length) return
+      const authStore = useAuthStore()
+      let { data: links, error } = await supabase
+        .from('links')
+        .select('id, title, url')
+        .eq('user_id', authStore.user?.id)
+        .order('created_at', { ascending: false })
+      this.links = links!
     }
   }
 })
