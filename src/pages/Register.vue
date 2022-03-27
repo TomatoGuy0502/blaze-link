@@ -32,9 +32,14 @@
           for="name"
           class="group flex w-full items-center gap-2 rounded-lg border border-gray-200 p-2 focus-within:border-brand-2"
         >
-          <IconEmojiHappy class="h-5 w-5 text-gray-400 group-focus-within:text-brand-2" />
+          <IconEmojiHappy class="h-5 w-5 shrink-0 text-gray-400 group-focus-within:text-brand-2" />
+          <p
+            class="w-0 max-w-min shrink-0 overflow-hidden transition-all group-focus-within:block group-focus-within:w-full group-focus-within:text-brand-2"
+          >
+            {{ location.origin + '/' }}
+          </p>
           <input
-            class="w-full font-medium autofill:bg-clip-text focus:outline-none"
+            class="shrink-1 -ml-2 w-full font-medium transition-[width] autofill:bg-clip-text focus:outline-none"
             type="text"
             placeholder="Your Name"
             id="name"
@@ -73,6 +78,7 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useBrowserLocation } from '@vueuse/core'
 import IconAtSymbol from '~icons/heroicons-solid/at-symbol/'
 import IconEmojiHappy from '~icons/heroicons-solid/emoji-happy/'
 import IconKey from '~icons/heroicons-solid/key/'
@@ -88,6 +94,7 @@ const formData = reactive({
   name: '',
   password: ''
 })
+const location = useBrowserLocation()
 
 const loading = ref(false)
 const register = async () => {
@@ -96,14 +103,13 @@ const register = async () => {
     const res = await authStore.register({
       email: formData.email,
       password: formData.password,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
+      name: formData.name
     })
     console.info(res)
-    // router.push({
-    //   name: 'Home',
-    //   query: { email: formData.email }
-    // })
+    router.push({
+      name: 'Dashboard',
+      query: { email: formData.email }
+    })
   } catch (error) {
     console.error(error)
   } finally {
