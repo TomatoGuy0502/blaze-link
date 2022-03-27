@@ -36,7 +36,7 @@
           <input
             class="w-full font-medium autofill:bg-clip-text focus:outline-none"
             type="password"
-            placeholder="Create Password"
+            placeholder="Your Password"
             id="password"
             v-model="formData.password"
           />
