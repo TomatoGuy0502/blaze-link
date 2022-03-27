@@ -36,7 +36,7 @@
           <input
             class="w-full font-medium autofill:bg-clip-text focus:outline-none"
             type="password"
-            placeholder="Create Password"
+            placeholder="Your Password"
             id="password"
             v-model="formData.password"
           />
@@ -80,7 +80,6 @@ const login = async () => {
       email: formData.email,
       password: formData.password
     })
-    console.log(res)
     router.push({
       name: 'Links',
       query: { email: formData.email }

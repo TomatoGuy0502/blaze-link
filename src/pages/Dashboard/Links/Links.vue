@@ -16,14 +16,19 @@
 <script setup lang="ts">
 import { useTitle } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
+import { onMounted } from 'vue';
 import { useLinksStore } from '../../../store/links'
 import LinkItem from './LinkItem.vue'
 
 const title = useTitle('Links | BlazeLink')
 
 const store = useLinksStore()
-const { addLink } = store
+const { addLink, getLinks } = store
 const { links } = storeToRefs(store)
+
+onMounted(async () => {
+  await getLinks()
+})
 </script>
 
 <style scoped>

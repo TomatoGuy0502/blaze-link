@@ -105,11 +105,7 @@ const register = async () => {
       password: formData.password,
       name: formData.name
     })
-    console.info(res)
-    router.push({
-      name: 'Dashboard',
-      query: { email: formData.email }
-    })
+    router.push({ name: 'Dashboard' })
   } catch (error) {
     console.error(error)
   } finally {

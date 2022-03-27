@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { useSupabase } from '../composables/useSupabase'
+import { useLinksStore } from './links'
 
 const { supabase } = useSupabase()
 
@@ -10,22 +11,17 @@ export const useAuthStore = defineStore('auth', {
     }
   },
   actions: {
-    async register({ email, password, name }: { email: string; password: string; name:string }) {
+    async register({ email, password, name }: { email: string; password: string; name: string }) {
       const { user, session, error } = await supabase.auth.signUp(
         { email, password },
         {
+          data: { name },
           redirectTo: `${window.location.origin}/dashboard`
         }
       )
       if (error) throw error
-      
-      const { data, error: updateError } = await supabase
-        .from('profiles')
-        .update({ user_name: name })
-        .eq('id', user!.id)
-      console.log(data)
+      const { error: updateError } = await supabase.from('profiles').update({ user_name: name }).match({ id: user?.id })
       if (updateError) throw updateError
-  
       return { user, session }
     },
     async login({ email, password }: { email: string; password: string }) {
@@ -45,8 +41,10 @@ export const useAuthStore = defineStore('auth', {
       return { user, session }
     },
     async logout() {
+      const linksStore = useLinksStore()
       const { error } = await supabase.auth.signOut()
       if (error) throw error
+      linksStore.links = []
     },
     async sendResetEmail(email: string) {
       const { data, error } = await supabase.auth.api.resetPasswordForEmail(email)
@@ -61,6 +59,9 @@ export const useAuthStore = defineStore('auth', {
   getters: {
     isLoggedIn(state) {
       return !!state.user
+    },
+    userName(state) {
+      return state.user?.user_metadata.name || 'My friend'
     }
   }
 })
