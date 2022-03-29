@@ -8,8 +8,8 @@
           :class="[isTitleEditing ? 'relative z-0 opacity-100' : 'absolute -z-10 opacity-0']"
           ref="titleInputRef"
           v-model.trim="title"
-          @blur="isTitleEditing = false"
-          @keypress.enter="isTitleEditing = false"
+          @blur="handleSaveLink"
+          @keypress.enter="handleSaveLink"
         />
         <p
           class="cursor-pointer truncate font-bold"
@@ -32,8 +32,8 @@
           :class="[isUrlEditing ? 'relative z-0 opacity-100' : 'absolute -z-10 opacity-0']"
           ref="urlInputRef"
           v-model.trim="url"
-          @blur="isUrlEditing = false"
-          @keypress.enter="isUrlEditing = false"
+          @blur="handleSaveLink"
+          @keypress.enter="handleSaveLink"
         />
         <p class="cursor-pointer truncate" :class="[!url && 'text-gray-500']" @click="editUrl" v-show="!isUrlEditing">
           {{ url || 'Url' }}
@@ -91,13 +91,26 @@ const editUrl = () => {
 const { openModal } = useConfirmModal()
 
 const handleDeleteLink = (id: number) => {
-  openModal(async () => {
-    await deleteLink(id)
-  }, {
-    title: '刪除連結',
-    description: '此連結將會永久消失，確定要刪除嗎？',
-    confirm: '刪除',
-    cancel: '取消'
+  openModal(
+    async () => {
+      await deleteLink(id)
+    },
+    {
+      title: '刪除連結',
+      description: '此連結將會永久消失，確定要刪除嗎？',
+      confirm: '刪除',
+      cancel: '取消'
+    }
+  )
+}
+
+const handleSaveLink = async () => {
+  isTitleEditing.value = false
+  isUrlEditing.value = false
+  await store.updateLink({
+    id: props.id,
+    title: title.value,
+    url: url.value
   })
 }
 </script>

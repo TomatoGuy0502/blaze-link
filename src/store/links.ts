@@ -25,12 +25,9 @@ export const useLinksStore = defineStore('links', {
       })
     },
     async deleteLink(linkId: number) {
-      const { error } = await supabase
-        .from('links')
-        .delete()
-        .match({ id: linkId })
+      const { error } = await supabase.from('links').delete().match({ id: linkId })
       if (error) throw error
-      const deleteIndex = this.links.findIndex(link => link.id === linkId)
+      const deleteIndex = this.links.findIndex((link) => link.id === linkId)
       this.links.splice(deleteIndex, 1)
     },
     async getLinks() {
@@ -42,6 +39,10 @@ export const useLinksStore = defineStore('links', {
         .eq('user_id', authStore.user?.id)
         .order('created_at', { ascending: false })
       this.links = links!
+    },
+    async updateLink({id, title, url}: { id: number, title: string, url: string }) {
+      const { data, error } = await supabase.from('links').update({ title, url }).match({ id })
+      if (error) throw error
     }
   }
 })

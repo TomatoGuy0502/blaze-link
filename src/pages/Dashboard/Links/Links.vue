@@ -6,9 +6,18 @@
       name="fade"
       class="relative h-full space-y-4 overflow-hidden overflow-y-auto scrollbar-hide"
     >
-      <button class="w-full rounded-lg bg-brand-2 py-2 text-white" @click="addLink" key="BUTTON">Add new link</button>
+      <button
+        class="w-full rounded-lg bg-brand-2 py-2 text-white disabled:bg-gray-300"
+        @click="handleAddLink"
+        key="BUTTON"
+        :disabled="isLoading"
+      >
+        Add new link
+      </button>
       <LinkItem v-for="link in links" v-model:title="link.title" v-model:url="link.url" :key="link.id" :id="link.id" />
-      <p class="text-center w-full p-4 bg-white rounded-lg text-gray-400" v-if="!links.length" key="HINT">這裡什麼都沒有，創建第一個連結吧！</p>
+      <p class="w-full rounded-lg bg-white p-4 text-center text-gray-400" v-if="!links.length" key="HINT">
+        這裡什麼都沒有，創建第一個連結吧！
+      </p>
     </TransitionGroup>
   </div>
 </template>
@@ -16,7 +25,7 @@
 <script setup lang="ts">
 import { useTitle } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue'
 import { useLinksStore } from '../../../store/links'
 import LinkItem from './LinkItem.vue'
 
@@ -29,6 +38,13 @@ const { links } = storeToRefs(store)
 onMounted(async () => {
   await getLinks()
 })
+
+const isLoading = ref(false)
+const handleAddLink = async () => {
+  isLoading.value = true
+  await addLink()
+  isLoading.value = false
+}
 </script>
 
 <style scoped>
