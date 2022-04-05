@@ -4,19 +4,36 @@
 @tailwind components;
 @tailwind utilities;
 
+#nprogress {
+  @apply pointer-events-none;
+}
+#nprogress .bar {
+  @apply bg-brand-2 top-0 left-0 fixed w-full h-0.5 z-[1031];
+}
+#nprogress .peg {
+  @apply block absolute right-0 h-full opacity-100 w-[100px];
+  box-shadow: 0 0 10px theme(colors.brand-2), 0 0 5px theme(colors.brand-2);
+
+  -webkit-transform: rotate(3deg) translate(0px, -4px);
+  -ms-transform: rotate(3deg) translate(0px, -4px);
+  transform: rotate(3deg) translate(0px, -4px);
+}
+
 @layer utilities {
   .scrollbar-hide {
     -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none;    /* Firefox */
+    scrollbar-width: none; /* Firefox */
   }
-  .scrollbar-hide::-webkit-scrollbar {     /* Safari and Chrome */
-    display: none
+  .scrollbar-hide::-webkit-scrollbar {
+    /* Safari and Chrome */
+    display: none;
   }
   .scrollbar-default {
     -ms-overflow-style: auto; /* IE and Edge */
-    scrollbar-width: auto;    /* Firefox */
+    scrollbar-width: auto; /* Firefox */
   }
-  .scrollbar-default::-webkit-scrollbar {     /* Safari and Chrome */
-    display: block
+  .scrollbar-default::-webkit-scrollbar {
+    /* Safari and Chrome */
+    display: block;
   }
 }

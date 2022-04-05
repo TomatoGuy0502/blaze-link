@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useNProgress } from '@vueuse/integrations/useNProgress'
 import { useAuthStore } from '../store/auth'
 const Home = () => import('../pages/Home.vue')
 const Links = () => import('../pages/Dashboard/Links/Links.vue')
@@ -38,7 +39,10 @@ const router = createRouter({
   routes
 })
 
+const progress = useNProgress()
+
 router.beforeEach(async (to) => {
+  progress.start()
   const authStore = useAuthStore()
 
   if (!authStore.isLoggedIn && to.matched.some((record) => record.meta.requiresAuth)) {
@@ -47,6 +51,10 @@ router.beforeEach(async (to) => {
   if (authStore.isLoggedIn && ['Login', 'Register'].includes(to.name as string)) {
     return { name: 'Links' }
   }
+})
+
+router.afterEach(() => {
+  progress.done()
 })
 
 export default router
