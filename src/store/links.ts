@@ -44,5 +44,8 @@ export const useLinksStore = defineStore('links', {
       const { data, error } = await supabase.from('links').update({ title, url }).match({ id })
       if (error) throw error
     }
+  },
+  getters: {
+    validLinks: (state) => state.links.filter((link) => link.url.length && link.title.length)
   }
 })
