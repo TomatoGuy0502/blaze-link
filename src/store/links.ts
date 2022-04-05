@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { Ref } from 'vue'
 import { useSupabase } from '../composables/useSupabase'
 import { useAuthStore } from './auth'
 
@@ -30,8 +31,9 @@ export const useLinksStore = defineStore('links', {
       const deleteIndex = this.links.findIndex((link) => link.id === linkId)
       this.links.splice(deleteIndex, 1)
     },
-    async getLinks() {
+    async getLinks(isLoading: Ref<boolean>) {
       if (this.links.length) return
+      isLoading.value = true
       const authStore = useAuthStore()
       let { data: links, error } = await supabase
         .from('links')
@@ -39,6 +41,7 @@ export const useLinksStore = defineStore('links', {
         .eq('user_id', authStore.user?.id)
         .order('created_at', { ascending: false })
       this.links = links!
+      isLoading.value = false
     },
     async updateLink({id, title, url}: { id: number, title: string, url: string }) {
       const { data, error } = await supabase.from('links').update({ title, url }).match({ id })
