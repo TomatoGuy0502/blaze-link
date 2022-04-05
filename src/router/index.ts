@@ -39,7 +39,11 @@ const router = createRouter({
   routes
 })
 
-const progress = useNProgress()
+const progress = useNProgress(null, {
+  minimum: 0.2,
+  easing: 'ease',
+  speed: 300 
+})
 
 router.beforeEach(async (to) => {
   progress.start()

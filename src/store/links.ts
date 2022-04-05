@@ -6,13 +6,15 @@ import { useAuthStore } from './auth'
 const { supabase } = useSupabase()
 
 export type RootState = {
-  links: any[]
+  links: any[],
+  isFirstTimeLoading: boolean
 }
 
 export const useLinksStore = defineStore('links', {
   state: () =>
     ({
-      links: []
+      links: [],
+      isFirstTimeLoading: true
     } as RootState),
   actions: {
     async addLink() {
@@ -31,9 +33,8 @@ export const useLinksStore = defineStore('links', {
       const deleteIndex = this.links.findIndex((link) => link.id === linkId)
       this.links.splice(deleteIndex, 1)
     },
-    async getLinks(isLoading: Ref<boolean>) {
-      if (this.links.length) return
-      isLoading.value = true
+    async getLinks() {
+      if (!this.isFirstTimeLoading) return
       const authStore = useAuthStore()
       let { data: links, error } = await supabase
         .from('links')
@@ -41,7 +42,7 @@ export const useLinksStore = defineStore('links', {
         .eq('user_id', authStore.user?.id)
         .order('created_at', { ascending: false })
       this.links = links!
-      isLoading.value = false
+      this.isFirstTimeLoading = false
     },
     async updateLink({id, title, url}: { id: number, title: string, url: string }) {
       const { data, error } = await supabase.from('links').update({ title, url }).match({ id })

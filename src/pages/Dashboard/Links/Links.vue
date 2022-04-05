@@ -10,19 +10,19 @@
         class="w-full rounded-lg bg-brand-2 py-2 text-white transition disabled:bg-gray-300"
         @click="handleAddLink"
         key="BUTTON"
-        :disabled="isLoading || isLinksLoading"
+        :disabled="isLoading || isFirstTimeLoading"
       >
         Add new link
       </button>
       <LinkItem v-for="link in links" v-model:title="link.title" v-model:url="link.url" :key="link.id" :id="link.id" />
       <p
         class="w-full rounded-lg bg-white p-4 text-center text-gray-400"
-        v-if="!isLinksLoading && !links.length"
+        v-if="!isFirstTimeLoading && !links.length"
         key="HINT"
       >
         這裡什麼都沒有，創建第一個連結吧！
       </p>
-      <div class="w-full space-y-4" v-if="isLinksLoading" key="LOADING">
+      <div class="w-full space-y-4" v-if="isFirstTimeLoading" key="LOADING">
         <MockLinkItem v-for="n in 3" />
       </div>
     </TransitionGroup>
@@ -32,7 +32,7 @@
 <script setup lang="ts">
 import { useTitle } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { useLinksStore } from '../../../store/links'
 import LinkItem from './LinkItem.vue'
 import MockLinkItem from './MockLinkItem.vue'
@@ -40,13 +40,8 @@ import MockLinkItem from './MockLinkItem.vue'
 const title = useTitle('Links | BlazeLink')
 
 const store = useLinksStore()
-const { addLink, getLinks } = store
-const { links } = storeToRefs(store)
-
-const isLinksLoading = ref(true)
-onMounted(async () => {
-  await getLinks(isLinksLoading)
-})
+const { addLink } = store
+const { links, isFirstTimeLoading } = storeToRefs(store)
 
 const isLoading = ref(false)
 const handleAddLink = async () => {
