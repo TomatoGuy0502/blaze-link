@@ -8,9 +8,10 @@ const Dashboard = () => import('../pages/Dashboard/Dashboard.vue')
 const Register = () => import('../pages/Register.vue')
 const Login = () => import('../pages/Login.vue')
 const Provider = () => import('../pages/Provider.vue')
+const UserLink = () => import('../pages/UserLink.vue')
 
 const routes = [
-  { path: '/', component: Home, name: 'Home' },
+  { path: '/', component: Home, name: 'Home', redirect: '/dashboard' },
   {
     path: '/dashboard',
     component: Dashboard,
@@ -31,7 +32,8 @@ const routes = [
   },
   { path: '/login', component: Login, name: 'Login' },
   { path: '/register', component: Register, name: 'Register' },
-  { path: '/auth/provider', component: Provider, name: 'Provider' }
+  { path: '/auth/provider', component: Provider, name: 'Provider' },
+  { path: '/:userName', component: UserLink, name: 'UserLink', props: true }
 ]
 
 const router = createRouter({
@@ -42,7 +44,7 @@ const router = createRouter({
 const progress = useNProgress(null, {
   minimum: 0.2,
   easing: 'ease',
-  speed: 300 
+  speed: 300
 })
 
 router.beforeEach(async (to) => {

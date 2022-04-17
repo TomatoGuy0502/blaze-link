@@ -20,7 +20,10 @@ export const useAuthStore = defineStore('auth', {
         }
       )
       if (error) throw error
-      const { error: updateError } = await supabase.from('profiles').update({ user_name: name }).match({ id: user?.id })
+      const { error: updateError } = await supabase
+        .from('profiles')
+        .update({ user_name: name, email })
+        .match({ id: user?.id })
       if (updateError) throw updateError
       return { user, session }
     },
@@ -54,6 +57,10 @@ export const useAuthStore = defineStore('auth', {
     async getUserFromToken(jwt: string) {
       const { user, error, data } = await supabase.auth.api.getUser(jwt)
       return { user, error, data }
+    },
+    async checkIfUserExists(userName: string) {
+      let { data } = await supabase.from('profiles').select('user_name').match({ user_name: userName })
+      return data!.length > 0
     }
   },
   getters: {

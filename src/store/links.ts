@@ -1,12 +1,13 @@
 import { defineStore } from 'pinia'
-import { Ref } from 'vue'
 import { useSupabase } from '../composables/useSupabase'
 import { useAuthStore } from './auth'
+import { useRegex } from '../composables/useRegex'
 
 const { supabase } = useSupabase()
+const { isValidUrl } = useRegex()
 
 export type RootState = {
-  links: any[],
+  links: any[]
   isFirstTimeLoading: boolean
 }
 
@@ -44,12 +45,21 @@ export const useLinksStore = defineStore('links', {
       this.links = links!
       this.isFirstTimeLoading = false
     },
-    async updateLink({id, title, url}: { id: number, title: string, url: string }) {
+    async getLinksByName(userName: string) {
+      // 也可以這樣寫，不過解構就比較麻煩一點
+      // let { data, error } = await supabase.from('profiles').select('links( id, title, url )').eq('user_name', userName)
+      const { data, error } = await supabase
+        .from('links')
+        .select('id, url, title, profiles!inner(user_name)')
+        .eq('profiles.user_name', userName)
+      return data
+    },
+    async updateLink({ id, title, url }: { id: number; title: string; url: string }) {
       const { data, error } = await supabase.from('links').update({ title, url }).match({ id })
       if (error) throw error
     }
   },
   getters: {
-    validLinks: (state) => state.links.filter((link) => link.url.length && link.title.length)
+    validLinks: (state) => state.links.filter((link) => isValidUrl(link.url) && !!link.title.length)
   }
 })

@@ -10,11 +10,16 @@
         <div
           class="absolute inset-x-1/2 top-0 mx-auto h-8 w-[150px] -translate-x-1/2 rounded-b-2xl bg-black before:absolute before:inset-1/2 before:h-1.5 before:w-10 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-md before:bg-gray-800 after:absolute after:inset-y-1/2 after:right-8 after:h-2 after:w-2 after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-md after:bg-gray-800"
         ></div>
-        <div class="h-full w-full rounded-[40px] bg-brand-4 p-3 pt-8 truncate">
-          <IconMockAvatar class="h-16 w-16 rounded-full mx-auto mb-6 border-white border-4" />
+        <div class="h-full w-full truncate rounded-[40px] bg-brand-4 p-3 pt-8">
+          <IconMockAvatar class="mx-auto mb-6 h-16 w-16 rounded-full border-4 border-white" />
           <ul class="flex flex-col gap-y-4 text-center font-bold">
             <li v-for="link in validLinks" :key="link.id">
-              <a :href="link.url" class="block p-2 border-2 rounded-md border-white text-white transition hover:bg-brand-3/60" target="_blank">{{ link.title }}</a>
+              <a
+                :href="link.url"
+                class="block truncate rounded-md border-2 border-white p-2 text-white transition hover:bg-brand-3/60"
+                target="_blank"
+                >{{ link.title }}</a
+              >
             </li>
           </ul>
         </div>
