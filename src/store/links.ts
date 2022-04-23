@@ -1,10 +1,9 @@
 import { defineStore } from 'pinia'
 import { useSupabase } from '../composables/useSupabase'
 import { useAuthStore } from './auth'
-import { useRegex } from '../composables/useRegex'
+import { isValidUrl } from '../utils'
 
 const { supabase } = useSupabase()
-const { isValidUrl } = useRegex()
 
 export type RootState = {
   links: any[]

@@ -1,11 +1,14 @@
 <template>
-  <div class="flex w-full gap-x-4 overflow-hidden rounded-xl bg-white p-4 shadow-sm">
+  <div
+    class="flex w-full gap-x-4 overflow-hidden rounded-xl bg-white p-4 shadow-sm"
+    :class="isValidLink ? '' : 'ring-2 ring-inset ring-red-300'"
+  >
     <div class="flex flex-1 flex-col gap-y-2 overflow-hidden">
       <div class="relative flex items-center gap-x-2">
         <input
           type="text"
           class="w-full font-bold focus:outline-none"
-          :class="[isTitleEditing ? 'relative z-0 opacity-100' : 'absolute -z-10 opacity-0']"
+          :class="isTitleEditing ? 'relative z-0 opacity-100' : 'absolute -z-10 opacity-0'"
           ref="titleInputRef"
           v-model.trim="title"
           @blur="handleSaveLink"
@@ -13,7 +16,11 @@
         />
         <p
           class="cursor-pointer truncate font-bold"
-          :class="[!title && 'text-gray-500']"
+          :class="[
+            !title && 'text-gray-500',
+            !isValidTitle && 'underline decoration-red-300 decoration-dashed decoration-4 underline-offset-2'
+          ]"
+          :title="!isValidTitle ? 'Title is required' : ''"
           @click="editTitle"
           v-show="!isTitleEditing"
         >
@@ -35,7 +42,16 @@
           @blur="handleSaveLink"
           @keypress.enter="handleSaveLink"
         />
-        <p class="cursor-pointer truncate" :class="[!url && 'text-gray-500']" @click="editUrl" v-show="!isUrlEditing">
+        <p
+          class="cursor-pointer truncate"
+          :class="[
+            !url && 'text-gray-500',
+            !isValidUrl && 'underline decoration-red-300 decoration-dashed decoration-2 underline-offset-2'
+          ]"
+          :title="!isValidUrl ? 'Incorrect URL' : ''"
+          @click="editUrl"
+          v-show="!isUrlEditing"
+        >
           {{ url || 'Url' }}
         </p>
         <IconPencilAlt class="h-5 w-5 flex-none cursor-pointer text-gray-300" @click="editUrl" v-show="!isUrlEditing" />
@@ -51,12 +67,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useVModels } from '@vueuse/core'
 import IconPencilAlt from '~icons/heroicons-solid/pencil-alt/'
 import IconTrash from '~icons/heroicons-outline/trash/'
 import { useLinksStore } from '../../../store/links'
 import { useConfirmModal } from '../../../composables/useConfirmModal'
+import { isValidUrl as _isValidUrl } from '../../../utils'
 
 // store
 const store = useLinksStore()
@@ -87,6 +104,11 @@ const editUrl = () => {
   urlInputRef.value?.focus()
 }
 
+// validation
+const isValidTitle = computed(() => title.value.length > 0)
+const isValidUrl = computed(() => _isValidUrl(url.value))
+const isValidLink = computed(() => isValidTitle.value && isValidUrl.value)
+
 // dialog
 const { openModal } = useConfirmModal()
 
@@ -107,6 +129,8 @@ const handleDeleteLink = (id: number) => {
 const handleSaveLink = async () => {
   isTitleEditing.value = false
   isUrlEditing.value = false
+  titleInputRef.value?.blur()
+  urlInputRef.value?.blur()
   await store.updateLink({
     id: props.id,
     title: title.value,
