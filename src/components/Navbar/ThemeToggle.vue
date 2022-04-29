@@ -1,6 +1,6 @@
 <template>
   <button
-    class="relative inline-flex items-center self-center rounded-full bg-slate-700 py-1.5 px-2 text-slate-400 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+    class="relative inline-flex items-center self-center rounded-full py-1.5 px-2 text-slate-400 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
     :class="
       isDark
         ? 'bg-slate-700 text-cyan-400 focus-visible:ring-slate-500'

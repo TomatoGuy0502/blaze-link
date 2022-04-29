@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import Sidebar from '@/components/Sidebar.vue'
-import Navbar from '@/components/Navbar.vue'
+import Navbar from '@/components/Navbar/Navbar.vue'
 import Preview from '@/components/Preview.vue'
 import ConfirmModal from '../../components/ConfirmModal.vue'
 import { useLinksStore } from '../../store/links'
