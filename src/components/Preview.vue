@@ -10,7 +10,7 @@
         <div
           class="absolute inset-x-1/2 top-0 mx-auto h-8 w-[150px] -translate-x-1/2 rounded-b-2xl bg-black before:absolute before:inset-1/2 before:h-1.5 before:w-10 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-md before:bg-gray-800 after:absolute after:inset-y-1/2 after:right-8 after:h-2 after:w-2 after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-md after:bg-gray-800"
         ></div>
-        <div class="h-full w-full truncate rounded-[40px] bg-brand-4 px-3 pt-6 overflow-auto scrollbar-hide">
+        <div class="h-full w-full truncate rounded-[40px] bg-brand-4 px-3 pt-6 overflow-auto scrollbar-hide" :class="colors[selectedColor]">
           <div class="h-full overflow-auto scrollbar-hide py-4">
             <IconMockAvatar class="mx-auto mb-6 h-16 w-16 rounded-full border-4 border-white" />
             <ul class="flex flex-col gap-y-4 text-center font-bold">
@@ -34,9 +34,12 @@
 import { storeToRefs } from 'pinia'
 import { useLinksStore } from '../store/links'
 import IconMockAvatar from '@/assets/mock-avatar.svg'
+import { useTempColors } from '../composables/useTempColors'
 
 const store = useLinksStore()
 const { validLinks } = storeToRefs(store)
+
+const { colors, selectedColor } = useTempColors()
 </script>
 
 <style></style>
