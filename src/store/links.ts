@@ -45,13 +45,26 @@ export const useLinksStore = defineStore('links', {
       this.isFirstTimeLoading = false
     },
     async getLinksByName(userName: string) {
-      // 也可以這樣寫，不過解構就比較麻煩一點
-      // let { data, error } = await supabase.from('profiles').select('links( id, title, url )').eq('user_name', userName)
-      const { data, error } = await supabase
-        .from('links')
-        .select('id, url, title, profiles!inner(user_name)')
-        .eq('profiles.user_name', userName)
-      return data
+      type Profile = {
+        user_name: string,
+        links: {
+          id: number,
+          title: string,
+          url: string
+        }[]
+      }
+
+      // 解構比較麻煩一點
+      let { data } = await supabase
+        .from<Profile>('profiles')
+        .select('links( id, title, url )')
+        .eq('user_name', userName)
+      // 從links篩選name看起來直觀，但是資料就會多一個profile
+      // const { data, error } = await supabase
+      //   .from('links')
+      //   .select('id, url, title, profile:profiles!inner(user_name)')
+      //   .eq('profiles.user_name', userName)
+      return data?.[0].links || []
     },
     async updateLink({ id, title, url }: { id: number; title: string; url: string }) {
       const { data, error } = await supabase.from('links').update({ title, url }).match({ id })
