@@ -9,7 +9,7 @@
         leave-from="opacity-100"
         leave-to="opacity-0"
       >
-        <DialogOverlay class="fixed inset-0 bg-black opacity-30" />
+        <div class="fixed inset-0 bg-black opacity-30" aria-hidden="true" />
       </TransitionChild>
 
       <TransitionChild
@@ -20,7 +20,7 @@
         leave-from="opacity-100 scale-100"
         leave-to="opacity-0 scale-95"
       >
-        <div class="min-w-[300px] max-w-sm transform rounded-xl bg-white p-4 shadow transition-all">
+        <DialogPanel class="min-w-[300px] max-w-sm transform rounded-xl bg-white p-4 shadow transition-all">
           <DialogTitle class="mb-2 text-lg font-medium leading-6 text-gray-900">{{ templateText.title }} </DialogTitle>
           <DialogDescription class="mb-4 text-sm text-gray-500">
             {{ templateText.description }}
@@ -41,14 +41,14 @@
               {{ templateText.cancel }}
             </button>
           </div>
-        </div>
+        </DialogPanel>
       </TransitionChild>
     </Dialog>
   </TransitionRoot>
 </template>
 
 <script setup lang="ts">
-import { Dialog, DialogOverlay, DialogTitle, DialogDescription, TransitionRoot, TransitionChild } from '@headlessui/vue'
+import { Dialog, DialogPanel, DialogTitle, DialogDescription, TransitionRoot, TransitionChild } from '@headlessui/vue'
 import { useConfirmModal } from '../composables/useConfirmModal'
 
 const { isShow, isLoading, confirm, cancel, templateText } = useConfirmModal()
