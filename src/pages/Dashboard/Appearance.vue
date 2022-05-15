@@ -56,7 +56,7 @@
     </div>
     <div>
       <h3 class="mb-4 text-xl font-bold text-gray-400">Corner</h3>
-      <ul class="grid grid-cols-[repeat(auto-fit,_minmax(80px,_1fr))] gap-6 rounded-xl bg-white p-6">
+      <ul class="grid grid-cols-[repeat(auto-fit,_minmax(100px,_1fr))] gap-6 rounded-xl bg-white p-6">
         <li
           v-for="radius in radiusList"
           :key="radius"
@@ -73,7 +73,7 @@
     </div>
     <div>
       <h3 class="mb-4 text-xl font-bold text-gray-400">Shadow</h3>
-      <ul class="grid grid-cols-[repeat(auto-fit,_minmax(80px,_1fr))] gap-6 rounded-xl bg-white p-6">
+      <ul class="grid grid-cols-[repeat(auto-fit,_minmax(100px,_1fr))] gap-6 rounded-xl bg-white p-6">
         <li
           v-for="shadow in shadowList"
           :key="shadow"

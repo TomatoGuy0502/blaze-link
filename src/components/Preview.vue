@@ -39,7 +39,6 @@ import { storeToRefs } from 'pinia'
 import { useLinksStore } from '../store/links'
 import IconMockAvatar from '@/assets/mock-avatar.svg'
 import { useAppearance } from '../composables/useAppearance'
-import { computed } from 'vue'
 
 const store = useLinksStore()
 const { validLinks } = storeToRefs(store)
@@ -47,22 +46,8 @@ const { validLinks } = storeToRefs(store)
 const {
   backgroundColors,
   selectedBackgroundColor,
-  buttonColors,
-  selectedButtonColor,
-  selectedRadius,
-  selectedShadow,
-  filled
+  buttonClass
 } = useAppearance()
-
-const buttonClass = computed(() => {
-  return [
-    selectedRadius.value,
-    selectedShadow.value,
-    filled.value ? 
-      buttonColors[selectedButtonColor.value] : 
-      buttonColors[selectedButtonColor.value].match(/((?<!:)border-\S+)|(text-\S+)/g)!.join(' ')
-  ]
-})
 </script>
 
 <style></style>

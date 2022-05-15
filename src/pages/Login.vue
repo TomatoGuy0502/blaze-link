@@ -42,9 +42,10 @@
           />
         </label>
         <button
-          class="w-full gap-x-1 rounded-lg bg-brand-2 py-2 text-white disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
+          class="flex items-center justify-center w-full gap-x-1 rounded-lg bg-brand-2 py-2 text-white disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
           :disabled="loading"
         >
+          <IconLockClosed class="-ml-5 w-5 h-5" />
           {{ loading ? 'Loading' : 'Sign In' }}
         </button>
         <p class="text-gray-400">
@@ -62,6 +63,7 @@ import { useRouter } from 'vue-router'
 import IconAtSymbol from '~icons/heroicons-solid/at-symbol/'
 import IconKey from '~icons/heroicons-solid/key/'
 import IconGoogle from '~icons/logos/google-icon'
+import IconLockClosed from '~icons/heroicons-solid/lock-closed/'
 import { useAuthStore } from '../store/auth'
 
 const authStore = useAuthStore()

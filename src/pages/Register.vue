@@ -63,7 +63,7 @@
           class="flex w-full items-center justify-center gap-x-1 rounded-lg bg-brand-2 py-2 text-white disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
           :disabled="loading"
         >
-          <IconLockClosed />
+          <IconLockClosed class="-ml-5 w-5 h-5" />
           {{ loading ? 'Loading' : 'Sign Up' }}
         </button>
         <p class="text-gray-400">

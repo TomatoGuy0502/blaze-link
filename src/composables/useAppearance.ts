@@ -1,4 +1,4 @@
-import { readonly, ref } from 'vue'
+import { computed, readonly, ref } from 'vue'
 
 const backgroundColors = {
   White: 'bg-white',
@@ -14,12 +14,12 @@ const backgroundColors = {
   Amber: 'bg-amber-200',
   Orange: 'bg-orange-200',
   Red: 'bg-red-200',
-}
+} as const
 const selectedBackgroundColor = ref<keyof typeof backgroundColors>('White')
 const changeBackgroundColor = (color: keyof typeof backgroundColors) => (selectedBackgroundColor.value = color)
 
 const buttonColors = {
-  White: 'bg-white hover:bg-gray-50 text-gray-700/80 ring-gray-400 border-white hover:border-gray-50',
+  White: 'bg-white hover:bg-gray-50 text-gray-800/80 ring-gray-400 border-white hover:border-gray-50',
   Gray: 'bg-gray-200 hover:bg-gray-300 text-gray-800/80 ring-gray-400 border-gray-200 hover:border-gray-300',
   Black: 'bg-black hover:bg-gray-800 text-white/80 ring-gray-800 border-black hover:border-gray-800',
   Pink: 'bg-pink-200 hover:bg-pink-300 text-gray-800/80 ring-pink-400 border-pink-200 hover:border-pink-300',
@@ -34,7 +34,7 @@ const buttonColors = {
   Orange:
     'bg-orange-200 hover:bg-orange-300 text-gray-800/80 ring-orange-400 border-orange-200 hover:border-orange-300',
   Red: 'bg-red-200 hover:bg-red-300 text-gray-800/80 ring-red-400 border-red-200 hover:border-red-300',
-}
+} as const
 const selectedButtonColor = ref<keyof typeof buttonColors>('Gray')
 const changeButtonColor = (color: keyof typeof buttonColors) => (selectedButtonColor.value = color)
 
@@ -51,12 +51,37 @@ const shadowList = [
   'shadow-lg shadow-gray-600/30',
   'shadow-[4px_4px] shadow-gray-800'
 ] as const
-const selectedShadow = ref<typeof shadowList[number]>(shadowList[1])
+const selectedShadow = ref<typeof shadowList[number]>(shadowList[0])
 const changeShadow = (shadow: typeof shadowList[number]) => {
   selectedShadow.value = shadow
 }
 
 const filled = ref(true)
+
+const buttonClass = computed(() => {
+  let textColor: string
+  // 當按鈕是outlined，背景又是深色時，文字要變成淺色
+  // 否則就維持原本顏色
+  textColor =
+    !filled.value && selectedBackgroundColor.value === 'Black'
+      ? 'text-white'
+      : buttonColors[selectedButtonColor.value].match(/(text-\S+)/)![0]
+
+  // 當按鈕是outlined，背景又是淺色時，Black按鈕的文字要變成深色
+  // 否則就維持原本顏色
+  if (!filled.value && selectedBackgroundColor.value !== 'Black' && selectedButtonColor.value === 'Black') {
+    textColor = 'text-gray-800'
+  }
+
+  return [
+    selectedRadius.value,
+    selectedShadow.value,
+    filled.value
+      ? buttonColors[selectedButtonColor.value]
+      : buttonColors[selectedButtonColor.value].match(/border-\S+/g)!.join(' '),
+    textColor
+  ]
+})
 
 export const useAppearance = () => {
   return {
@@ -72,6 +97,7 @@ export const useAppearance = () => {
     shadowList,
     selectedShadow: readonly(selectedShadow),
     changeShadow,
-    filled
+    filled,
+    buttonClass
   }
 }
