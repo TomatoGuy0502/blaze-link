@@ -68,7 +68,7 @@ export const useAuthStore = defineStore('auth', {
       return !!state.user
     },
     userName(state) {
-      return state.user?.user_metadata.name || 'My friend'
+      return state.user?.user_metadata.name as string || 'My friend'
     }
   }
 })

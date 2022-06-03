@@ -2,7 +2,7 @@
   <div class="flex h-full flex-auto flex-col gap-y-4 overflow-auto rounded-t-2xl bg-gray-100 py-4 px-6 scrollbar-hide">
     <div>
       <h3 class="mb-4 text-xl font-bold text-gray-400">Background Color</h3>
-      <ul class="grid grid-cols-[repeat(auto-fit,_minmax(48px,_1fr))] gap-4 rounded-xl bg-white p-6">
+      <ul class="relative grid grid-cols-[repeat(auto-fit,_minmax(48px,_1fr))] gap-4 rounded-xl bg-white p-6">
         <li
           v-for="(_, color) in backgroundColors"
           :key="color"
@@ -10,11 +10,16 @@
           :class="`${buttonColors[color]} ${selectedBackgroundColor === color && 'ring'}`"
           @click="changeBackgroundColor(color)"
         ></li>
+        <Transition name="fade">
+          <div class="absolute inset-0 overflow-hidden rounded-xl bg-gray-100" v-if="isLoading">
+            <div class="h-full w-full animate-pulse bg-gray-200"></div>
+          </div>
+        </Transition>
       </ul>
     </div>
     <div>
       <h3 class="mb-4 text-xl font-bold text-gray-400">Button Type</h3>
-      <SwitchGroup as="div" class="inline-flex flex-row items-center gap-x-2 rounded-xl bg-white p-6">
+      <SwitchGroup as="div" class="relative inline-flex flex-row items-center gap-x-2 rounded-xl bg-white p-6">
         <SwitchLabel
           class="flex flex-col items-center gap-x-2 transition"
           :class="filled ? 'text-gray-800' : 'text-gray-400'"
@@ -27,7 +32,6 @@
         >
           <span class="sr-only"> Filled or Outlined</span>
           <span
-            aria-hidden="true"
             :class="filled ? 'translate-x-0' : 'translate-x-10'"
             class="pointer-events-none absolute top-0.5 left-0.5 h-8 w-8 transform rounded-full bg-white transition duration-300 ease-in-out"
           />
@@ -38,11 +42,16 @@
         >
           <IconsSquare />Outlined</SwitchLabel
         >
+        <Transition name="fade">
+          <div class="absolute inset-0 overflow-hidden rounded-xl bg-gray-100" v-if="isLoading">
+            <div class="h-full w-full animate-pulse bg-gray-200"></div>
+          </div>
+        </Transition>
       </SwitchGroup>
     </div>
     <div>
       <h3 class="mb-4 text-xl font-bold text-gray-400">Button Color</h3>
-      <ul class="grid grid-cols-[repeat(auto-fit,_minmax(80px,_1fr))] gap-4 rounded-xl bg-white p-6">
+      <ul class="relative grid grid-cols-[repeat(auto-fit,_minmax(80px,_1fr))] gap-4 rounded-xl bg-white p-6">
         <li
           v-for="(itemClass, color) in buttonColors"
           :key="color"
@@ -52,11 +61,16 @@
         >
           {{ color }}
         </li>
+        <Transition name="fade">
+          <div class="absolute inset-0 overflow-hidden rounded-xl bg-gray-100" v-if="isLoading">
+            <div class="h-full w-full animate-pulse bg-gray-200"></div>
+          </div>
+        </Transition>
       </ul>
     </div>
     <div>
       <h3 class="mb-4 text-xl font-bold text-gray-400">Corner</h3>
-      <ul class="grid grid-cols-[repeat(auto-fit,_minmax(100px,_1fr))] gap-6 rounded-xl bg-white p-6">
+      <ul class="relative grid grid-cols-[repeat(auto-fit,_minmax(100px,_1fr))] gap-6 rounded-xl bg-white p-6">
         <li
           v-for="radius in radiusList"
           :key="radius"
@@ -69,11 +83,16 @@
             :class="[radius, selectedShadow]"
           ></button>
         </li>
+        <Transition name="fade">
+          <div class="absolute inset-0 overflow-hidden rounded-xl bg-gray-100" v-if="isLoading">
+            <div class="h-full w-full animate-pulse bg-gray-200"></div>
+          </div>
+        </Transition>
       </ul>
     </div>
     <div>
       <h3 class="mb-4 text-xl font-bold text-gray-400">Shadow</h3>
-      <ul class="grid grid-cols-[repeat(auto-fit,_minmax(100px,_1fr))] gap-6 rounded-xl bg-white p-6">
+      <ul class="relative grid grid-cols-[repeat(auto-fit,_minmax(100px,_1fr))] gap-6 rounded-xl bg-white p-6">
         <li
           v-for="shadow in shadowList"
           :key="shadow"
@@ -86,6 +105,11 @@
             :class="[selectedRadius, shadow]"
           ></button>
         </li>
+        <Transition name="fade">
+          <div class="absolute inset-0 overflow-hidden rounded-xl bg-gray-100" v-if="isLoading">
+            <div class="h-full w-full animate-pulse bg-gray-200"></div>
+          </div>
+        </Transition>
       </ul>
     </div>
   </div>
@@ -113,8 +137,19 @@ const {
   shadowList,
   selectedShadow,
   changeShadow,
-  filled
+  filled,
+  isLoading
 } = useAppearance()
 </script>
 
-<style scoped></style>
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

@@ -1,5 +1,19 @@
-import { computed, readonly, ref } from 'vue'
+import { computed, readonly, ref, watch, watchEffect } from 'vue'
+import { useSupabase } from './useSupabase'
+import { useAuthStore } from '../store/auth'
 
+const { supabase } = useSupabase()
+const authStore = useAuthStore()
+
+type Theme = {
+  user_id: string,
+  background_color: keyof typeof backgroundColors,
+  button_color: keyof typeof buttonColors,
+  radius: typeof radiusList[number],
+  shadow: typeof shadowList[number]
+}
+
+// background colors
 const backgroundColors = {
   White: 'bg-white',
   Gray: 'bg-gray-200',
@@ -13,11 +27,18 @@ const backgroundColors = {
   Lime: 'bg-lime-200',
   Amber: 'bg-amber-200',
   Orange: 'bg-orange-200',
-  Red: 'bg-red-200',
+  Red: 'bg-red-200'
 } as const
 const selectedBackgroundColor = ref<keyof typeof backgroundColors>('White')
-const changeBackgroundColor = (color: keyof typeof backgroundColors) => (selectedBackgroundColor.value = color)
+const changeBackgroundColor = async (color: keyof typeof backgroundColors) => {
+  selectedBackgroundColor.value = color
+  await supabase
+    .from('theme')
+    .update({ background_color: color })
+    .eq('user_id', authStore.user?.id)
+}
 
+// button colors
 const buttonColors = {
   White: 'bg-white hover:bg-gray-50 text-gray-800/80 ring-gray-400 border-white hover:border-gray-50',
   Gray: 'bg-gray-200 hover:bg-gray-300 text-gray-800/80 ring-gray-400 border-gray-200 hover:border-gray-300',
@@ -33,17 +54,23 @@ const buttonColors = {
   Amber: 'bg-amber-200 hover:bg-amber-300 text-gray-800/80 ring-amber-400 border-amber-200 hover:border-amber-300',
   Orange:
     'bg-orange-200 hover:bg-orange-300 text-gray-800/80 ring-orange-400 border-orange-200 hover:border-orange-300',
-  Red: 'bg-red-200 hover:bg-red-300 text-gray-800/80 ring-red-400 border-red-200 hover:border-red-300',
+  Red: 'bg-red-200 hover:bg-red-300 text-gray-800/80 ring-red-400 border-red-200 hover:border-red-300'
 } as const
 const selectedButtonColor = ref<keyof typeof buttonColors>('Gray')
-const changeButtonColor = (color: keyof typeof buttonColors) => (selectedButtonColor.value = color)
-
-const radiusList = ['rounded-none', 'rounded', 'rounded-lg', 'rounded-xl', 'rounded-2xl', 'rounded-[30px]'] as const
-const selectedRadius = ref<typeof radiusList[number]>(radiusList[1])
-const changeRadius = (radius: typeof radiusList[number]) => {
-  selectedRadius.value = radius
+const changeButtonColor = async (color: keyof typeof buttonColors) => {
+  selectedButtonColor.value = color
+  await supabase.from('theme').update({ button_color: color }).eq('user_id', authStore.user?.id)
 }
 
+// radius
+const radiusList = ['rounded-none', 'rounded', 'rounded-lg', 'rounded-xl', 'rounded-2xl', 'rounded-[30px]'] as const
+const selectedRadius = ref<typeof radiusList[number]>(radiusList[1])
+const changeRadius = async (radius: typeof radiusList[number]) => {
+  selectedRadius.value = radius
+  await supabase.from('theme').update({ radius }).eq('user_id', authStore.user?.id)
+}
+
+// shadow
 const shadowList = [
   'shadow-none',
   'shadow shadow-gray-600/30',
@@ -52,11 +79,14 @@ const shadowList = [
   'shadow-[4px_4px] shadow-gray-800'
 ] as const
 const selectedShadow = ref<typeof shadowList[number]>(shadowList[0])
-const changeShadow = (shadow: typeof shadowList[number]) => {
+const changeShadow = async (shadow: typeof shadowList[number]) => {
   selectedShadow.value = shadow
+  await supabase.from('theme').update({ shadow }).eq('user_id', authStore.user?.id)
 }
 
+// filled
 const filled = ref(true)
+const isLoading = ref(false)
 
 const buttonClass = computed(() => {
   let textColor: string
@@ -83,6 +113,33 @@ const buttonClass = computed(() => {
   ]
 })
 
+watch(
+  () => authStore.user?.id,
+  async () => {
+    if (!authStore.user?.id) return
+    const now = new Date().getTime()
+    try {
+      isLoading.value = true
+      let { data: theme, error } = await supabase
+        .from<Theme>('theme')
+        .select('button_color, background_color, radius, shadow')
+        .eq('user_id', authStore.user?.id)
+  
+      selectedBackgroundColor.value = theme?.[0].background_color || selectedBackgroundColor.value
+      selectedButtonColor.value = theme?.[0].button_color || selectedButtonColor.value
+      selectedRadius.value = theme?.[0].radius || selectedRadius.value
+      selectedShadow.value = theme?.[0].shadow || selectedShadow.value
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setTimeout(() => {
+        isLoading.value = false
+      }, 1000 - (new Date().getTime() - now));
+    }
+  },
+  { immediate: true }
+)
+
 export const useAppearance = () => {
   return {
     buttonColors,
@@ -98,6 +155,7 @@ export const useAppearance = () => {
     selectedShadow: readonly(selectedShadow),
     changeShadow,
     filled,
-    buttonClass
+    buttonClass,
+    isLoading
   }
 }
