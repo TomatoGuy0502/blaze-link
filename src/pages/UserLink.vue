@@ -1,12 +1,13 @@
 <template>
-  <div class="h-screen w-full bg-brand-4" v-if="userExist">
+  <div class="h-screen w-full" :class="backgroundColors[theme.background_color]" v-if="userExists">
     <div class="mx-auto max-w-3xl p-8">
       <IconMockAvatar class="mx-auto mb-6 h-16 w-16 rounded-full border-4 border-white" />
       <TransitionGroup tag="ul" name="fade" class="flex flex-col gap-y-4 text-center font-bold">
         <li v-for="link in links" :key="link.id">
           <a
             :href="link.url"
-            class="block truncate rounded-md border-2 border-white p-2 text-white transition hover:bg-brand-3/60"
+            class="block truncate border-2 p-2 px-4 transition-all duration-300"
+            :class="buttonClass"
             target="_blank"
             >{{ link.title }}</a
           >
@@ -18,28 +19,38 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
+import { Ref, ref } from 'vue'
 import IconMockAvatar from '@/assets/mock-avatar.svg'
 import { useLinksStore } from '../store/links'
-import { useAuthStore } from '../store/auth'
+import { Theme } from '../composables/useAppearance'
+import { getButtonClass, useAppearance } from '../composables/useAppearance'
 
 const props = defineProps({
   userName: { type: String, required: true }
 })
 
-const { getLinksByName } = useLinksStore()
-const { checkIfUserExists } = useAuthStore()
+const { getLinksAndThemeByName } = useLinksStore()
 
 const links = ref<any>([])
-const userExist = ref<boolean>(false)
+const theme = ref() as Ref<Theme>
+const userExists = ref<boolean>(false)
 
-userExist.value = await checkIfUserExists(props.userName)
+const res = await getLinksAndThemeByName(props.userName)
+if (res) {
+  userExists.value = true
+  links.value = res.links
+  theme.value = res.theme
+}
 
-onMounted(async () => {
-  if (userExist.value) {
-    links.value = await getLinksByName(props.userName)
-  }
-})
+const { backgroundColors } = useAppearance()
+
+const buttonClass = getButtonClass(
+  theme.value.filled,
+  theme.value.background_color,
+  theme.value.button_color,
+  theme.value.radius,
+  theme.value.shadow
+)
 </script>
 
 <style>

@@ -21,7 +21,7 @@
                 <li v-for="link in validLinks" :key="link.id">
                   <a
                     :href="link.url"
-                    class="block truncate border-2 p-2 px-4 transition-all duration-300"
+                    class="block truncate border-4 p-2 px-4 transition-all duration-300"
                     :class="buttonClass"
                     target="_blank"
                     >{{ link.title }}</a
@@ -46,8 +46,7 @@ import IconMockAvatar from '@/assets/mock-avatar.svg'
 import TablerLoader from '~icons/tabler/loader'
 import { useAppearance } from '../composables/useAppearance'
 
-const store = useLinksStore()
-const { validLinks } = storeToRefs(store)
+const { validLinks } = storeToRefs(useLinksStore())
 
 const { backgroundColors, selectedBackgroundColor, buttonClass, isLoading } = useAppearance()
 </script>
@@ -55,7 +54,7 @@ const { backgroundColors, selectedBackgroundColor, buttonClass, isLoading } = us
 <style scoped>
 .fade-enter-active,
 .fade-leave-active {
-  transition: all 0.5s ease-in-out;
+  transition: all 0.8s ease-in-out;
 }
 
 .fade-enter-from,

@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { useSupabase } from '../composables/useSupabase'
 import { useAuthStore } from './auth'
 import { isValidUrl } from '../utils'
+import { Theme } from '../composables/useAppearance'
 
 const { supabase } = useSupabase()
 
@@ -44,27 +45,33 @@ export const useLinksStore = defineStore('links', {
       this.links = links!
       this.isFirstTimeLoading = false
     },
-    async getLinksByName(userName: string) {
+    async getLinksAndThemeByName(userName: string) {
       type Profile = {
-        user_name: string,
+        user_name: string
         links: {
-          id: number,
-          title: string,
+          id: number
+          title: string
           url: string
         }[]
+        theme: Theme[]
       }
 
-      // 解構比較麻煩一點
       let { data } = await supabase
         .from<Profile>('profiles')
-        .select('links( id, title, url )')
+        .select(
+          `
+          links( id, title, url ),
+          theme( button_color, background_color, radius, shadow, filled )
+        `
+        )
         .eq('user_name', userName)
-      // 從links篩選name看起來直觀，但是資料就會多一個profile
-      // const { data, error } = await supabase
-      //   .from('links')
-      //   .select('id, url, title, profile:profiles!inner(user_name)')
-      //   .eq('profiles.user_name', userName)
-      return data?.[0].links || []
+
+      if (!data?.[0]?.theme) return null
+
+      return {
+        links: data?.[0]?.links || [],
+        theme: data?.[0]?.theme[0]
+      }
     },
     async updateLink({ id, title, url }: { id: number; title: string; url: string }) {
       const { data, error } = await supabase.from('links').update({ title, url }).match({ id })

@@ -22,23 +22,23 @@
       <SwitchGroup as="div" class="relative inline-flex flex-row items-center gap-x-2 rounded-xl bg-white p-6">
         <SwitchLabel
           class="flex flex-col items-center gap-x-2 transition"
-          :class="filled ? 'text-gray-800' : 'text-gray-400'"
+          :class="isFilled ? 'text-gray-800' : 'text-gray-400'"
           ><IconsSquareFill />Filled</SwitchLabel
         >
         <Switch
-          v-model="filled"
-          :class="filled ? 'bg-teal-900' : 'bg-teal-700'"
+          v-model="isFilled"
+          :class="isFilled ? 'bg-teal-900' : 'bg-teal-700'"
           class="relative h-10 w-20 shrink-0 cursor-pointer rounded-full border-2 border-transparent ring-teal-400/75 ring-offset-2 transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2"
         >
           <span class="sr-only"> Filled or Outlined</span>
           <span
-            :class="filled ? 'translate-x-0' : 'translate-x-10'"
+            :class="isFilled ? 'translate-x-0' : 'translate-x-10'"
             class="pointer-events-none absolute top-0.5 left-0.5 h-8 w-8 transform rounded-full bg-white transition duration-300 ease-in-out"
           />
         </Switch>
         <SwitchLabel
           class="flex flex-col items-center gap-x-2 transition"
-          :class="filled ? 'text-gray-400' : 'text-gray-800'"
+          :class="isFilled ? 'text-gray-400' : 'text-gray-800'"
         >
           <IconsSquare />Outlined</SwitchLabel
         >
@@ -122,7 +122,7 @@ import IconsSquare from '~icons/akar-icons/square'
 import IconsSquareFill from '~icons/akar-icons/square-fill'
 import { useAppearance } from '../../composables/useAppearance'
 
-const title = useTitle('Appearance | BlazeLink')
+useTitle('Appearance | BlazeLink')
 
 const {
   buttonColors,
@@ -137,7 +137,7 @@ const {
   shadowList,
   selectedShadow,
   changeShadow,
-  filled,
+  isFilled,
   isLoading
 } = useAppearance()
 </script>
@@ -145,7 +145,7 @@ const {
 <style scoped>
 .fade-enter-active,
 .fade-leave-active {
-  transition: all 0.5s ease-in-out;
+  transition: all 0.8s ease-in-out;
 }
 
 .fade-enter-from,

@@ -1,16 +1,17 @@
-import { computed, readonly, ref, watch, watchEffect } from 'vue'
+import { computed, readonly, Ref, ref, watch, watchEffect } from 'vue'
 import { useSupabase } from './useSupabase'
 import { useAuthStore } from '../store/auth'
 
 const { supabase } = useSupabase()
 const authStore = useAuthStore()
 
-type Theme = {
-  user_id: string,
-  background_color: keyof typeof backgroundColors,
-  button_color: keyof typeof buttonColors,
-  radius: typeof radiusList[number],
+export type Theme = {
+  user_name?: string
+  background_color: keyof typeof backgroundColors
+  button_color: keyof typeof buttonColors
+  radius: typeof radiusList[number]
   shadow: typeof shadowList[number]
+  filled: boolean
 }
 
 // background colors
@@ -32,10 +33,7 @@ const backgroundColors = {
 const selectedBackgroundColor = ref<keyof typeof backgroundColors>('White')
 const changeBackgroundColor = async (color: keyof typeof backgroundColors) => {
   selectedBackgroundColor.value = color
-  await supabase
-    .from('theme')
-    .update({ background_color: color })
-    .eq('user_id', authStore.user?.id)
+  await supabase.from('theme').update({ background_color: color }).eq('user_name', authStore.userName)
 }
 
 // button colors
@@ -59,7 +57,7 @@ const buttonColors = {
 const selectedButtonColor = ref<keyof typeof buttonColors>('Gray')
 const changeButtonColor = async (color: keyof typeof buttonColors) => {
   selectedButtonColor.value = color
-  await supabase.from('theme').update({ button_color: color }).eq('user_id', authStore.user?.id)
+  await supabase.from('theme').update({ button_color: color }).eq('user_name', authStore.userName)
 }
 
 // radius
@@ -67,7 +65,7 @@ const radiusList = ['rounded-none', 'rounded', 'rounded-lg', 'rounded-xl', 'roun
 const selectedRadius = ref<typeof radiusList[number]>(radiusList[1])
 const changeRadius = async (radius: typeof radiusList[number]) => {
   selectedRadius.value = radius
-  await supabase.from('theme').update({ radius }).eq('user_id', authStore.user?.id)
+  await supabase.from('theme').update({ radius }).eq('user_name', authStore.userName)
 }
 
 // shadow
@@ -81,60 +79,51 @@ const shadowList = [
 const selectedShadow = ref<typeof shadowList[number]>(shadowList[0])
 const changeShadow = async (shadow: typeof shadowList[number]) => {
   selectedShadow.value = shadow
-  await supabase.from('theme').update({ shadow }).eq('user_id', authStore.user?.id)
+  await supabase.from('theme').update({ shadow }).eq('user_name', authStore.userName)
 }
 
 // filled
-const filled = ref(true)
+const isFilled = ref(true)
+watch(isFilled, () => changeFill(isFilled.value))
+const changeFill = async (filled: boolean) => {
+  isFilled.value = filled
+  await supabase.from('theme').update({ filled }).eq('user_name', authStore.userName)
+}
+
 const isLoading = ref(false)
 
 const buttonClass = computed(() => {
-  let textColor: string
-  // 當按鈕是outlined，背景又是深色時，文字要變成淺色
-  // 否則就維持原本顏色
-  textColor =
-    !filled.value && selectedBackgroundColor.value === 'Black'
-      ? 'text-white'
-      : buttonColors[selectedButtonColor.value].match(/(text-\S+)/)![0]
-
-  // 當按鈕是outlined，背景又是淺色時，Black按鈕的文字要變成深色
-  // 否則就維持原本顏色
-  if (!filled.value && selectedBackgroundColor.value !== 'Black' && selectedButtonColor.value === 'Black') {
-    textColor = 'text-gray-800'
-  }
-
-  return [
+  return getButtonClass(
+    isFilled.value,
+    selectedBackgroundColor.value,
+    selectedButtonColor.value,
     selectedRadius.value,
-    selectedShadow.value,
-    filled.value
-      ? buttonColors[selectedButtonColor.value]
-      : buttonColors[selectedButtonColor.value].match(/border-\S+/g)!.join(' '),
-    textColor
-  ]
+    selectedShadow.value
+  )
 })
 
 watch(
   () => authStore.user?.id,
-  async () => {
-    if (!authStore.user?.id) return
-    const now = new Date().getTime()
+  async (userId) => {
+    isLoading.value = true
+    if (!userId) return
     try {
-      isLoading.value = true
-      let { data: theme, error } = await supabase
-        .from<Theme>('theme')
-        .select('button_color, background_color, radius, shadow')
-        .eq('user_id', authStore.user?.id)
-  
-      selectedBackgroundColor.value = theme?.[0].background_color || selectedBackgroundColor.value
-      selectedButtonColor.value = theme?.[0].button_color || selectedButtonColor.value
-      selectedRadius.value = theme?.[0].radius || selectedRadius.value
-      selectedShadow.value = theme?.[0].shadow || selectedShadow.value
+      const { data } = await supabase
+        .from('theme')
+        .select(`button_color, background_color, radius, shadow, filled, profile:profiles!inner(id)`)
+        .eq('profiles.id', userId)
+
+      const theme = data?.[0] as Theme
+
+      selectedBackgroundColor.value = theme.background_color || selectedBackgroundColor.value
+      selectedButtonColor.value = theme.button_color || selectedButtonColor.value
+      selectedRadius.value = theme.radius || selectedRadius.value
+      selectedShadow.value = theme.shadow || selectedShadow.value
+      isFilled.value = theme.filled
     } catch (error) {
       console.error(error)
     } finally {
-      setTimeout(() => {
-        isLoading.value = false
-      }, 1000 - (new Date().getTime() - now));
+      isLoading.value = false
     }
   },
   { immediate: true }
@@ -154,8 +143,27 @@ export const useAppearance = () => {
     shadowList,
     selectedShadow: readonly(selectedShadow),
     changeShadow,
-    filled,
+    isFilled,
+    changeFill,
     buttonClass,
     isLoading
   }
+}
+
+export function getButtonClass(
+  filled: boolean,
+  selectedBackgroundColor: keyof typeof backgroundColors,
+  selectedButtonColor: keyof typeof buttonColors,
+  selectedRadius: typeof radiusList[number],
+  selectedShadow: typeof shadowList[number]
+) {
+  let textColor = ''
+  if (!filled) textColor = selectedBackgroundColor === 'Black' ? 'text-white' : 'text-gray-800/80'
+
+  return [
+    selectedRadius,
+    selectedShadow,
+    filled ? buttonColors[selectedButtonColor] : buttonColors[selectedButtonColor].match(/border-\S+/g)!.join(' '),
+    textColor
+  ]
 }

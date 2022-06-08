@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { useSupabase } from '../composables/useSupabase'
+import { Profile } from '../types'
 import { useLinksStore } from './links'
 
 const { supabase } = useSupabase()
@@ -7,7 +8,8 @@ const { supabase } = useSupabase()
 export const useAuthStore = defineStore('auth', {
   state: () => {
     return {
-      user: supabase.auth.user()
+      user: supabase.auth.user(),
+      profile: {} as Profile | null,
     }
   },
   actions: {
@@ -58,7 +60,7 @@ export const useAuthStore = defineStore('auth', {
       const { user, error, data } = await supabase.auth.api.getUser(jwt)
       return { user, error, data }
     },
-    async checkIfUserExists(userName: string) {
+    async isUserExists(userName: string) {
       let { data } = await supabase.from('profiles').select('user_name').match({ user_name: userName })
       return data!.length > 0
     }
@@ -68,7 +70,7 @@ export const useAuthStore = defineStore('auth', {
       return !!state.user
     },
     userName(state) {
-      return state.user?.user_metadata.name as string || 'My friend'
+      return state.profile?.user_name || ''
     }
   }
 })
