@@ -23,7 +23,8 @@ import { Ref, ref } from 'vue'
 import IconMockAvatar from '@/assets/mock-avatar.svg'
 import { useLinksStore } from '../store/links'
 import { Theme } from '../composables/useAppearance'
-import { getButtonClass, useAppearance } from '../composables/useAppearance'
+import { getButtonClass } from '../utils'
+import { backgroundColors } from '../data'
 
 const props = defineProps({
   userName: { type: String, required: true }
@@ -41,8 +42,6 @@ if (res) {
   links.value = res.links
   theme.value = res.theme
 }
-
-const { backgroundColors } = useAppearance()
 
 const buttonClass = getButtonClass(
   theme.value.filled,

@@ -2,6 +2,7 @@ import { computed, readonly, Ref, ref, watch } from 'vue'
 import { useSupabase } from './useSupabase'
 import { useAuthStore } from '../store/auth'
 import { backgroundColors, buttonColors, radiusList, shadowList } from '../data'
+import { getButtonClass } from '../utils'
 
 const { supabase } = useSupabase()
 const authStore = useAuthStore()
@@ -94,24 +95,6 @@ export const useAppearance = () => {
     buttonClass,
     isLoading
   }
-}
-
-export function getButtonClass(
-  filled: boolean,
-  selectedBackgroundColor: keyof typeof backgroundColors,
-  selectedButtonColor: keyof typeof buttonColors,
-  selectedRadius: typeof radiusList[number],
-  selectedShadow: typeof shadowList[number]
-) {
-  let textColor = ''
-  if (!filled) textColor = selectedBackgroundColor === 'Black' ? 'text-white' : 'text-gray-800/80'
-
-  return [
-    selectedRadius,
-    selectedShadow,
-    filled ? buttonColors[selectedButtonColor] : buttonColors[selectedButtonColor].match(/border-\S+/g)!.join(' '),
-    textColor
-  ]
 }
 
 function generateChangeFunction<T>(targetRef: Ref<T>, columnName: string) {
