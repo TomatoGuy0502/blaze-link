@@ -9,7 +9,7 @@ export const useAuthStore = defineStore('auth', {
   state: () => {
     return {
       user: supabase.auth.user(),
-      profile: {} as Profile | null,
+      profile: {} as Profile | null
     }
   },
   actions: {
@@ -51,6 +51,12 @@ export const useAuthStore = defineStore('auth', {
       if (error) throw error
       linksStore.links = []
     },
+    async updateUsername(username: string) {
+      const { error } = await supabase.from('profiles').update({ user_name: username }).match({ id: this.user?.id })
+      if (!error) {
+        this.profile!.user_name = username
+      }
+    },
     async sendResetEmail(email: string) {
       const { data, error } = await supabase.auth.api.resetPasswordForEmail(email)
       if (error) throw error
@@ -63,6 +69,10 @@ export const useAuthStore = defineStore('auth', {
     async isUserExists(userName: string) {
       let { data } = await supabase.from('profiles').select('user_name').match({ user_name: userName })
       return data!.length > 0
+    },
+    async isUserHasUserName() {
+      let { data } = await supabase.from('profiles').select('user_name').match({ id: this.user?.id })
+      return data?.[0].user_name !== null
     }
   },
   getters: {

@@ -44,6 +44,7 @@
             placeholder="Your Name"
             id="name"
             v-model="formData.name"
+            autocomplete="off"
           />
         </label>
         <label
