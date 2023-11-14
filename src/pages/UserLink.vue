@@ -37,6 +37,7 @@ const theme = ref() as Ref<Theme>
 const userExists = ref<boolean>(false)
 
 const res = await getLinksAndThemeByName(props.userName)
+console.log(res)
 if (res) {
   userExists.value = true
   links.value = res.links

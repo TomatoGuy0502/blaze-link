@@ -53,7 +53,7 @@ export const useLinksStore = defineStore('links', {
           title: string
           url: string
         }[]
-        theme: Theme[]
+        theme: Theme
       }
 
       let { data } = await supabase
@@ -65,12 +65,12 @@ export const useLinksStore = defineStore('links', {
         `
         )
         .eq('user_name', userName)
-
+      console.log(data)
       if (!data?.[0]?.theme) return null
 
       return {
         links: data?.[0]?.links || [],
-        theme: data?.[0]?.theme[0]
+        theme: data?.[0]?.theme
       }
     },
     async updateLink({ id, title, url }: { id: number; title: string; url: string }) {

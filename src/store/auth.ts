@@ -80,7 +80,7 @@ export const useAuthStore = defineStore('auth', {
       return !!state.user
     },
     userName(state) {
-      return state.profile?.user_name || ''
+      return state.profile?.user_name === undefined ? '' : state.profile?.user_name
     }
   }
 })

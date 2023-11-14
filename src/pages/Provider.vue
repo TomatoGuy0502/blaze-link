@@ -1,16 +1,16 @@
 <template>
   <div class="pattern flex h-screen flex-col items-center justify-center">
     <div class="flex flex-col items-center gap-y-4 rounded-xl bg-white/90 p-6 text-center shadow-md">
-      <template v-if="!!authStore.userName">
+      <template v-if="!!authStore.isLoggedIn">
         <div class="flex items-center gap-x-2 text-4xl font-bold text-brand-2">
           <IconCheck />
           <h1>Authorized</h1>
         </div>
-        <p class="text-2xl font-medium text-gray-500">Redirecting...</p>
+        <p class="ext-gray-500 text-2xl font-medium">Redirecting...</p>
       </template>
       <template v-else>
         <h1 class="text-4xl font-bold text-brand-2">Last step</h1>
-        <p class="text-gray-400 -mt-2">Input your name</p>
+        <p class="-mt-2 text-gray-400">Input your name</p>
         <label
           for="name"
           class="group flex w-full items-center gap-2 rounded-lg border border-gray-200 p-2 focus-within:border-brand-2"
@@ -28,7 +28,7 @@
             autocomplete="off"
           />
         </label>
-        <div class="flex flex-col w-full gap-y-1">
+        <div class="flex w-full flex-col gap-y-1">
           <button
             class="w-full rounded-lg bg-brand-2 py-2 text-white transition hover:bg-brand-2/90 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
             :disabled="isLoading"
@@ -36,7 +36,7 @@
           >
             {{ isLoading ? 'Loading' : 'Finish' }}
           </button>
-          <p v-if="error" class="text-red-400 font-semibold">{{ error }}</p>
+          <p v-if="error" class="font-semibold text-red-400">{{ error }}</p>
         </div>
       </template>
     </div>
@@ -46,25 +46,78 @@
 <script setup lang="ts">
 import { useBrowserLocation } from '@vueuse/core'
 import { onMounted, ref, watch } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import IconCheck from '~icons/heroicons-outline/check-circle'
 import IconEmojiHappy from '~icons/heroicons-solid/emoji-happy/'
 import { useAuthStore } from '../store/auth'
+import { useSupabase } from '../composables/useSupabase'
 
 const authStore = useAuthStore()
 const router = useRouter()
+const route = useRoute()
 const location = useBrowserLocation()
+const { supabase } = useSupabase()
 
 const name = ref('')
 const isLoading = ref(false)
 const error = ref('')
 
-if (!authStore.isLoggedIn) router.push({ name: 'Login' })
+console.log('-----進入頁面-----')
+console.log('authStore.isLoggedIn:', authStore.isLoggedIn)
+console.log('authStore.userName:', authStore.userName)
+console.log('route.hash:', route.hash)
+console.log('-----進入頁面-----')
 
-// FIXME: 頁面讀取完畢時，username不一定讀取到了，要確認他們的順序
-watch(() => authStore.userName, (userName) => {
-  if (!userName) router.push({ name: 'Links' })
-}, { immediate: true })
+// 狀況：
+// 1. 還沒登入，然後帶著access_token來到這個頁面 => 正常，檢查是否有username
+if (!authStore.isLoggedIn && route.hash) {
+  console.log('還沒登入，然後帶著access_token來到這個頁面')
+  watch(
+    () => authStore.isLoggedIn,
+    (isLoggedIn) => {
+      console.log('isLoggedIn:', isLoggedIn)
+      if (isLoggedIn) {
+        // access_token是對的 => 檢查是否有userName
+        watch(
+          () => authStore.userName,
+          (userName) => {
+            console.log('userName:', userName)
+            if (userName) {
+              console.log('已經有userName了，正常跳轉')
+              router.push({ name: 'Links' })
+            } else {
+              console.log('還沒有取過userName，留在這個頁面')
+            }
+          }
+        )
+      } else {
+        // FIXME: 要如何檢查access_token是錯的？
+        console.log('access_token是錯的')
+        router.push({ name: 'Login' })
+      }
+    }
+  )
+}
+// 2. 還沒登入，然後沒事來到這個頁面 => 跳轉到Login頁面
+if (!authStore.isLoggedIn && !route.hash) {
+  console.log('還沒登入，然後沒事來到這個頁面')
+  router.push({ name: 'Login' })
+}
+// 3. 已經登入(authStore.isLoggedIn===true)
+if (authStore.isLoggedIn) {
+  watch(
+    () => authStore.userName,
+    (userName) => {
+      console.log('userName:', userName)
+      if (userName) {
+        console.log('已經登入，然後沒事來到這個頁面')
+        router.push({ name: 'Links' })
+      } else {
+        console.log('已經登入，但還沒有username')
+      }
+    }
+  )
+}
 
 const handleSubmit = async () => {
   if (isLoading.value || !name.value) return
