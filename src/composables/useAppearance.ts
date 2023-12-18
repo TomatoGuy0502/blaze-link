@@ -7,14 +7,14 @@ import { getButtonClass } from '../utils'
 const { supabase } = useSupabase()
 const authStore = useAuthStore()
 
-export type Theme = {
-  user_name?: string
-  background_color: keyof typeof backgroundColors
-  button_color: keyof typeof buttonColors
-  radius: typeof radiusList[number]
-  shadow: typeof shadowList[number]
-  filled: boolean
-}
+// export type Theme = {
+//   user_name?: string
+//   background_color: keyof typeof backgroundColors
+//   button_color: keyof typeof buttonColors
+//   radius: typeof radiusList[number]
+//   shadow: typeof shadowList[number]
+//   filled: boolean
+// }
 
 // background colors
 const selectedBackgroundColor = ref<keyof typeof backgroundColors>('White')
@@ -60,7 +60,7 @@ watch(
         .select(`button_color, background_color, radius, shadow, filled, profile:profiles!inner(id)`)
         .eq('profiles.id', userId)
 
-      const theme = data?.[0] as Theme
+      const theme = data?.[0]!
 
       selectedBackgroundColor.value = theme.background_color || selectedBackgroundColor.value
       selectedButtonColor.value = theme.button_color || selectedButtonColor.value
@@ -103,6 +103,6 @@ function generateChangeFunction<T>(targetRef: Ref<T>, columnName: string) {
     await supabase
       .from('theme')
       .update({ [columnName]: changeTo })
-      .eq('user_name', authStore.userName)
+      .eq('user_name', authStore.userName!)
   }
 }

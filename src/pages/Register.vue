@@ -33,6 +33,7 @@
           class="group flex w-full items-center gap-2 rounded-lg border border-gray-200 p-2 focus-within:border-brand-2"
         >
           <IconEmojiHappy class="h-5 w-5 shrink-0 text-gray-400 group-focus-within:text-brand-2" />
+          <!-- FIXME: When click on string, p element will flash -->
           <p
             class="w-0 max-w-min shrink-0 overflow-hidden transition-all group-focus-within:block group-focus-within:w-full group-focus-within:text-brand-2"
           >
@@ -60,6 +61,7 @@
             v-model="formData.password"
           />
         </label>
+        <!-- TODO: Form validation -->
         <button
           class="flex w-full items-center justify-center gap-x-1 rounded-lg bg-brand-2 py-2 text-white disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
           :disabled="loading"

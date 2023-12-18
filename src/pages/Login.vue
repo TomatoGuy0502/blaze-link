@@ -41,6 +41,7 @@
             v-model="formData.password"
           />
         </label>
+        <!-- TODO: Form validation -->
         <button
           class="flex items-center justify-center w-full gap-x-1 rounded-lg bg-brand-2 py-2 text-white disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
           :disabled="loading"

@@ -12,7 +12,7 @@
       leave-to-class="transform scale-95 opacity-0"
     >
       <MenuItems
-        class="absolute right-0 mt-2 w-48 origin-top-right divide-y divide-gray-100 rounded-md bg-white p-1 shadow focus:outline-none"
+        class="absolute right-0 mt-2 w-48 z-[100] origin-top-right divide-y divide-gray-100 rounded-md bg-white p-1 shadow focus:outline-none"
       >
         <MenuItem v-slot="{ active }">
           <button

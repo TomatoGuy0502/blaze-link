@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen w-full" :class="backgroundColors[theme.background_color]" v-if="userExists">
+  <div class="h-screen w-full" :class="backgroundColors[theme.background_color!]" v-if="userExists">
     <div class="mx-auto max-w-3xl p-8">
       <IconMockAvatar class="mx-auto mb-6 h-16 w-16 rounded-full border-4 border-white" />
       <TransitionGroup tag="ul" name="fade" class="flex flex-col gap-y-4 text-center font-bold">
@@ -22,9 +22,10 @@
 import { Ref, ref } from 'vue'
 import IconMockAvatar from '@/assets/mock-avatar.svg'
 import { useLinksStore } from '../store/links'
-import { Theme } from '../composables/useAppearance'
 import { getButtonClass } from '../utils'
 import { backgroundColors } from '../data'
+import { Tables } from '../../database.types'
+import { isValidUrl } from '../utils'
 
 const props = defineProps({
   userName: { type: String, required: true }
@@ -33,21 +34,21 @@ const props = defineProps({
 const { getLinksAndThemeByName } = useLinksStore()
 
 const links = ref<any>([])
-const theme = ref() as Ref<Theme>
+const theme = ref() as Ref<Tables<'theme'>>
 const userExists = ref<boolean>(false)
 
 const res = await getLinksAndThemeByName(props.userName)
-console.log(res)
+
 if (res) {
   userExists.value = true
-  links.value = res.links
+  links.value = res.links.filter((link) => link.url && isValidUrl(link.url) && !!link.title?.length)
   theme.value = res.theme
 }
 
 const buttonClass = getButtonClass(
   theme.value.filled,
-  theme.value.background_color,
-  theme.value.button_color,
+  theme.value.background_color!,
+  theme.value.button_color!,
   theme.value.radius,
   theme.value.shadow
 )

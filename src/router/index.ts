@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useNProgress } from '@vueuse/integrations/useNProgress'
 import { useAuthStore } from '../store/auth'
-const Home = () => import('../pages/Home.vue')
 const Links = () => import('../pages/Dashboard/Links/Links.vue')
 const Appearance = () => import('../pages/Dashboard/Appearance.vue')
 const Dashboard = () => import('../pages/Dashboard/Dashboard.vue')
@@ -11,7 +10,7 @@ const Provider = () => import('../pages/Provider.vue')
 const UserLink = () => import('../pages/UserLink.vue')
 
 const routes = [
-  { path: '/', component: Home, name: 'Home', redirect: '/dashboard' },
+  { path: '/', redirect: '/dashboard' },
   {
     path: '/dashboard',
     component: Dashboard,
@@ -48,6 +47,9 @@ const progress = useNProgress(null, {
 })
 
 router.beforeEach(async (to) => {
+  // if going to a user link, juut go
+  if (to.name === 'UserLink') return
+
   progress.start()
   const authStore = useAuthStore()
 

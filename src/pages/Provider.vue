@@ -1,7 +1,7 @@
 <template>
   <div class="pattern flex h-screen flex-col items-center justify-center">
     <div class="flex flex-col items-center gap-y-4 rounded-xl bg-white/90 p-6 text-center shadow-md">
-      <template v-if="!!authStore.isLoggedIn">
+      <template v-if="!!authStore.userName">
         <div class="flex items-center gap-x-2 text-4xl font-bold text-brand-2">
           <IconCheck />
           <h1>Authorized</h1>
@@ -62,11 +62,13 @@ const name = ref('')
 const isLoading = ref(false)
 const error = ref('')
 
+console.group('Provider.vue')
 console.log('-----進入頁面-----')
 console.log('authStore.isLoggedIn:', authStore.isLoggedIn)
 console.log('authStore.userName:', authStore.userName)
 console.log('route.hash:', route.hash)
 console.log('-----進入頁面-----')
+console.groupEnd()
 
 // 狀況：
 // 1. 還沒登入，然後帶著access_token來到這個頁面 => 正常，檢查是否有username
