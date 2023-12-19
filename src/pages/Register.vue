@@ -15,53 +15,62 @@
         <p class="absolute top-1/2 left-1/2 -translate-y-2/4 -translate-x-2/4 bg-white px-2">or</p>
       </div>
       <form class="flex flex-col gap-4" @submit.prevent="register">
-        <label
-          for="email"
-          class="group flex w-full items-center gap-2 rounded-lg border border-gray-200 p-2 focus-within:border-brand-2"
-        >
-          <IconAtSymbol class="h-5 w-5 text-gray-400 group-focus-within:text-brand-2" />
-          <input
-            class="w-full font-medium autofill:bg-clip-text focus:outline-none"
-            type="text"
-            placeholder="Your Email"
-            id="email"
-            v-model="formData.email"
-          />
-        </label>
-        <label
-          for="name"
-          class="group flex w-full items-center gap-2 rounded-lg border border-gray-200 p-2 focus-within:border-brand-2"
-        >
-          <IconEmojiHappy class="h-5 w-5 shrink-0 text-gray-400 group-focus-within:text-brand-2" />
-          <!-- FIXME: When click on string, p element will flash -->
-          <p
-            class="w-0 max-w-min shrink-0 overflow-hidden transition-all group-focus-within:block group-focus-within:w-full group-focus-within:text-brand-2"
+        <div>
+          <label
+            for="email"
+            class="group flex w-full items-center gap-2 rounded-lg border border-gray-200 p-2 focus-within:border-brand-2"
           >
-            {{ location.origin + '/' }}
-          </p>
-          <input
-            class="shrink-1 -ml-2 w-full font-medium transition-[width] autofill:bg-clip-text focus:outline-none"
-            type="text"
-            placeholder="Your Name"
-            id="name"
-            v-model="formData.name"
-            autocomplete="off"
-          />
-        </label>
-        <label
-          for="password"
-          class="group flex w-full items-center gap-2 rounded-lg border border-gray-200 p-2 focus-within:border-brand-2"
-        >
-          <IconKey class="h-5 w-5 text-gray-400 group-focus-within:text-brand-2" />
-          <input
-            class="w-full font-medium autofill:bg-clip-text focus:outline-none"
-            type="password"
-            placeholder="Create Password"
-            id="password"
-            v-model="formData.password"
-          />
-        </label>
-        <!-- TODO: Form validation -->
+            <IconAtSymbol class="h-5 w-5 text-gray-400 group-focus-within:text-brand-2" />
+            <input
+              class="w-full font-medium autofill:bg-clip-text focus:outline-none"
+              type="text"
+              placeholder="Your Email"
+              id="email"
+              v-model="formData.email"
+            />
+          </label>
+          <p class="text-red-500 text-sm text-left mt-1" v-if="formData.emailError">{{ formData.emailError }}</p>
+        </div>
+        <!-- TODO: Add tooltip to introduce the relation between username and user links -->
+        <div>
+          <label
+            for="name"
+            class="group flex w-full items-center gap-2 rounded-lg border border-gray-200 p-2 focus-within:border-brand-2"
+          >
+            <IconEmojiHappy class="h-5 w-5 shrink-0 text-gray-400 group-focus-within:text-brand-2" />
+            <!-- FIXME: When click on string, p element will flash -->
+            <p
+              class="w-0 max-w-min shrink-0 overflow-hidden transition-all group-focus-within:block group-focus-within:w-full group-focus-within:text-brand-2"
+            >
+              {{ location.origin + '/' }}
+            </p>
+            <input
+              class="shrink-1 -ml-2 w-full font-medium transition-[width] autofill:bg-clip-text focus:outline-none"
+              type="text"
+              placeholder="Your Name"
+              id="name"
+              v-model="formData.name"
+              autocomplete="off"
+            />
+          </label>
+          <p class="text-red-500 text-sm text-left mt-1" v-if="formData.nameError">{{ formData.nameError }}</p>
+        </div>
+        <div>
+          <label
+            for="password"
+            class="group flex w-full items-center gap-2 rounded-lg border border-gray-200 p-2 focus-within:border-brand-2"
+          >
+            <IconKey class="h-5 w-5 text-gray-400 group-focus-within:text-brand-2" />
+            <input
+              class="w-full font-medium autofill:bg-clip-text focus:outline-none"
+              type="password"
+              placeholder="Create Password"
+              id="password"
+              v-model="formData.password"
+            />
+          </label>
+          <p class="text-red-500 text-sm text-left mt-1" v-if="formData.passwordError">{{ formData.passwordError }}</p>
+        </div>
         <button
           class="flex w-full items-center justify-center gap-x-1 rounded-lg bg-brand-2 py-2 text-white disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
           :disabled="loading"
@@ -88,6 +97,7 @@ import IconKey from '~icons/heroicons-solid/key/'
 import IconLockClosed from '~icons/heroicons-solid/lock-closed/'
 import IconGoogle from '~icons/logos/google-icon'
 import { useAuthStore } from '../store/auth'
+import { isValidEmail } from '../utils'
 
 const authStore = useAuthStore()
 const router = useRouter()
@@ -95,7 +105,10 @@ const router = useRouter()
 const formData = reactive({
   email: '',
   name: '',
-  password: ''
+  password: '',
+  emailError: '',
+  nameError: '',
+  passwordError: ''
 })
 const location = useBrowserLocation()
 
@@ -103,6 +116,15 @@ const loading = ref(false)
 const register = async () => {
   try {
     loading.value = true
+    formData.emailError = ''
+    formData.nameError = ''
+    formData.passwordError = ''
+    if (!isValidEmail(formData.email))
+      formData.emailError = 'Please enter a valid email address.'
+    if (!formData.name) formData.nameError = 'Please enter your name.'
+    if (formData.password.length < 6) formData.passwordError = 'Password must be at least 6 characters'
+    if (formData.emailError || formData.nameError || formData.passwordError) return
+
     const res = await authStore.register({
       email: formData.email,
       password: formData.password,

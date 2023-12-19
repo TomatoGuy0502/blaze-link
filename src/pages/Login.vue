@@ -15,33 +15,38 @@
         <p class="absolute top-1/2 left-1/2 -translate-y-2/4 -translate-x-2/4 bg-white px-2">or</p>
       </div>
       <form class="flex flex-col gap-6" @submit.prevent="login">
-        <label
-          for="email"
-          class="group flex w-full items-center gap-2 rounded-lg border border-gray-200 p-2 focus-within:border-brand-2"
-        >
-          <IconAtSymbol class="h-5 w-5 text-gray-400 group-focus-within:text-brand-2" />
-          <input
-            class="w-full font-medium autofill:bg-clip-text focus:outline-none"
-            type="text"
-            placeholder="Your Email"
-            id="email"
-            v-model="formData.email"
-          />
-        </label>
-        <label
-          for="password"
-          class="group flex w-full items-center gap-2 rounded-lg border border-gray-200 p-2 focus-within:border-brand-2"
-        >
-          <IconKey class="h-5 w-5 text-gray-400 group-focus-within:text-brand-2" />
-          <input
-            class="w-full font-medium autofill:bg-clip-text focus:outline-none"
-            type="password"
-            placeholder="Your Password"
-            id="password"
-            v-model="formData.password"
-          />
-        </label>
-        <!-- TODO: Form validation -->
+        <div>
+          <label
+            for="email"
+            class="group flex w-full items-center gap-2 rounded-lg border border-gray-200 p-2 focus-within:border-brand-2"
+          >
+            <IconAtSymbol class="h-5 w-5 text-gray-400 group-focus-within:text-brand-2" />
+            <input
+              class="w-full font-medium autofill:bg-clip-text focus:outline-none"
+              type="text"
+              placeholder="Your Email"
+              id="email"
+              v-model="formData.email"
+            />
+          </label>
+          <p class="text-red-500 text-sm text-left mt-1" v-if="formData.emailError">{{ formData.emailError }}</p>
+        </div>
+        <div>
+          <label
+            for="password"
+            class="group flex w-full items-center gap-2 rounded-lg border border-gray-200 p-2 focus-within:border-brand-2"
+          >
+            <IconKey class="h-5 w-5 text-gray-400 group-focus-within:text-brand-2" />
+            <input
+              class="w-full font-medium autofill:bg-clip-text focus:outline-none"
+              type="password"
+              placeholder="Your Password"
+              id="password"
+              v-model="formData.password"
+            />
+          </label>
+          <p class="text-red-500 text-sm text-left mt-1" v-if="formData.passwordError">{{ formData.passwordError }}</p>
+        </div>
         <button
           class="flex items-center justify-center w-full gap-x-1 rounded-lg bg-brand-2 py-2 text-white disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
           :disabled="loading"
@@ -66,19 +71,30 @@ import IconKey from '~icons/heroicons-solid/key/'
 import IconGoogle from '~icons/logos/google-icon'
 import IconLockClosed from '~icons/heroicons-solid/lock-closed/'
 import { useAuthStore } from '../store/auth'
+import { isValidEmail } from '../utils'
 
 const authStore = useAuthStore()
 const router = useRouter()
 
 const formData = reactive({
   email: '',
-  password: ''
+  password: '',
+  emailError: '',
+  passwordError: ''
 })
 
 const loading = ref(false)
 const login = async () => {
   try {
     loading.value = true
+    formData.emailError = ''
+    formData.passwordError = ''
+    if (!isValidEmail(formData.email)) 
+      formData.emailError = 'Please enter a valid email address'
+    if (formData.password.length < 6) 
+      formData.passwordError = 'Password must be at least 6 characters'
+    if (formData.emailError || formData.passwordError) return
+
     const res = await authStore.login({
       email: formData.email,
       password: formData.password
