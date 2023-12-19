@@ -5,6 +5,11 @@ export const isValidUrl = (url: string) => {
   return urlReg.test(url)
 }
 
+export const isValidEmail = (email: string) => {
+  const emailReg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+  return emailReg.test(email)
+}
+
 export function getButtonClass(
   filled: boolean,
   selectedBackgroundColor: keyof typeof backgroundColors,

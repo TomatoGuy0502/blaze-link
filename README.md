@@ -5,5 +5,7 @@ A Linktree-like website for your social media links.
 ## TODO
 
 - [ ] Disable some userID for preserved routes
-- [ ] Login / Register form validation
-- [ ] Add preview link
+- [x] Fix preview window on safari
+- [x] Login / Register form validation
+- [x] Add preview link
+- [ ] Generate QR code
