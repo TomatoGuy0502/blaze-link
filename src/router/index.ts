@@ -59,6 +59,9 @@ router.beforeEach(async (to) => {
   if (authStore.isLoggedIn && ['Login', 'Register'].includes(to.name as string)) {
     return { name: 'Links' }
   }
+  if (authStore.isLoggedIn && to.name !== 'Provider' && !authStore.profile?.user_name) {
+    return { name: 'Provider' }
+  }
 })
 
 router.afterEach(() => {

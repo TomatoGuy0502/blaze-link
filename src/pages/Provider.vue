@@ -132,6 +132,7 @@ const handleSubmit = async () => {
     return
   }
   await authStore.updateUsername(name.value)
+  await authStore.createTheme(name.value)
   router.push({ name: 'Links' })
 }
 </script>

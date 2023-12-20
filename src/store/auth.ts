@@ -32,16 +32,9 @@ export const useAuthStore = defineStore('auth', () => {
       }
     })
     if (error) throw error
-    const { error: updateError } = await supabase
-      .from('profiles')
-      .update({ user_name: name })
-      .match({ id: user?.id })
+    await updateUsername(name)
+    await createTheme(name)
 
-    const { error: createThemeError } = await supabase
-      .from('theme')
-      .insert({ user_name: name, background_color: 'White', button_color: 'Gray', filled: false, radius: 'rounded-none', shadow: 'shadow-none'})
-    if (updateError) throw updateError
-    if (createThemeError) throw createThemeError
     return { user, session }
   }
   async function login({ email, password }: { email: string; password: string }) {
@@ -66,9 +59,14 @@ export const useAuthStore = defineStore('auth', () => {
   }
   async function updateUsername(username: string) {
     const { error } = await supabase.from('profiles').update({ user_name: username }).match({ id: user.value?.id })
-    if (!error) {
-      profile.value!.user_name = username
-    }
+    if (error) throw error
+    if (profile.value) profile.value.user_name = username
+  }
+  async function createTheme(username: string) {
+    const { error } = await supabase
+      .from('theme')
+      .insert({ user_name: username, background_color: 'White', button_color: 'Green', filled: true, radius: 'rounded-lg', shadow: 'shadow-none'})
+    if (error) throw error
   }
   async function sendResetEmail(email: string) {
     const { data, error } = await supabase.auth.resetPasswordForEmail(email)
@@ -100,6 +98,7 @@ export const useAuthStore = defineStore('auth', () => {
     logout,
     updateUsername,
     sendResetEmail,
+    createTheme,
     getUserFromToken,
     isUserExists,
     isUserHasUserName,

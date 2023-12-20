@@ -9,3 +9,4 @@ A Linktree-like website for your social media links.
 - [x] Login / Register form validation
 - [x] Add preview link
 - [ ] Generate QR code
+- [ ] Add footer in user link page
