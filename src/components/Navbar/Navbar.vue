@@ -9,7 +9,7 @@
           <HeroiconsLink20Solid class="text-gray-600 w-6 h-6" v-else />
         </Transition>
         <div class="w-[2px] bg-gray-400 rounded-full h-full"></div>
-        <p class="text-gray-600 font-medium">http://localhost:8080/Tomato</p>
+        <p class="text-gray-600 font-medium">http://localhost:8080/{{ authStore.userName }}</p>
       </div>
     </div>
     <Avatar />
@@ -22,14 +22,19 @@ import Avatar from './Avatar.vue'
 import ThemeToggle from './ThemeToggle.vue'
 import HeroiconsLink20Solid from '~icons/heroicons/link-20-solid'
 import HeroiconsClipboardDocumentCheck20Solid from '~icons/heroicons/clipboard-document-check-20-solid'
+import { useAuthStore } from '../../store/auth'
+
+const authStore = useAuthStore()
 
 const showCopied = ref(false)
+const timeoutId = ref(0)
 
 const copyUrl = () => {
-  const url = 'http://localhost:8080/Tomato'
+  window.clearTimeout(timeoutId.value)
+  const url = `http://localhost:8080/${authStore.userName}`
   navigator.clipboard.writeText(url)
   showCopied.value = true
-  setTimeout(() => {
+  timeoutId.value = window.setTimeout(() => {
     showCopied.value = false
   }, 1500)
 }
