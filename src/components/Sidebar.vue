@@ -47,22 +47,12 @@
         </transition>
       </Disclosure>
     </nav>
-    <div class="mt-auto flex">
-      <MockAvatar class="h-16 w-16 rounded-l-lg" />
-      <div
-        class="flex flex-1 flex-col justify-between truncate rounded-r-lg border-2 border-l-0 border-gray-200 px-4 py-2 leading-none"
-      >
-        <p class="truncate font-bold text-gray-500" :title="authStore.profile?.user_name">Hi! {{ authStore.profile?.user_name }}</p>
-        <p class="font-bold text-gray-400">ID: 1234567</p>
-      </div>
-    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import IconBrand from '@/assets/brand-white.svg'
-import MockAvatar from '@/assets/mock-avatar.svg'
 import IconCursorClick from '~icons/heroicons-solid/cursor-click/'
 import IconSparkles from '~icons/heroicons-solid/sparkles'
 import IconChevronDown from '~icons/heroicons-solid/chevron-down/'

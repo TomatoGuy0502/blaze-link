@@ -3,7 +3,7 @@
     <h1 class="text-3xl font-bold text-gray-700">{{ $route.meta.headingChinese }}</h1>
     <div class="ml-auto flex gap-x-4">
       <!-- <ThemeToggle /> -->
-      <div class="flex items-center bg-gray-200 p-2 px-4 rounded-lg gap-2 cursor-copy" @click="copyUrl">
+      <div class="flex items-center bg-gray-200 p-2 px-4 rounded-lg gap-2 cursor-pointer" @click="copyUrl">
         <Transition name="fade" mode="out-in">
           <HeroiconsClipboardDocumentCheck20Solid class="w-6 h-6 text-brand-2" v-if="showCopied" />
           <HeroiconsLink20Solid class="text-gray-600 w-6 h-6" v-else />

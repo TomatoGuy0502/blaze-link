@@ -1,8 +1,8 @@
 <template>
-  <Menu as="div" class="relative">
-    <MenuButton as="template">
-      <IconMockAvatar class="h-12 w-12 cursor-pointer rounded-full" />
-    </MenuButton>
+  <Popover v-slot="{ open }" as="div" class="relative">
+    <PopoverButton as="template">
+      <IconMockAvatar class="h-12 w-12 cursor-pointer rounded-full ring-offset-2 ring-brand-2" :class="{ 'ring-2': open }" />
+    </PopoverButton>
     <transition
       enter-active-class="transition duration-100 ease-out"
       enter-from-class="transform scale-95 opacity-0"
@@ -11,38 +11,38 @@
       leave-from-class="transform scale-100 opacity-100"
       leave-to-class="transform scale-95 opacity-0"
     >
-      <MenuItems
-        class="absolute right-0 mt-2 w-48 z-[100] origin-top-right divide-y divide-gray-100 rounded-md bg-white p-1 shadow focus:outline-none"
+      <PopoverPanel
+        class="absolute right-0 mt-2 w-80 z-[100] origin-top-right divide-y divide-gray-100 rounded-md bg-white p-1 shadow focus:outline-none"
       >
-        <MenuItem v-slot="{ active }">
-          <button
-            :class="{ 'bg-brand-1/10 text-brand-1': active }"
-            class="w-full rounded p-2 text-left hover:bg-brand-1/10 hover:text-brand-1 focus:bg-brand-1/10 focus:text-brand-1 flex items-center"
-          >
-            <IconsSettings class="h-6 w-6 cursor-pointer text-gray-500 mr-2" />
-            <span>設定</span>
-            <span class="inline-block text-sm">Setting</span>
-          </button>
-        </MenuItem>
-        <MenuItem v-slot="{ active }">
-          <button
-            @click="handleLogout"
-            :class="{ 'bg-brand-1/10 text-brand-1': active }"
-            class="w-full rounded p-2 text-left hover:bg-brand-1/10 hover:text-brand-1 focus:bg-brand-1/10 focus:text-brand-1 flex items-center"
-          >
-            <IconLogout class="h-6 w-6 cursor-pointer text-gray-500 mr-2" />
-            <span>登出</span>
-            <span class="inline-block text-sm">Logout</span>
-          </button>
-        </MenuItem>
-        
-      </MenuItems>
+        <div class="mt-auto flex p-3 px-4 gap-2">
+          <IconMockAvatar class="h-12 w-12 rounded-full" />
+          <div class="flex flex-1 flex-col justify-center gap-2 truncate leading-none">
+            <p class="truncate font-bold text-gray-500">@{{ authStore.profile?.user_name }}</p>
+            <p class="text-gray-600 text-xs">http://localhost:8080/{{ authStore.userName }}</p>
+          </div>
+        </div>
+        <button
+          class="w-full rounded p-3 px-4 text-left hover:bg-brand-1/10 hover:text-brand-1 focus:bg-brand-1/10 focus:text-brand-1 flex items-center"
+        >
+          <IconsSettings class="h-6 w-6 cursor-pointer text-gray-500 mr-2" />
+          <span>設定</span>
+          <span class="inline-block text-sm ml-1">Setting</span>
+        </button>
+        <button
+          @click="handleLogout"
+          class="w-full rounded p-3 px-4 text-left hover:bg-brand-1/10 hover:text-brand-1 focus:bg-brand-1/10 focus:text-brand-1 flex items-center"
+        >
+          <IconLogout class="h-6 w-6 cursor-pointer text-gray-500 mr-2" />
+          <span>登出</span>
+          <span class="inline-block text-sm ml-1">Logout</span>
+        </button>
+      </PopoverPanel>
     </transition>
-  </Menu>
+  </Popover>
 </template>
 
 <script setup lang="ts">
-import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
+import { Menu, MenuButton, MenuItems, MenuItem, Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { useRouter } from 'vue-router'
 import IconLogout from '~icons/akar-icons/sign-out'
 import IconsSettings from '~icons/akar-icons/settings-horizontal'

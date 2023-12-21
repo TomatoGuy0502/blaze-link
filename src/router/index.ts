@@ -59,7 +59,8 @@ router.beforeEach(async (to) => {
   if (authStore.isLoggedIn && ['Login', 'Register'].includes(to.name as string)) {
     return { name: 'Links' }
   }
-  if (authStore.isLoggedIn && to.name !== 'Provider' && !authStore.profile?.user_name) {
+  // FIXME: Even when going to /dashboard, it still redirects to /auth/provider first
+  if (authStore.isLoggedIn && to.name !== 'Provider' && !authStore.userName) {
     return { name: 'Provider' }
   }
 })
