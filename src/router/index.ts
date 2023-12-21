@@ -60,9 +60,9 @@ router.beforeEach(async (to) => {
     return { name: 'Links' }
   }
   // FIXME: Even when going to /dashboard, it still redirects to /auth/provider first
-  if (authStore.isLoggedIn && to.name !== 'Provider' && !authStore.userName) {
-    return { name: 'Provider' }
-  }
+  // if (authStore.isLoggedIn && to.name !== 'Provider' && !authStore.userName) {
+  //   return { name: 'Provider' }
+  // }
 })
 
 router.afterEach(() => {

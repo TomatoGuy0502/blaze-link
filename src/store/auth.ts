@@ -4,7 +4,6 @@ import { Tables } from '../../database.types'
 import { useLinksStore } from './links'
 import type { User } from '@supabase/supabase-js'
 import { computed, ref, watch } from 'vue'
-import { useRouter } from 'vue-router'
 
 const { supabase } = useSupabase()
 
