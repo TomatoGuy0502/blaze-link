@@ -10,7 +10,6 @@ const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey)
 supabase.auth.onAuthStateChange(async (event, session) => {
   console.group('onAuthStateChange')
   console.log(event, session)
-  console.log('onAuthStateChange')
   console.groupEnd()
   const authStore = useAuthStore()
   if (event === 'SIGNED_IN') {
@@ -18,7 +17,6 @@ supabase.auth.onAuthStateChange(async (event, session) => {
   } else if (event === 'SIGNED_OUT') {
     authStore.user = null
   }
-  
 })
 
 export const useSupabase = () => {

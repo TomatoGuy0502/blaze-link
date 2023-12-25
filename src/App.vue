@@ -9,9 +9,6 @@
 </template>
 
 <script setup lang="ts">
-console.group('App.vue')
-console.log('App重啟')
-console.groupEnd()
 </script>
 
 <style></style>

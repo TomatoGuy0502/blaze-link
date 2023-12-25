@@ -13,9 +13,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   watch(user, async (newUser) => {
     if (newUser) {
-      console.log(newUser)
       const { data, error } = await supabase.from('profiles').select().match({ id: newUser.id })
-      console.log(data)
       if (error) throw error
       profile.value = data![0]
     }

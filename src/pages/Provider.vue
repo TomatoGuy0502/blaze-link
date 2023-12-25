@@ -63,16 +63,12 @@ const isLoading = ref(false)
 const error = ref('')
 
 console.group('Provider.vue')
-console.log('-----進入頁面-----')
 console.log('authStore.isLoggedIn:', authStore.isLoggedIn)
-console.log('authStore.userName:', authStore.userName)
-console.log('route.hash:', route.hash)
-console.log('-----進入頁面-----')
 console.groupEnd()
 
 // 狀況：
 // 1. 還沒登入，然後帶著access_token來到這個頁面 => 正常，檢查是否有username
-if (!authStore.isLoggedIn && route.hash) {
+if (!authStore.isLoggedIn && isValidHash(route.hash)) {
   console.log('還沒登入，然後帶著access_token來到這個頁面')
   watch(
     () => authStore.isLoggedIn,
@@ -101,7 +97,7 @@ if (!authStore.isLoggedIn && route.hash) {
   )
 }
 // 2. 還沒登入，然後沒事來到這個頁面 => 跳轉到Login頁面
-if (!authStore.isLoggedIn && !route.hash) {
+if (!authStore.isLoggedIn && !isValidHash(route.hash)) {
   console.log('還沒登入，然後沒事來到這個頁面')
   router.push({ name: 'Login' })
 }
@@ -134,6 +130,21 @@ const handleSubmit = async () => {
   await authStore.updateUsername(name.value)
   await authStore.createTheme(name.value)
   router.push({ name: 'Links' })
+}
+
+function isValidHash(hash: string) {
+  const params = new URLSearchParams(hash.slice(1))
+  const accessToken = params.get('access_token')
+  const expiresAt = params.get('expires_at')
+  const expiresIn = params.get('expires_in')
+  const refreshToken = params.get('refresh_token')
+  const providerToken = params.get('provider_token')
+  const tokenType = params.get('token_type')
+
+  if (!accessToken || !expiresAt || !expiresIn || !refreshToken || !providerToken || !tokenType) {
+    return false
+  }
+  return true
 }
 </script>
 
