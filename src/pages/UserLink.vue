@@ -1,8 +1,11 @@
 <template>
-  <div class="h-screen w-full" :class="backgroundColors[theme.background_color!]" v-if="userExists">
-    <div class="mx-auto max-w-3xl p-8">
-      <IconMockAvatar class="mx-auto mb-6 h-16 w-16 rounded-full border-4 border-white" />
-      <TransitionGroup tag="ul" name="fade" class="flex flex-col gap-y-4 text-center font-bold">
+  <div class="h-screen w-full flex flex-col overflow-auto pb-8" :class="backgroundColors[theme.background_color!]" v-if="userExists">
+    <div class="mx-auto w-full max-w-3xl">
+      <div class="sticky top-0 pt-8 backdrop-filter backdrop-blur-sm">
+        <IconMockAvatar class="mx-auto mb-2 h-20 w-20 rounded-full border-4 border-white" />
+        <p class="text-center mb-6 font-bold text-xl">@{{ props.userName }}</p>
+      </div>
+      <TransitionGroup tag="ul" name="fade" class="flex flex-col gap-y-4 text-center font-bold px-8 pb-8">
         <li v-for="link in links" :key="link.id">
           <a
             :href="link.url"
@@ -14,6 +17,7 @@
         </li>
       </TransitionGroup>
     </div>
+    <a :href="registerUrl" class="h-12 mx-auto p-4 px-6 font-bold text-gray-800 rounded-full mt-auto bg-white grid place-items-center leading-none shadow-md hover:shadow-sm transition-all">Create your Blaze Link</a>
   </div>
   <div v-else>User not exist</div>
 </template>
@@ -39,6 +43,8 @@ const { getLinksAndThemeByName } = useLinksStore()
 const links = ref<any>([])
 const theme = ref() as Ref<Tables<'theme'>>
 const userExists = ref<boolean>(false)
+const buttonClass = ref<string[]>([])
+const registerUrl = window.location.origin + '/register'
 
 const res = await getLinksAndThemeByName(props.userName)
 
@@ -46,15 +52,15 @@ if (res) {
   userExists.value = true
   links.value = res.links.filter((link) => link.url && isValidUrl(link.url) && !!link.title?.length)
   theme.value = res.theme
+  buttonClass.value = getButtonClass(
+    theme.value.filled,
+    theme.value.background_color!,
+    theme.value.button_color!,
+    theme.value.radius,
+    theme.value.shadow
+  )
 }
 
-const buttonClass = getButtonClass(
-  theme.value.filled,
-  theme.value.background_color!,
-  theme.value.button_color!,
-  theme.value.radius,
-  theme.value.shadow
-)
 </script>
 
 <style>
