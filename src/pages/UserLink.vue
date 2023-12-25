@@ -20,6 +20,7 @@
 
 <script lang="ts" setup>
 import { Ref, ref } from 'vue'
+import { useTitle } from '@vueuse/core'
 import IconMockAvatar from '@/assets/mock-avatar.svg'
 import { useLinksStore } from '../store/links'
 import { getButtonClass } from '../utils'
@@ -30,6 +31,8 @@ import { isValidUrl } from '../utils'
 const props = defineProps({
   userName: { type: String, required: true }
 })
+
+useTitle(`${props.userName} | Blaze Link`)
 
 const { getLinksAndThemeByName } = useLinksStore()
 

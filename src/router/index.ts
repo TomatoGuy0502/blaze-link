@@ -10,6 +10,8 @@ const Login = () => import('../pages/Login.vue')
 const Provider = () => import('../pages/Provider.vue')
 const UserLink = () => import('../pages/UserLink.vue')
 
+export const preservedIds = ['dashboard', 'login', 'register', 'auth']
+
 const routes = [
   { path: '/', redirect: '/dashboard' },
   {

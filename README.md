@@ -4,9 +4,9 @@ A Linktree-like website for your social media links.
 
 ## TODO
 
-- [ ] Disable some userID for preserved routes
 - [ ] Add footer in user link page
-- [ ] Update user link title
+- [x] Disable some userID for preserved routes
+- [x] Update user link title
 - [x] Add share menu
 - [x] Fix preview window on safari
 - [x] Login / Register form validation

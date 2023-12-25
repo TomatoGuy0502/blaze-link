@@ -51,6 +51,7 @@ import IconCheck from '~icons/heroicons-outline/check-circle'
 import IconEmojiHappy from '~icons/heroicons-solid/emoji-happy/'
 import { useAuthStore } from '../store/auth'
 import { useSupabase } from '../composables/useSupabase'
+import { preservedIds } from '../router'
 
 const authStore = useAuthStore()
 const router = useRouter()
@@ -121,6 +122,11 @@ const handleSubmit = async () => {
   if (isLoading.value || !name.value) return
 
   isLoading.value = true
+  if (preservedIds.includes(name.value)) {
+    error.value = 'Username not available'
+    isLoading.value = false
+    return
+  }
   const userExists = await authStore.isUserExists(name.value)
   if (userExists) {
     error.value = 'Username already exists'

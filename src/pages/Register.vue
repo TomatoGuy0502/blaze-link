@@ -98,6 +98,7 @@ import IconLockClosed from '~icons/heroicons-solid/lock-closed/'
 import IconGoogle from '~icons/logos/google-icon'
 import { useAuthStore } from '../store/auth'
 import { isValidEmail } from '../utils'
+import { preservedIds } from '../router'
 
 const authStore = useAuthStore()
 const router = useRouter()
@@ -125,6 +126,14 @@ const register = async () => {
     if (formData.password.length < 6) formData.passwordError = 'Password must be at least 6 characters'
     if (formData.emailError || formData.nameError || formData.passwordError) return
 
+    if (preservedIds.includes(formData.name)) {
+      formData.nameError = 'This name is not available.'
+      return
+    }
+    if (await authStore.isUserExists(formData.name)) {
+      formData.nameError = 'This name is already taken.'
+      return
+    }
     const res = await authStore.register({
       email: formData.email,
       password: formData.password,
