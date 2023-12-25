@@ -4,6 +4,7 @@ import { Tables } from '../../database.types'
 import { useLinksStore } from './links'
 import type { User } from '@supabase/supabase-js'
 import { computed, ref, watch } from 'vue'
+import { getURL } from '../utils'
 
 const { supabase } = useSupabase()
 
@@ -25,7 +26,7 @@ export const useAuthStore = defineStore('auth', () => {
       password,
       options: {
         data: { name },
-        emailRedirectTo: `${window.location.origin}/dashboard`
+        emailRedirectTo: `${getURL()}dashboard`
       }
     })
     if (error) throw error
@@ -43,7 +44,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
   async function loginWithGoogle() {
     const { data, error } = await supabase.auth.signInWithOAuth(
-      { provider: 'google', options: { redirectTo: `${window.location.origin}/auth/provider` } }
+      { provider: 'google', options: { redirectTo: `${getURL()}auth/provider` } }
     )
     if (error) throw error
     return data
