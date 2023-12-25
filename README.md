@@ -6,6 +6,7 @@ A Linktree-like website for your social media links.
 
 - [ ] Enable supabase RLS
 - [x] Setup vercel deployment
+- [ ] Add 404 page
 - [ ] Add ESLint
 - [x] Add footer in user link page
 - [x] Disable some userID for preserved routes
