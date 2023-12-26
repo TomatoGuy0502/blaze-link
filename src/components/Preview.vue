@@ -4,7 +4,7 @@
   >
     <div class="flex gap-2 items-center">
       <h2 class="text-xl font-bold text-gray-400">Preview</h2>
-      <a :href="`http://localhost:8080/${userName}`" target="_blank">
+      <a :href="userLink" target="_blank">
         <TablerExternalLink class="text-gray-400 w-6 h-6" />
       </a>
     </div>
@@ -52,9 +52,11 @@ import TablerLoader from '~icons/tabler/loader'
 import { useAppearance } from '../composables/useAppearance'
 import TablerExternalLink from '~icons/tabler/external-link'
 import { useAuthStore } from '../store/auth'
+import { computed } from 'vue'
 
 const { userName } = storeToRefs(useAuthStore())
 const { validLinks } = storeToRefs(useLinksStore())
+const userLink = computed(() => `${window.location.origin}/${userName.value}`)
 
 const { backgroundColors, selectedBackgroundColor, buttonClass, isLoading } = useAppearance()
 </script>

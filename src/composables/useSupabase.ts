@@ -12,7 +12,7 @@ supabase.auth.onAuthStateChange(async (event, session) => {
   console.log(event, session)
   console.groupEnd()
   const authStore = useAuthStore()
-  if (event === 'SIGNED_IN') {
+  if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
     authStore.user = session!.user
   } else if (event === 'SIGNED_OUT') {
     authStore.user = null

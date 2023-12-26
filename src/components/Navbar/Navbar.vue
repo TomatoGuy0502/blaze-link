@@ -10,7 +10,8 @@
           <HeroiconsLink20Solid class="text-gray-600 w-6 h-6" v-else />
         </Transition> -->
         <!-- <div class="w-[2px] bg-gray-400 rounded-full h-3/4"></div> -->
-        <p class="text-gray-800 font-medium">http://localhost:8080/{{ authStore.userName }}</p>
+        <!-- FIXME: 網址不要寫死 -->
+        <p class="text-gray-800 font-medium">{{ userLink }}</p>
         <div class="p-1.5 rounded-full bg-white">
           <Transition name="fade" mode="out-in">
             <TablerCopyCheck class="text-brand-2 w-5 h-5" v-if="showCopied" />
@@ -60,7 +61,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 import Avatar from './Avatar.vue'
 import TablerShare from '~icons/tabler/share'
 import TablerCopy from '~icons/tabler/copy'
@@ -76,9 +77,10 @@ const authStore = useAuthStore()
 const showCopied = ref(false)
 const timeoutId = ref(0)
 const canvasEl = ref<HTMLCanvasElement | null>(null)
+const userLink = computed(() => `${window.location.origin}/${authStore.userName}`)
 
 onMounted(async () => {
-  await QRCode.toCanvas(canvasEl.value!, 'http://localhost:8080/Tomato', {
+  await QRCode.toCanvas(canvasEl.value!, userLink.value, {
     width: 240,
     margin: 0
   })
@@ -91,7 +93,7 @@ const downloadQRCodePNG = () => {
   link.click()
 }
 const downloadQRCodeSVG = async () => {
-  const svgString = await QRCode.toString('http://localhost:8080/Tomato', {
+  const svgString = await QRCode.toString(userLink.value, {
     type: 'svg',
     width: 240,
     margin: 0
@@ -105,8 +107,7 @@ const downloadQRCodeSVG = async () => {
 
 const copyUrl = () => {
   window.clearTimeout(timeoutId.value)
-  const url = `http://localhost:8080/${authStore.userName}`
-  navigator.clipboard.writeText(url)
+  navigator.clipboard.writeText(userLink.value)
   showCopied.value = true
   timeoutId.value = window.setTimeout(() => {
     showCopied.value = false

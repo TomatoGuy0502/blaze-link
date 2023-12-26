@@ -18,7 +18,7 @@
           <IconMockAvatar class="h-12 w-12 rounded-full" />
           <div class="flex flex-1 flex-col justify-center gap-2 truncate leading-none">
             <p class="truncate font-bold text-gray-500">@{{ authStore.profile?.user_name }}</p>
-            <p class="text-gray-600 text-xs">http://localhost:8080/{{ authStore.userName }}</p>
+            <p class="text-gray-600 text-xs">{{ userLink }}</p>
           </div>
         </div>
         <button
@@ -42,17 +42,19 @@
 </template>
 
 <script setup lang="ts">
-import { Menu, MenuButton, MenuItems, MenuItem, Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
+import {Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { useRouter } from 'vue-router'
 import IconLogout from '~icons/akar-icons/sign-out'
 import IconsSettings from '~icons/akar-icons/settings-horizontal'
 import IconMockAvatar from '@/assets/mock-avatar.svg'
 import { useConfirmModal } from '../../composables/useConfirmModal'
 import { useAuthStore } from '../../store/auth'
+import { computed } from 'vue'
 
 const { openModal } = useConfirmModal()
 const authStore = useAuthStore()
 const router = useRouter()
+const userLink = computed(() => `${window.location.origin}/${authStore.userName}`)
 
 const handleLogout = () => {
   openModal(
