@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen w-full flex flex-col overflow-auto pb-8" :class="backgroundColors[theme.background_color!]" v-if="userExists">
+  <div class="h-screen w-full flex flex-col overflow-auto pb-8" :class="backgroundColors[theme!.background_color!]" v-if="userExists">
     <div class="mx-auto w-full max-w-3xl">
       <div class="sticky top-0 pt-8 backdrop-filter backdrop-blur-sm">
         <IconMockAvatar class="mx-auto mb-2 h-20 w-20 rounded-full border-4 border-white" />
@@ -41,7 +41,7 @@ useTitle(`${props.userName} | Blaze Link`)
 const { getLinksAndThemeByName } = useLinksStore()
 
 const links = ref<any>([])
-const theme = ref() as Ref<Tables<'theme'>>
+const theme = ref<Tables<'theme'>>()
 const userExists = ref<boolean>(false)
 const buttonClass = ref<string[]>([])
 const registerUrl = window.location.origin + '/register'

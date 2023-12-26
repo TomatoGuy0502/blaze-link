@@ -8,6 +8,7 @@ A Linktree-like website for your social media links.
 - [ ] Add 404 page
 - [ ] Add ESLint
 - [ ] Add Landing page
+- [ ] Add CI/CD
 - [x] Handle token refresh
 - [x] Setup vercel deployment
 - [x] Add footer in user link page
