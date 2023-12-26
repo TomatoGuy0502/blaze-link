@@ -11,7 +11,7 @@ export const backgroundColors = {
   Lime: 'bg-lime-200',
   Amber: 'bg-amber-200',
   Orange: 'bg-orange-200',
-  Red: 'bg-red-200'
+  Red: 'bg-red-200',
 } as const
 
 export const buttonColors = {
@@ -29,7 +29,7 @@ export const buttonColors = {
   Amber: 'bg-amber-200 hover:bg-amber-300 text-gray-800/80 ring-amber-400 border-amber-200 hover:border-amber-300',
   Orange:
     'bg-orange-200 hover:bg-orange-300 text-gray-800/80 ring-orange-400 border-orange-200 hover:border-orange-300',
-  Red: 'bg-red-200 hover:bg-red-300 text-gray-800/80 ring-red-400 border-red-200 hover:border-red-300'
+  Red: 'bg-red-200 hover:bg-red-300 text-gray-800/80 ring-red-400 border-red-200 hover:border-red-300',
 } as const
 
 export const radiusList = [
@@ -38,7 +38,7 @@ export const radiusList = [
   'rounded-lg',
   'rounded-xl',
   'rounded-2xl',
-  'rounded-[30px]'
+  'rounded-[30px]',
 ] as const
 
 export const shadowList = [
@@ -46,5 +46,5 @@ export const shadowList = [
   'shadow shadow-gray-600/30',
   'shadow-md shadow-gray-600/30',
   'shadow-lg shadow-gray-600/30',
-  'shadow-[4px_4px] shadow-gray-800'
+  'shadow-[4px_4px] shadow-gray-800',
 ] as const

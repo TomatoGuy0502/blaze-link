@@ -1,7 +1,9 @@
-<template>
-  <div class="text-3xl font-bold underline">Home</div>
-</template>
-
 <script setup lang="ts"></script>
+
+<template>
+  <div class="text-3xl font-bold underline">
+    Home
+  </div>
+</template>
 
 <style scoped></style>

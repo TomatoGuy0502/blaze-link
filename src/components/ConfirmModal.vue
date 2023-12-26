@@ -1,6 +1,13 @@
+<script setup lang="ts">
+import { Dialog, DialogDescription, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import { useConfirmModal } from '../composables/useConfirmModal'
+
+const { isShow, isLoading, confirm, cancel, templateText } = useConfirmModal()
+</script>
+
 <template>
   <TransitionRoot appear as="template" :show="isShow">
-    <Dialog @close="cancel" class="fixed inset-0 z-10 flex items-center justify-center overflow-y-auto">
+    <Dialog class="fixed inset-0 z-10 flex items-center justify-center overflow-y-auto" @close="cancel">
       <TransitionChild
         enter="duration-300 ease-out"
         enter-from="opacity-0"
@@ -21,22 +28,24 @@
         leave-to="opacity-0 scale-95"
       >
         <DialogPanel class="min-w-[300px] max-w-sm transform rounded-xl bg-white p-4 shadow transition-all">
-          <DialogTitle class="mb-2 text-lg font-medium leading-6 text-gray-900">{{ templateText.title }} </DialogTitle>
+          <DialogTitle class="mb-2 text-lg font-medium leading-6 text-gray-900">
+            {{ templateText.title }}
+          </DialogTitle>
           <DialogDescription class="mb-4 text-sm text-gray-500">
             {{ templateText.description }}
           </DialogDescription>
           <div class="flex flex-row-reverse gap-x-2">
             <button
               class="rounded border border-red-400 bg-red-400 p-4 py-2 text-white outline-none transition hover:bg-red-500 focus:ring-2 focus:ring-red-600 focus:ring-opacity-50 focus:ring-offset-1 disabled:cursor-wait disabled:bg-gray-200 disabled:text-gray-500 disabled:border-transparent"
-              @click="confirm"
               :disabled="isLoading"
+              @click="confirm"
             >
               {{ templateText.confirm }}
             </button>
             <button
               class="rounded border p-4 py-2 outline-none transition hover:bg-gray-100 focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50 focus:ring-offset-1 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-500"
-              @click="cancel"
               :disabled="isLoading"
+              @click="cancel"
             >
               {{ templateText.cancel }}
             </button>
@@ -46,12 +55,5 @@
     </Dialog>
   </TransitionRoot>
 </template>
-
-<script setup lang="ts">
-import { Dialog, DialogPanel, DialogTitle, DialogDescription, TransitionRoot, TransitionChild } from '@headlessui/vue'
-import { useConfirmModal } from '../composables/useConfirmModal'
-
-const { isShow, isLoading, confirm, cancel, templateText } = useConfirmModal()
-</script>
 
 <style scoped></style>

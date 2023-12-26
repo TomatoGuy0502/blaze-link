@@ -8,18 +8,18 @@ const templateText = reactive({
   title: '再次確認',
   description: '即將進行此動作，確定嗎？',
   confirm: '確定',
-  cancel: '取消'
+  cancel: '取消',
 })
 
-export const useConfirmModal = () => {
+export function useConfirmModal() {
   const openModal = (
     cb: Function,
     {
       title,
       description,
       confirm,
-      cancel
-    }: { title?: string; description?: string; confirm?: string; cancel?: string } = {}
+      cancel,
+    }: { title?: string, description?: string, confirm?: string, cancel?: string } = {},
   ) => {
     isShow.value = true
     callback.value = cb
@@ -32,9 +32,11 @@ export const useConfirmModal = () => {
     try {
       isLoading.value = true
       await callback.value()
-    } catch (error) {
-      alert(error)
-    } finally {
+    }
+    catch (error) {
+      console.error(error)
+    }
+    finally {
       isLoading.value = false
     }
     isShow.value = false
@@ -48,6 +50,6 @@ export const useConfirmModal = () => {
     templateText,
     openModal,
     confirm,
-    cancel
+    cancel,
   }
 }

@@ -1,3 +1,34 @@
+<script setup lang="ts">
+import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
+import { useRouter } from 'vue-router'
+import { computed } from 'vue'
+import { useConfirmModal } from '../../composables/useConfirmModal'
+import { useAuthStore } from '../../store/auth'
+import IconLogout from '~icons/akar-icons/sign-out'
+import IconsSettings from '~icons/akar-icons/settings-horizontal'
+import IconMockAvatar from '@/assets/mock-avatar.svg'
+
+const { openModal } = useConfirmModal()
+const authStore = useAuthStore()
+const router = useRouter()
+const userLink = computed(() => `${window.location.origin}/${authStore.userName}`)
+
+function handleLogout() {
+  openModal(
+    async () => {
+      await authStore.logout()
+      router.push({ name: 'Login' })
+    },
+    {
+      title: '登出',
+      description: '確定要登出嗎？',
+      confirm: '登出',
+      cancel: '取消',
+    },
+  )
+}
+</script>
+
 <template>
   <Popover v-slot="{ open }" as="div" class="relative">
     <PopoverButton as="template">
@@ -17,8 +48,12 @@
         <div class="mt-auto flex p-3 px-4 gap-2">
           <IconMockAvatar class="h-12 w-12 rounded-full" />
           <div class="flex flex-1 flex-col justify-center gap-2 truncate leading-none">
-            <p class="truncate font-bold text-gray-500">@{{ authStore.profile?.user_name }}</p>
-            <p class="text-gray-600 text-xs">{{ userLink }}</p>
+            <p class="truncate font-bold text-gray-500">
+              @{{ authStore.profile?.user_name }}
+            </p>
+            <p class="text-gray-600 text-xs">
+              {{ userLink }}
+            </p>
           </div>
         </div>
         <button
@@ -29,8 +64,8 @@
           <span class="inline-block text-sm ml-1">Setting</span>
         </button>
         <button
-          @click="handleLogout"
           class="w-full rounded p-3 px-4 text-left hover:bg-brand-1/10 hover:text-brand-1 focus:bg-brand-1/10 focus:text-brand-1 flex items-center"
+          @click="handleLogout"
         >
           <IconLogout class="h-6 w-6 cursor-pointer text-gray-500 mr-2" />
           <span>登出</span>
@@ -40,36 +75,5 @@
     </transition>
   </Popover>
 </template>
-
-<script setup lang="ts">
-import {Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
-import { useRouter } from 'vue-router'
-import IconLogout from '~icons/akar-icons/sign-out'
-import IconsSettings from '~icons/akar-icons/settings-horizontal'
-import IconMockAvatar from '@/assets/mock-avatar.svg'
-import { useConfirmModal } from '../../composables/useConfirmModal'
-import { useAuthStore } from '../../store/auth'
-import { computed } from 'vue'
-
-const { openModal } = useConfirmModal()
-const authStore = useAuthStore()
-const router = useRouter()
-const userLink = computed(() => `${window.location.origin}/${authStore.userName}`)
-
-const handleLogout = () => {
-  openModal(
-    async () => {
-      await authStore.logout()
-      router.push({ name: 'Login' })
-    },
-    {
-      title: '登出',
-      description: '確定要登出嗎？',
-      confirm: '登出',
-      cancel: '取消'
-    }
-  )
-}
-</script>
 
 <style></style>

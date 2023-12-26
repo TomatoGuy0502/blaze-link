@@ -1,8 +1,9 @@
-import { computed, readonly, Ref, ref, watch } from 'vue'
-import { useSupabase } from './useSupabase'
+import type { Ref } from 'vue'
+import { computed, readonly, ref, watch } from 'vue'
 import { useAuthStore } from '../store/auth'
 import { backgroundColors, buttonColors, radiusList, shadowList } from '../data'
 import { getButtonClass } from '../utils'
+import { useSupabase } from './useSupabase'
 
 const { supabase } = useSupabase()
 const authStore = useAuthStore()
@@ -45,7 +46,7 @@ const buttonClass = computed(() => {
     selectedBackgroundColor.value,
     selectedButtonColor.value,
     selectedRadius.value,
-    selectedShadow.value
+    selectedShadow.value,
   )
 })
 
@@ -53,30 +54,35 @@ watch(
   () => authStore.user?.id,
   async (userId) => {
     isLoading.value = true
-    if (!userId) return
+    if (!userId)
+      return
     try {
       const { data } = await supabase
         .from('theme')
         .select(`button_color, background_color, radius, shadow, filled, profile:profiles!inner(id)`)
         .eq('profiles.id', userId)
 
-      const theme = data?.[0]!
+      if (!data)
+        return
+      const theme = data?.[0]
 
       selectedBackgroundColor.value = theme.background_color || selectedBackgroundColor.value
       selectedButtonColor.value = theme.button_color || selectedButtonColor.value
       selectedRadius.value = theme.radius || selectedRadius.value
       selectedShadow.value = theme.shadow || selectedShadow.value
       isFilled.value = theme.filled
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error)
-    } finally {
+    }
+    finally {
       isLoading.value = false
     }
   },
-  { immediate: true }
+  { immediate: true },
 )
 
-export const useAppearance = () => {
+export function useAppearance() {
   return {
     buttonColors,
     selectedButtonColor: readonly(selectedButtonColor),
@@ -93,7 +99,7 @@ export const useAppearance = () => {
     isFilled,
     changeFill,
     buttonClass,
-    isLoading
+    isLoading,
   }
 }
 

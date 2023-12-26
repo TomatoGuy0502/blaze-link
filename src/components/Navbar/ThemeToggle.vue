@@ -1,3 +1,12 @@
+<script setup lang="ts">
+import { useDark, useToggle } from '@vueuse/core'
+import IconSun from '~icons/akar-icons/sun-fill/'
+import IconMoon from '~icons/akar-icons/moon-fill/'
+
+const isDark = useDark()
+const toggleDark = useToggle(isDark)
+</script>
+
 <template>
   <button
     class="relative inline-flex items-center self-center rounded-full py-1.5 px-2 text-slate-400 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
@@ -32,14 +41,5 @@
     </span>
   </button>
 </template>
-
-<script setup lang="ts">
-import { useDark, useToggle } from '@vueuse/core'
-import IconSun from '~icons/akar-icons/sun-fill/'
-import IconMoon from '~icons/akar-icons/moon-fill/'
-
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
-</script>
 
 <style scoped></style>
