@@ -36,4 +36,7 @@
     /* Safari and Chrome */
     display: block;
   }
+  .pattern {
+    background-image: url('@/assets/pattern.svg');
+  }
 }

@@ -4,11 +4,11 @@ A Linktree-like website for your social media links.
 
 ## TODO
 
-- [ ] Enable supabase RLS
-- [ ] Add 404 page
-- [ ] Add ESLint
 - [ ] Add Landing page
 - [ ] Add CI/CD
+- [x] Add 404 page
+- [x] Add ESLint
+- [x] Enable supabase RLS
 - [x] Handle token refresh
 - [x] Setup vercel deployment
 - [x] Add footer in user link page

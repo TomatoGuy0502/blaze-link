@@ -137,9 +137,3 @@ async function loginWithGoogle() {
     </div>
   </div>
 </template>
-
-<style scoped>
-.pattern {
-  background-image: url('@/assets/pattern.svg');
-}
-</style>

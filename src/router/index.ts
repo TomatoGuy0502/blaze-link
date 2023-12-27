@@ -10,6 +10,7 @@ const Register = () => import('../pages/Register.vue')
 const Login = () => import('../pages/Login.vue')
 const Provider = () => import('../pages/Provider.vue')
 const UserLink = () => import('../pages/UserLink.vue')
+const NotFound = () => import('../pages/NotFound.vue')
 
 export const preservedIds = ['dashboard', 'login', 'register', 'auth']
 
@@ -37,11 +38,13 @@ const routes = [
   { path: '/register', component: Register, name: 'Register' },
   { path: '/auth/provider', component: Provider, name: 'Provider' },
   { path: '/:userName', component: UserLink, name: 'UserLink', props: true },
+  { path: '/:pathMatch(.*)*', component: NotFound, name: 'NotFound' },
 ]
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
+  sensitive: true,
 })
 
 const progress = useNProgress(null, {
