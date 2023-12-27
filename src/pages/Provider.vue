@@ -16,10 +16,6 @@ const name = ref('')
 const isLoading = ref(false)
 const error = ref('')
 
-console.group('Provider.vue')
-console.log('authStore.isLoggedIn:', authStore.isLoggedIn)
-console.groupEnd()
-
 // 狀況：
 // 1. 還沒登入，然後帶著access_token來到這個頁面 => 正常，檢查是否有username
 if (!authStore.isLoggedIn && isValidHash(route.hash)) {
@@ -27,7 +23,7 @@ if (!authStore.isLoggedIn && isValidHash(route.hash)) {
   watch(
     () => authStore.isLoggedIn,
     (isLoggedIn) => {
-      console.log('isLoggedIn:', isLoggedIn)
+      // console.log('isLoggedIn:', isLoggedIn)
       if (isLoggedIn) {
         // access_token是對的 => 檢查是否有userName
         watch(
