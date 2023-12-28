@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Raleway', ...defaultTheme.fontFamily.sans],
+        sans: ['Noto Sans TC', ...defaultTheme.fontFamily.sans],
       },
       colors: {
         'brand-1': '#876445',
