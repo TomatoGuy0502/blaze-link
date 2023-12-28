@@ -9,6 +9,9 @@ import TablerCopy from '~icons/tabler/copy'
 import TablerCopyCheck from '~icons/tabler/copy-check'
 import TablerQrcode from '~icons/tabler/qrcode'
 import TablerDownload from '~icons/tabler/download'
+import HeroiconsFireSolid from '~icons/heroicons/fire-solid'
+import IconCursorClick from '~icons/heroicons-solid/cursor-click'
+import IconSparkles from '~icons/heroicons-solid/sparkles'
 
 const authStore = useAuthStore()
 
@@ -54,13 +57,40 @@ function copyUrl() {
 </script>
 
 <template>
-  <div class="relative flex items-center gap-x-8 rounded-bl-2xl bg-gray-100 py-4 px-6">
-    <h1 class="text-3xl font-bold text-gray-700">
+  <div class="relative flex items-center gap-x-8 xl:rounded-bl-2xl bg-gray-100 py-4 px-6">
+    <HeroiconsFireSolid class="block xl:hidden text-brand-1 w-10 h-10 shrink-0" />
+    <h1 class="hidden xl:block text-3xl font-bold text-gray-700">
       {{ $route.meta.headingChinese }}
     </h1>
+    <ul class="flex xl:hidden gap-2 overflow-x-auto">
+      <router-link v-slot="{ navigate, isActive }" :to="{ name: 'Links' }" custom>
+        <li
+          class="group flex cursor-pointer items-center gap-x-2 whitespace-nowrap rounded-lg p-3 transition hover:bg-brand-1/10 hover:text-brand-1"
+          :class="[isActive ? 'bg-brand-1/10 text-brand-1' : 'text-gray-500']"
+          @click="navigate"
+        >
+          <IconCursorClick class="h-6 w-6" />
+          <p class="flex items-center gap-x-2 text-lg font-bold leading-none">
+            連結<span class="inline-block text-base font-normal">Links</span>
+          </p>
+        </li>
+      </router-link>
+      <router-link v-slot="{ navigate, isActive }" :to="{ name: 'Appearance' }" custom>
+        <li
+          class="group flex cursor-pointer items-center gap-x-2 whitespace-nowrap rounded-lg p-3 transition hover:bg-brand-1/10 hover:text-brand-1"
+          :class="[isActive ? 'bg-brand-1/10 text-brand-1' : 'text-gray-500']"
+          @click="navigate"
+        >
+          <IconSparkles class="h-6 w-6" />
+          <p class="flex items-center gap-x-2 text-lg font-bold leading-none">
+            外觀<span class="inline-block text-base font-normal">Appearance</span>
+          </p>
+        </li>
+      </router-link>
+    </ul>
     <div class="ml-auto flex gap-x-4">
       <!-- <ThemeToggle /> -->
-      <div class="flex items-center bg-brand-2/15 p-2 px-4 rounded-lg gap-2 cursor-pointer" @click="copyUrl">
+      <div class="flex items-center bg-brand-2/15 p-2 px-4 rounded-full lg:rounded-lg gap-2 cursor-pointer" @click="copyUrl">
         <TablerShare class="text-brand-2 w-6 h-6" />
         <!-- <Transition name="fade" mode="out-in">
           <HeroiconsClipboardDocumentCheck20Solid class="w-6 h-6 text-brand-2" v-if="showCopied" />
@@ -69,7 +99,8 @@ function copyUrl() {
         <!-- <div class="w-[2px] bg-gray-400 rounded-full h-3/4"></div> -->
         <!-- FIXME: 網址不要寫死 -->
         <p class="text-gray-800 font-medium">
-          {{ userLink }}
+          <span class="inline lg:hidden">Share</span>
+          <span class="hidden lg:inline">{{ userLink }}</span>
         </p>
         <div class="p-1.5 rounded-full bg-white">
           <Transition name="fade" mode="out-in">
