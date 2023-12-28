@@ -116,7 +116,17 @@ function isValidHash(hash: string) {
           <h1>Authorized</h1>
         </div>
         <p class="ext-gray-500 text-2xl font-medium">
-          Redirecting...
+          Redirecting
+          <span class="animate-bounce inline-block">.</span>
+          <span class="animate-bounce inline-block animation-delay-[50ms]">.</span>
+          <span class="animate-bounce inline-block animation-delay-100">.</span>
+        </p>
+        <p class="text-gray-500 text-lg">
+          Or
+          <router-link to="/dashboard/links" class="underline">
+            {{ "click here" }}
+          </router-link>
+          to redirect
         </p>
       </template>
       <template v-else>
