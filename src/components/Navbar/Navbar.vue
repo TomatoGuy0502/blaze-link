@@ -54,108 +54,105 @@ function copyUrl() {
     showCopied.value = false
   }, 1500)
 }
+
+function handleNavigate(e: MouseEvent, navigate: () => void) {
+  (e.target as HTMLLIElement).scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
+  navigate()
+}
 </script>
 
 <template>
-  <div class="relative flex items-center gap-x-8 xl:rounded-bl-2xl bg-gray-100 py-4 px-6">
-    <HeroiconsFireSolid class="block xl:hidden text-brand-1 w-10 h-10 shrink-0" />
+  <div class="flex-wrap-reverse sm:flex-nowrap relative flex items-center gap-4 md:gap-x-8 xl:rounded-bl-2xl bg-gray-100 py-2 px-4 md:py-4 md:px-6">
+    <HeroiconsFireSolid class="hidden sm:block xl:hidden text-brand-1 w-10 h-10 shrink-0" />
     <h1 class="hidden xl:block text-3xl font-bold text-gray-700">
       {{ $route.meta.headingChinese }}
     </h1>
-    <ul class="flex xl:hidden gap-2 overflow-x-auto">
+    <ul class="grid grid-flow-col sm:flex xl:hidden gap-2 overflow-x-auto w-full sm:w-auto">
       <router-link v-slot="{ navigate, isActive }" :to="{ name: 'Links' }" custom>
         <li
-          class="group flex cursor-pointer items-center gap-x-2 whitespace-nowrap rounded-lg p-3 transition hover:bg-brand-1/10 hover:text-brand-1"
+          class="group flex justify-center cursor-pointer items-center gap-x-2 whitespace-nowrap rounded-lg p-3 transition hover:bg-brand-1/10 hover:text-brand-1"
           :class="[isActive ? 'bg-brand-1/10 text-brand-1' : 'text-gray-500']"
-          @click="navigate"
+          @click.self="handleNavigate($event, navigate)"
         >
-          <IconCursorClick class="h-6 w-6" />
-          <p class="flex items-center gap-x-2 text-lg font-bold leading-none">
-            連結<span class="inline-block text-base font-normal">Links</span>
+          <IconCursorClick class="h-6 w-6 pointer-events-none" />
+          <p class="flex items-center gap-x-2 text-lg font-bold leading-none pointer-events-none">
+            編輯連結
           </p>
         </li>
       </router-link>
       <router-link v-slot="{ navigate, isActive }" :to="{ name: 'Appearance' }" custom>
         <li
-          class="group flex cursor-pointer items-center gap-x-2 whitespace-nowrap rounded-lg p-3 transition hover:bg-brand-1/10 hover:text-brand-1"
+          class="group flex justify-center cursor-pointer items-center gap-x-2 whitespace-nowrap rounded-lg p-3 transition hover:bg-brand-1/10 hover:text-brand-1"
           :class="[isActive ? 'bg-brand-1/10 text-brand-1' : 'text-gray-500']"
-          @click="navigate"
+          @click.self="handleNavigate($event, navigate)"
         >
-          <IconSparkles class="h-6 w-6" />
-          <p class="flex items-center gap-x-2 text-lg font-bold leading-none">
-            外觀<span class="inline-block text-base font-normal">Appearance</span>
+          <IconSparkles class="h-6 w-6 pointer-events-none" />
+          <p class="flex items-center gap-x-2 text-lg font-bold leading-none pointer-events-none">
+            外觀
           </p>
         </li>
       </router-link>
     </ul>
-    <div class="ml-auto flex gap-x-4">
-      <!-- <ThemeToggle /> -->
-      <div class="flex items-center bg-brand-2/15 p-2 px-4 rounded-full lg:rounded-lg gap-2 cursor-pointer" @click="copyUrl">
-        <TablerShare class="text-brand-2 w-6 h-6" />
-        <!-- <Transition name="fade" mode="out-in">
-          <HeroiconsClipboardDocumentCheck20Solid class="w-6 h-6 text-brand-2" v-if="showCopied" />
-          <HeroiconsLink20Solid class="text-gray-600 w-6 h-6" v-else />
-        </Transition> -->
-        <!-- <div class="w-[2px] bg-gray-400 rounded-full h-3/4"></div> -->
-        <!-- FIXME: 網址不要寫死 -->
-        <p class="text-gray-800 font-medium">
-          <span class="inline lg:hidden">Share</span>
-          <span class="hidden lg:inline">{{ userLink }}</span>
-        </p>
-        <div class="p-1.5 rounded-full bg-white">
-          <Transition name="fade" mode="out-in">
-            <TablerCopyCheck v-if="showCopied" class="text-brand-2 w-5 h-5" />
-            <TablerCopy v-else class="text-gray-600 w-5 h-5" />
-          </Transition>
-        </div>
-        <Popover v-slot="{ open }" class="relative" @click.stop>
-          <PopoverButton as="template">
-            <div class="p-1.5 rounded-full bg-white">
-              <TablerQrcode class="text-gray-600 w-5 h-5" />
-            </div>
-          </PopoverButton>
-          <transition
-            enter-active-class="transition duration-100 ease-out"
-            enter-from-class="transform scale-95 opacity-0"
-            enter-to-class="transform scale-100 opacity-100"
-            leave-active-class="transition duration-75 ease-out"
-            leave-from-class="transform scale-100 opacity-100"
-            leave-to-class="transform scale-95 opacity-0"
-          >
-            <PopoverPanel v-show="open" static class="absolute flex flex-col gap-2 right-0 mt-2 z-[100] rounded-md shadow p-2 bg-white">
-              <canvas ref="canvasEl" class="p-2 cursor-default" />
-              <button class="flex items-center gap-2 p-2 rounded hover:bg-gray-200" @click="downloadQRCodePNG">
-                <div class="flex flex-col items-start">
-                  <p class="font-bold text-gray-700">
-                    Download PNG
-                  </p>
-                  <p class="text-sm text-gray-400">
-                    高清圖片
-                  </p>
-                </div>
-                <p class="ml-auto text-xs text-gray-400">
-                  .PNG
-                </p>
-                <TablerDownload class="w-6 h-6 text-gray-700" />
-              </button>
-              <button class="flex items-center gap-2 p-2 rounded hover:bg-gray-200" @click="downloadQRCodeSVG">
-                <div class="flex flex-col items-start">
-                  <p class="font-bold text-gray-700">
-                    Download SVG
-                  </p>
-                  <p class="text-sm text-gray-400">
-                    可縮放向量圖形
-                  </p>
-                </div>
-                <p class="ml-auto text-xs text-gray-400">
-                  .SVG
-                </p>
-                <TablerDownload class="w-6 h-6 text-gray-700" />
-              </button>
-            </PopoverPanel>
-          </transition>
-        </Popover>
+    <HeroiconsFireSolid class="block sm:hidden text-brand-1 w-10 h-10 shrink-0" />
+    <div class="ml-auto flex items-center bg-brand-2/15 p-2 px-4 rounded-full lg:rounded-lg gap-2 cursor-pointer" @click="copyUrl">
+      <TablerShare class="text-brand-2 w-6 h-6" />
+      <p class="text-gray-800 font-medium text-sm lg:text-base">
+        <!-- <span class="inline md:hidden">Share</span> -->
+        <span class="hidden md:inline">{{ userLink }}</span>
+      </p>
+      <div class="p-1.5 rounded-full bg-white">
+        <Transition name="fade" mode="out-in">
+          <TablerCopyCheck v-if="showCopied" class="text-brand-2 w-5 h-5" />
+          <TablerCopy v-else class="text-gray-600 w-5 h-5" />
+        </Transition>
       </div>
+      <Popover v-slot="{ open }" class="relative" @click.stop>
+        <PopoverButton as="template">
+          <div class="p-1.5 rounded-full bg-white">
+            <TablerQrcode class="text-gray-600 w-5 h-5" />
+          </div>
+        </PopoverButton>
+        <transition
+          enter-active-class="transition duration-100 ease-out"
+          enter-from-class="transform scale-95 opacity-0"
+          enter-to-class="transform scale-100 opacity-100"
+          leave-active-class="transition duration-75 ease-out"
+          leave-from-class="transform scale-100 opacity-100"
+          leave-to-class="transform scale-95 opacity-0"
+        >
+          <PopoverPanel v-show="open" static class="absolute flex flex-col gap-2 right-0 mt-2 z-[100] rounded-md shadow p-2 bg-white">
+            <canvas ref="canvasEl" class="p-2 cursor-default" />
+            <button class="flex items-center gap-2 p-2 rounded hover:bg-gray-200" @click="downloadQRCodePNG">
+              <div class="flex flex-col items-start">
+                <p class="font-bold text-gray-700">
+                  Download PNG
+                </p>
+                <p class="text-sm text-gray-400">
+                  高清圖片
+                </p>
+              </div>
+              <p class="ml-auto text-xs text-gray-400">
+                .PNG
+              </p>
+              <TablerDownload class="w-6 h-6 text-gray-700" />
+            </button>
+            <button class="flex items-center gap-2 p-2 rounded hover:bg-gray-200" @click="downloadQRCodeSVG">
+              <div class="flex flex-col items-start">
+                <p class="font-bold text-gray-700">
+                  Download SVG
+                </p>
+                <p class="text-sm text-gray-400">
+                  可縮放向量圖形
+                </p>
+              </div>
+              <p class="ml-auto text-xs text-gray-400">
+                .SVG
+              </p>
+              <TablerDownload class="w-6 h-6 text-gray-700" />
+            </button>
+          </PopoverPanel>
+        </transition>
+      </Popover>
     </div>
     <Avatar />
   </div>
