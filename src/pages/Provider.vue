@@ -108,7 +108,7 @@ function isValidHash(hash: string) {
 </script>
 
 <template>
-  <div class="pattern flex h-screen flex-col items-center justify-center">
+  <div class="pattern flex h-dvh flex-col items-center justify-center">
     <div class="flex flex-col items-center gap-y-4 rounded-xl bg-white/90 p-6 text-center shadow-md">
       <template v-if="!!authStore.userName">
         <div class="flex items-center gap-x-2 text-4xl font-bold text-brand-2">

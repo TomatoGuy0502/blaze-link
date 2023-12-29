@@ -6,8 +6,8 @@ A Linktree-like website for your social media links.
 
 - [ ] Add Landing page
 - [ ] Add CI/CD
-- [ ] RWD for mobile
 - [ ] Fix user links order
+- [x] RWD for mobile
 - [x] Add 404 page
 - [x] Add ESLint
 - [x] Enable supabase RLS

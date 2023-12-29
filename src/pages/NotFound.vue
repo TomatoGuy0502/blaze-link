@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <div class="pattern flex h-screen items-center justify-center">
+  <div class="pattern flex h-dvh items-center justify-center">
     <div class="bg-gray-800/50 w-full">
       <div class="flex flex-col max-w-[1200px] text-center p-8 md:p-12 rounded-xl mx-auto">
         <p class="font-black text-4xl md:text-6xl text-white">Oops!</p>

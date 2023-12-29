@@ -15,7 +15,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="flex h-screen gap-x-4">
+  <div class="flex h-dvh gap-x-4">
     <Sidebar />
     <div class="flex flex-1 flex-col gap-y-4 overflow-x-hidden">
       <Navbar />

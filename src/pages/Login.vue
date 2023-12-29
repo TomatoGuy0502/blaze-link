@@ -62,7 +62,7 @@ async function loginWithGoogle() {
 </script>
 
 <template>
-  <div class="pattern flex h-screen items-center justify-center">
+  <div class="pattern flex h-dvh items-center justify-center">
     <div class="flex w-[420px] flex-col gap-y-4 rounded-xl bg-white p-6 py-8 text-center shadow-xl text-gray-800">
       <h1 class="text-3xl font-bold">
         Login

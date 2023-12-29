@@ -39,7 +39,7 @@ if (res) {
 </script>
 
 <template>
-  <div v-if="userExists" class="h-screen w-full flex flex-col overflow-auto pb-8" :class="backgroundColors[theme!.background_color!]">
+  <div v-if="userExists" class="h-dvh w-full flex flex-col overflow-auto pb-8" :class="backgroundColors[theme!.background_color!]">
     <div class="mx-auto w-full max-w-3xl">
       <div class="sticky top-0 pt-8 backdrop-filter backdrop-blur-sm">
         <IconMockAvatar class="mx-auto mb-2 h-20 w-20 rounded-full border-4 border-white" />

@@ -27,9 +27,6 @@ const showPreview = ref(false)
     <div v-show="!showPreview" class="flex items-center gap-2 p-6 py-3 font-bold rounded-full bg-brand-3/10 border-2 border-brand-3/50 backdrop-filter backdrop-blur-sm shadow-md bottom-8 leading-none" @click="showPreview = true">
       <TablerDeviceMobile class="w-6 h-6 " />Preview
     </div>
-    <div v-show="!showPreview" class="flex items-center gap-2 p-3 font-bold rounded-full bg-brand-3/10 border-2 border-brand-3/50 backdrop-filter backdrop-blur-sm shadow-md bottom-8 leading-none">
-      <TablerShare class="w-6 h-6 " />
-    </div>
   </div>
   <Transition 
     enter-active-class="transition duration-300 ease-out"
