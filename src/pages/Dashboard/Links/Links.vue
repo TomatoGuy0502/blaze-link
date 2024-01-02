@@ -3,8 +3,8 @@ import { useTitle } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
 import { useLinksStore } from '../../../store/links'
-import LinkItem from './LinkItem.vue'
-import MockLinkItem from './MockLinkItem.vue'
+import LinksItem from './LinksItem.vue'
+import LinksItemMock from './LinksItemMock.vue'
 
 useTitle('Links | BlazeLink')
 
@@ -38,7 +38,7 @@ async function handleAddLink() {
       >
         Add new link
       </button>
-      <LinkItem v-for="link in links" :id="link.id" :key="link.id" v-model:title="link.title" v-model:url="link.url" />
+      <LinksItem v-for="link in links" :id="link.id" :key="link.id" v-model:title="link.title" v-model:url="link.url" />
       <p
         v-if="!isFirstTimeLoading && !links.length"
         key="HINT"
@@ -47,7 +47,7 @@ async function handleAddLink() {
         這裡什麼都沒有，創建第一個連結吧！
       </p>
       <div v-if="isFirstTimeLoading" key="LOADING" class="w-full space-y-4">
-        <MockLinkItem v-for="n in 3" :key="n" />
+        <LinksItemMock v-for="n in 3" :key="n" />
       </div>
     </TransitionGroup>
   </div>

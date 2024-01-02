@@ -35,7 +35,7 @@ import IconChevronDown from '~icons/heroicons-solid/chevron-down/'
               >
                 <IconCursorClick class="h-6 w-6" />
                 <p class="flex items-center gap-x-2 text-lg font-bold leading-none">
-                  連結<span class="inline-block text-base font-normal">Links</span>
+                  編輯連結<span class="inline-block text-base font-normal">Links</span>
                 </p>
               </li>
             </router-link>

@@ -10,7 +10,6 @@ import TablerLoader from '~icons/tabler/loader'
 import TablerExternalLink from '~icons/tabler/external-link'
 import TablerPlaystationX from '~icons/tabler/playstation-x'
 import TablerDeviceMobile from '~icons/tabler/device-mobile'
-import TablerShare from '~icons/tabler/share'
 
 const { userName } = storeToRefs(useAuthStore())
 const { validLinks } = storeToRefs(useLinksStore())
@@ -19,7 +18,6 @@ const userLink = computed(() => `${window.location.origin}/${userName.value}`)
 
 const { backgroundColors, selectedBackgroundColor, buttonClass, isLoading } = useAppearance()
 const showPreview = ref(false)
-// TODO: Add a button to toggle the preview
 </script>
 
 <template>

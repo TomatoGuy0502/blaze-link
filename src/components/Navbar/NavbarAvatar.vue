@@ -1,17 +1,16 @@
 <script setup lang="ts">
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { useRouter } from 'vue-router'
-import { computed } from 'vue'
 import { useConfirmModal } from '../../composables/useConfirmModal'
 import { useAuthStore } from '../../store/auth'
 import IconLogout from '~icons/akar-icons/sign-out'
-import IconsSettings from '~icons/akar-icons/settings-horizontal'
 import IconMockAvatar from '@/assets/mock-avatar.svg'
+
+// import IconsSettings from '~icons/akar-icons/settings-horizontal'
 
 const { openModal } = useConfirmModal()
 const authStore = useAuthStore()
 const router = useRouter()
-const userLink = computed(() => `${window.location.origin}/${authStore.userName}`)
 
 function handleLogout() {
   openModal(
@@ -51,18 +50,18 @@ function handleLogout() {
             <p class="truncate font-bold text-gray-500">
               @{{ authStore.profile?.user_name }}
             </p>
-            <p class="text-gray-600 text-xs">
-              {{ userLink }}
+            <p class="text-gray-600 text-xs truncate">
+              {{ authStore.user?.email }}
             </p>
           </div>
         </div>
-        <button
+        <!-- <button
           class="w-full rounded p-3 px-4 text-left hover:bg-brand-1/10 hover:text-brand-1 focus:bg-brand-1/10 focus:text-brand-1 flex items-center"
         >
           <IconsSettings class="h-6 w-6 cursor-pointer text-gray-500 mr-2" />
           <span>設定</span>
           <span class="inline-block text-sm ml-1">Setting</span>
-        </button>
+        </button> -->
         <button
           class="w-full rounded p-3 px-4 text-left hover:bg-brand-1/10 hover:text-brand-1 focus:bg-brand-1/10 focus:text-brand-1 flex items-center"
           @click="handleLogout"
