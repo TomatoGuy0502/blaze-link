@@ -96,9 +96,8 @@ function handleNavigate(e: MouseEvent, navigate: () => void) {
     <HeroiconsFireSolid class="block sm:hidden text-brand-1 w-10 h-10 shrink-0" />
     <div class="ml-auto flex items-center bg-brand-2/15 p-2 px-4 rounded-full lg:rounded-lg gap-2 cursor-pointer" @click="copyUrl">
       <TablerShare class="text-brand-2 w-6 h-6" />
-      <p class="text-gray-800 font-medium text-sm lg:text-base">
-        <!-- <span class="inline md:hidden">Share</span> -->
-        <span class="hidden md:inline">{{ userLink }}</span>
+      <p class="hidden md:block text-gray-800 font-medium whitespace-nowrap text-sm lg:text-base">
+        {{ userLink }}
       </p>
       <div class="p-1.5 rounded-full bg-white">
         <Transition name="fade" mode="out-in">
