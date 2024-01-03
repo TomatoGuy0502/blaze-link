@@ -26,7 +26,7 @@ const showPreview = ref(false)
       <TablerDeviceMobile class="w-6 h-6 " />Preview
     </div>
   </div>
-  <Transition 
+  <Transition
     enter-active-class="transition duration-300 ease-out"
     enter-from-class="opacity-0 translate-y-4"
     enter-to-class="opacity-100 translate-y-0"
@@ -35,8 +35,8 @@ const showPreview = ref(false)
     leave-to-class="opacity-0 translate-y-4"
   >
     <div
-      class="flex max-sm:top-36 max-md:absolute max-md:top-20 max-md:bottom-0 max-md:w-full max-md:inset-x-1/2 max-md:-translate-x-1/2 max-md:bg-white/50 max-md:rounded-t-2xl max-md:ring-4 max-md:ring-inset max-md:ring-brand-3/50 max-md:h-auto max-md:backdrop-filter max-md:backdrop-blur-sm md:flex md:h-full md:w-[308px] lg:w-[334px] xl:w-[360px] flex-grow-0 flex-shrink-0 flex-col gap-y-4 rounded-tl-2xl bg-gray-100 py-4 px-6"
       v-show="windowWidth >= 768 || showPreview"
+      class="flex max-sm:top-36 max-md:absolute max-md:top-20 max-md:bottom-0 max-md:w-full max-md:inset-x-1/2 max-md:-translate-x-1/2 max-md:bg-white/50 max-md:rounded-t-2xl max-md:ring-4 max-md:ring-inset max-md:ring-brand-3/50 max-md:h-auto max-md:backdrop-filter max-md:backdrop-blur-sm md:flex md:h-full md:w-[308px] lg:w-[334px] xl:w-[360px] flex-grow-0 flex-shrink-0 flex-col gap-y-4 rounded-tl-2xl bg-gray-100 py-4 px-6"
     >
       <div class="flex gap-2 items-center">
         <h2 class="text-xl font-bold text-gray-700 md:text-gray-400">
