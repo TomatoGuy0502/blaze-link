@@ -10,6 +10,7 @@ import IconEmojiHappy from '~icons/heroicons-solid/emoji-happy/'
 import IconKey from '~icons/heroicons-solid/key/'
 import IconLockClosed from '~icons/heroicons-solid/lock-closed/'
 import IconGoogle from '~icons/logos/google-icon'
+import HeroiconsInformationCircle20Solid from '~icons/heroicons/information-circle-20-solid'
 
 const authStore = useAuthStore()
 const router = useRouter()
@@ -77,7 +78,7 @@ async function loginWithGoogle() {
 </script>
 
 <template>
-  <div class="pattern flex h-dvh items-center justify-center">
+  <div class="pattern flex h-dvh items-center justify-center p-4">
     <div class="flex w-[420px] flex-col gap-y-3 rounded-xl bg-white p-6 py-8 text-center text-gray-800 shadow-xl">
       <h1 class="text-3xl font-bold">
         Getting Started
@@ -118,7 +119,13 @@ async function loginWithGoogle() {
           </p>
         </div>
         <!-- TODO: Add tooltip to introduce the relation between username and user links -->
-        <div>
+        <div class="text-left">
+          <div class="inline-flex items-center gap-0.5 mb-0.5 text-green-500">
+            <HeroiconsInformationCircle20Solid class="w-4 h-4" />
+            <p class="text-sm text-left leading-none text-nowrap">
+              This will be your share url
+            </p>
+          </div>
           <label
             for="name"
             class="group flex w-full items-center gap-2 rounded-lg border border-gray-200 p-2 focus-within:border-brand-2"
@@ -126,7 +133,7 @@ async function loginWithGoogle() {
             <IconEmojiHappy class="h-5 w-5 shrink-0 text-gray-400 group-focus-within:text-brand-2" />
             <!-- FIXME: When click on string, p element will flash -->
             <p
-              class="w-0 max-w-min shrink-0 overflow-hidden transition-all group-focus-within:block group-focus-within:w-full group-focus-within:text-brand-2"
+              class="w-0 max-w-min shrink-0 overflow-hidden text-nowrap transition-all group-focus-within:block group-focus-within:w-full group-focus-within:text-brand-2"
             >
               {{ `${location.origin}/` }}
             </p>
@@ -135,7 +142,7 @@ async function loginWithGoogle() {
               v-model="formData.name"
               class="shrink-1 -ml-2 w-full font-medium transition-[width] autofill:bg-clip-text focus:outline-none"
               type="text"
-              placeholder="Your Name"
+              placeholder="User ID"
               autocomplete="off"
             >
           </label>
@@ -154,7 +161,7 @@ async function loginWithGoogle() {
               v-model="formData.password"
               class="w-full font-medium autofill:bg-clip-text focus:outline-none"
               type="password"
-              placeholder="Create Password"
+              placeholder="Password"
             >
           </label>
           <p v-if="formData.passwordError" class="text-red-500 text-sm text-left mt-1">
