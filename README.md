@@ -6,7 +6,7 @@ A Linktree-like website for your social media links.
 
 - [ ] Add Landing page
 - [ ] Add CI/CD
-- [ ] Fix user links order
+- [x] Fix user links order
 - [x] RWD for mobile
 - [x] Add 404 page
 - [x] Add ESLint

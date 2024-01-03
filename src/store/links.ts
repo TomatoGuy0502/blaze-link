@@ -59,7 +59,7 @@ export const useLinksStore = defineStore('links', () => {
         theme( * )
       `)
       .eq('user_name', userName)
-      .order('created_at', { ascending: false })
+      .order('created_at', { referencedTable: 'links', ascending: false })
     if (!data?.[0]?.theme)
       return null
 
