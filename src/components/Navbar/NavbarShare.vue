@@ -79,7 +79,7 @@ async function downloadQRCodeSVG() {
         leave-from-class="transform scale-100 opacity-100"
         leave-to-class="transform scale-95 opacity-0"
       >
-        <PopoverPanel v-show="open" static class="absolute flex flex-col gap-2 right-0 mt-2 z-[100] rounded-md shadow p-2 bg-white">
+        <PopoverPanel v-show="open" static class="absolute flex flex-col gap-2 right-0 mt-2 z-[100] rounded-md shadow p-2 bg-white origin-top-right max-[374px]:scale-[.8]">
           <canvas ref="canvasEl" class="p-2 cursor-default" />
           <button class="flex items-center gap-2 p-2 rounded hover:bg-gray-200" @click="downloadQRCodePNG">
             <div class="flex flex-col items-start">

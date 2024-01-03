@@ -42,7 +42,7 @@ function handleLogout() {
       leave-to-class="transform scale-95 opacity-0"
     >
       <PopoverPanel
-        class="absolute right-0 mt-2 w-80 z-[100] origin-top-right rounded-md bg-white p-1 shadow focus:outline-none"
+        class="absolute right-0 mt-2 max-[374px]:w-72 w-80 z-[100] origin-top-right rounded-md bg-white p-1 shadow focus:outline-none"
       >
         <div class="mt-auto flex p-3 px-4 gap-2">
           <IconMockAvatar class="h-12 w-12 rounded-full" />
