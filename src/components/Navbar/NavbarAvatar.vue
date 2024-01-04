@@ -28,7 +28,7 @@ function handleLogout() {
 </script>
 
 <template>
-  <Popover v-slot="{ open }" as="div" class="relative">
+  <Popover v-slot="{ open }" as="div" class="relative shrink-0">
     <PopoverButton class="block outline-none">
       <img v-if="authStore.avatarSrc" :src="authStore.avatarSrc" alt="User avatar" class="h-12 w-12 cursor-pointer rounded-full ring-offset-2 ring-brand-2" :class="{ 'ring-2': open }">
       <IconMockAvatar v-else class="h-12 w-12 cursor-pointer rounded-full ring-offset-2 ring-brand-2" :class="{ 'ring-2': open }" />
@@ -60,10 +60,10 @@ function handleLogout() {
         <router-link
           as="button"
           :to="{ name: 'Profile' }"
-          class="w-full rounded p-3 px-4 text-left hover:bg-brand-1/10 hover:text-brand-1 focus:bg-brand-1/10 focus:text-brand-1 flex items-center"
+          class="flex sm:hidden items-center w-full rounded p-3 px-4 text-left hover:bg-brand-1/10 hover:text-brand-1 focus:bg-brand-1/10 focus:text-brand-1"
         >
           <TablerUserCircle class="h-6 w-6 cursor-pointer text-gray-500 mr-2" />
-          <span>設定</span>
+          <span>用戶設定</span>
           <span class="inline-block text-sm ml-1">Profile</span>
         </router-link>
         <button
