@@ -94,6 +94,38 @@ export const useAuthStore = defineStore('auth', () => {
   const isLoggedIn = computed(() => !!user.value)
   const userName = computed(() => profile.value?.user_name === undefined ? '' : profile.value?.user_name)
 
+  const avatarSrc = ref('')
+  watch(() => profile.value?.avatar_url, async (url) => {
+    if (url)
+      avatarSrc.value = await downloadAvatar(url)
+  }, { immediate: true })
+  async function updateAvatar(avatarUrl: string) {
+    try {
+      const updates = {
+        id: user.value!.id,
+        avatar_url: avatarUrl,
+      }
+      const { error } = await supabase.from('profiles').upsert(updates)
+      if (error)
+        throw error
+    }
+    catch (error: any) {
+      console.error(error.message)
+    }
+  }
+  async function downloadAvatar(avatarUrl: string) {
+    try {
+      const { data, error } = await supabase.storage.from('avatars').download(avatarUrl)
+      if (error)
+        throw error
+      return URL.createObjectURL(data)
+    }
+    catch (error: any) {
+      console.error('Error downloading image: ', error.message)
+      return ''
+    }
+  }
+
   return {
     user,
     profile,
@@ -109,5 +141,8 @@ export const useAuthStore = defineStore('auth', () => {
     isUserHasUserName,
     isLoggedIn,
     userName,
+    avatarSrc,
+    updateAvatar,
+    downloadAvatar,
   }
 })

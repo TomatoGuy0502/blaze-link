@@ -6,6 +6,7 @@ import { useSupabase } from '../composables/useSupabase'
 const Links = () => import('../pages/Dashboard/Links/Links.vue')
 const Appearance = () => import('../pages/Dashboard/Appearance.vue')
 const Dashboard = () => import('../pages/Dashboard/Dashboard.vue')
+const Profile = () => import('../pages/Dashboard/Profile/Profile.vue')
 const Register = () => import('../pages/Register.vue')
 const Login = () => import('../pages/Login.vue')
 const Provider = () => import('../pages/Provider.vue')
@@ -31,6 +32,15 @@ const routes = [
         component: Appearance,
         name: 'Appearance',
         meta: { headingChinese: '外觀' },
+      },
+      {
+        path: 'profile',
+        component: Profile,
+        name: 'Profile',
+        meta: {
+          requiresAuth: true,
+          headingChinese: '用戶設定'
+        },
       },
     ],
   },

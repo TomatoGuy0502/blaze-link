@@ -11,7 +11,7 @@ import TablerExternalLink from '~icons/tabler/external-link'
 import TablerPlaystationX from '~icons/tabler/playstation-x'
 import TablerDeviceMobile from '~icons/tabler/device-mobile'
 
-const { userName } = storeToRefs(useAuthStore())
+const { userName, avatarSrc } = storeToRefs(useAuthStore())
 const { validLinks } = storeToRefs(useLinksStore())
 const { width: windowWidth } = useWindowSize()
 const userLink = computed(() => `${window.location.origin}/${userName.value}`)
@@ -60,7 +60,8 @@ const showPreview = ref(false)
           >
             <Transition name="fade">
               <div v-if="!isLoading" class="h-full overflow-auto pt-10 py-4 px-2 scrollbar-hide">
-                <IconMockAvatar class="mx-auto mb-5 xl:mb-6 h-14 w-14 xl:h-16 xl:w-16 rounded-full border-4 border-white" />
+                <img v-if="avatarSrc" :src="avatarSrc" alt="User avatar" class="mx-auto mb-5 xl:mb-6 h-14 w-14 xl:h-16 xl:w-16 rounded-full border-4 border-white">
+                <IconMockAvatar v-else class="mx-auto mb-5 xl:mb-6 h-14 w-14 xl:h-16 xl:w-16 rounded-full border-4 border-white" />
                 <ul class="flex flex-col gap-y-3 xl:gap-y-4 text-center font-bold">
                   <li v-for="link in validLinks" :key="link.id">
                     <a

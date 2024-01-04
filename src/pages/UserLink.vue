@@ -7,6 +7,7 @@ import { backgroundColors } from '../data'
 import type { Tables } from '../../database.types'
 
 import IconMockAvatar from '@/assets/mock-avatar.svg'
+import { useSupabase } from '@/composables/useSupabase'
 
 const props = defineProps({
   userName: { type: String, required: true },
@@ -14,6 +15,7 @@ const props = defineProps({
 
 useTitle(`${props.userName} | Blaze Link`)
 
+const { supabase } = useSupabase()
 const { getLinksAndThemeByName } = useLinksStore()
 
 const links = ref<any>([])
@@ -21,6 +23,20 @@ const theme = ref<Tables<'theme'>>()
 const userExists = ref<boolean>(false)
 const buttonClass = ref<string[]>([])
 const registerUrl = `${window.location.origin}/register`
+const avatarSrc = ref<string>('')
+
+async function downloadAvatar(avatarUrl: string) {
+  try {
+    const { data, error } = await supabase.storage.from('avatars').download(avatarUrl)
+    if (error)
+      throw error
+    return URL.createObjectURL(data)
+  }
+  catch (error: any) {
+    console.error('Error downloading image: ', error.message)
+    return ''
+  }
+}
 
 const res = await getLinksAndThemeByName(props.userName)
 
@@ -35,6 +51,8 @@ if (res) {
     theme.value.radius,
     theme.value.shadow,
   )
+  if (res.avatar_url)
+    avatarSrc.value = await downloadAvatar(res.avatar_url)
 }
 </script>
 
@@ -42,7 +60,8 @@ if (res) {
   <div v-if="userExists" class="h-dvh w-full flex flex-col overflow-auto pb-8" :class="backgroundColors[theme!.background_color!]">
     <div class="mx-auto w-full max-w-3xl">
       <div class="sticky top-0 pt-8 backdrop-filter backdrop-blur-sm">
-        <IconMockAvatar class="mx-auto mb-2 h-20 w-20 rounded-full border-4 border-white" />
+        <img v-if="avatarSrc" :src="avatarSrc" alt="User avatar" class="mx-auto mb-2 h-20 w-20 rounded-full border-4 border-white">
+        <IconMockAvatar v-else class="mx-auto mb-2 h-20 w-20 rounded-full border-4 border-white" />
         <p class="text-center mb-6 font-bold text-xl">
           @{{ props.userName }}
         </p>
