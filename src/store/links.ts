@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia'
+import { acceptHMRUpdate, defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import { useSupabase } from '../composables/useSupabase'
 import { isValidUrl } from '../utils'
@@ -87,3 +87,6 @@ export const useLinksStore = defineStore('links', () => {
     validLinks,
   }
 })
+
+if (import.meta.hot)
+  import.meta.hot.accept(acceptHMRUpdate(useLinksStore, import.meta.hot))

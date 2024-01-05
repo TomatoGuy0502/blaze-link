@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia'
+import { acceptHMRUpdate, defineStore } from 'pinia'
 import type { User } from '@supabase/supabase-js'
 import { computed, ref, watch } from 'vue'
 import { useSupabase } from '../composables/useSupabase'
@@ -111,3 +111,6 @@ export const useAuthStore = defineStore('auth', () => {
     userName,
   }
 })
+
+if (import.meta.hot)
+  import.meta.hot.accept(acceptHMRUpdate(useAuthStore, import.meta.hot))
