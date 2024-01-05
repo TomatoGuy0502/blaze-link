@@ -6,6 +6,9 @@
     "useDefineForClassFields": true,
     "module": "esnext",
     "moduleResolution": "node",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "resolveJsonModule": true,
     "types": ["unplugin-icons/types/vue"],
     "strict": true,

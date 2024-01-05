@@ -4,6 +4,7 @@ import NavbarShare from './NavbarShare.vue'
 import HeroiconsFireSolid from '~icons/heroicons/fire-solid'
 import IconCursorClick from '~icons/heroicons-solid/cursor-click'
 import IconSparkles from '~icons/heroicons-solid/sparkles'
+import HeroiconsUserCircleSolid from '~icons/heroicons/user-circle-solid'
 
 function handleNavigate(e: MouseEvent, navigate: () => void) {
   (e.target as HTMLLIElement).scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
@@ -39,6 +40,18 @@ function handleNavigate(e: MouseEvent, navigate: () => void) {
           <IconSparkles class="h-6 w-6 pointer-events-none" />
           <p class="flex items-center gap-x-2 text-lg font-bold leading-none pointer-events-none">
             外觀
+          </p>
+        </li>
+      </router-link>
+      <router-link v-slot="{ navigate, isActive }" :to="{ name: 'Profile' }" custom>
+        <li
+          class="hidden sm:flex group justify-center cursor-pointer items-center gap-x-2 whitespace-nowrap rounded-lg p-3 transition hover:bg-brand-1/10 hover:text-brand-1"
+          :class="[isActive ? 'bg-brand-1/10 text-brand-1' : 'text-gray-500']"
+          @click.self="handleNavigate($event, navigate)"
+        >
+          <HeroiconsUserCircleSolid class="h-6 w-6 pointer-events-none" />
+          <p class="flex items-center gap-x-2 text-lg font-bold leading-none pointer-events-none">
+            用戶設定
           </p>
         </li>
       </router-link>

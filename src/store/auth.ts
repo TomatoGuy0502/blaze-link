@@ -4,12 +4,16 @@ import { computed, ref, watch } from 'vue'
 import { useSupabase } from '../composables/useSupabase'
 import type { Tables } from '../../database.types'
 import { getURL } from '../utils'
+import { preservedIds } from '@/router'
 
 const { supabase } = useSupabase()
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref<(User | null)>(null)
   const profile = ref<Tables<'profiles'> | null>(null)
+
+  const isLoggedIn = computed(() => !!user.value)
+  const userName = computed(() => profile.value?.user_name === undefined ? '' : profile.value?.user_name)
 
   watch(user, async (newUser) => {
     if (newUser) {
@@ -58,12 +62,16 @@ export const useAuthStore = defineStore('auth', () => {
       throw error
     location.reload()
   }
-  async function updateUsername(username: string) {
-    const { error } = await supabase.from('profiles').update({ user_name: username }).match({ id: user.value?.id })
+  async function updateUsername(newUserName: string) {
+    if (userName.value === newUserName)
+      return
+    if (preservedIds.includes(newUserName))
+      throw new Error('This name is not available.')
+    const { error } = await supabase.from('profiles').update({ user_name: newUserName, updated_at: new Date() }).match({ id: user.value?.id })
     if (error)
       throw error
     if (profile.value)
-      profile.value.user_name = username
+      profile.value.user_name = newUserName
   }
   async function createTheme(username: string) {
     const { error } = await supabase
@@ -91,8 +99,37 @@ export const useAuthStore = defineStore('auth', () => {
     return data?.[0].user_name !== null
   }
 
-  const isLoggedIn = computed(() => !!user.value)
-  const userName = computed(() => profile.value?.user_name === undefined ? '' : profile.value?.user_name)
+  const avatarSrc = ref('')
+  watch(() => profile.value?.avatar_url, async (url) => {
+    if (url)
+      avatarSrc.value = await downloadAvatar(url)
+  }, { immediate: true })
+  async function updateAvatar(avatarUrl: string) {
+    try {
+      const updates = {
+        id: user.value!.id,
+        avatar_url: avatarUrl,
+      }
+      const { error } = await supabase.from('profiles').upsert(updates)
+      if (error)
+        throw error
+    }
+    catch (error: any) {
+      console.error(error.message)
+    }
+  }
+  async function downloadAvatar(avatarUrl: string) {
+    try {
+      const { data, error } = await supabase.storage.from('avatars').download(avatarUrl)
+      if (error)
+        throw error
+      return URL.createObjectURL(data)
+    }
+    catch (error: any) {
+      console.error('Error downloading image: ', error.message)
+      return ''
+    }
+  }
 
   return {
     user,
@@ -109,6 +146,9 @@ export const useAuthStore = defineStore('auth', () => {
     isUserHasUserName,
     isLoggedIn,
     userName,
+    avatarSrc,
+    updateAvatar,
+    downloadAvatar,
   }
 })
 

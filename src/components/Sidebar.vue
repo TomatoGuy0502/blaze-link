@@ -4,6 +4,7 @@ import IconCursorClick from '~icons/heroicons-solid/cursor-click/'
 import IconSparkles from '~icons/heroicons-solid/sparkles'
 import IconChevronDown from '~icons/heroicons-solid/chevron-down/'
 import HeroiconsFireSolid from '~icons/heroicons/fire-solid'
+import HeroiconsUserCircleSolid from '~icons/heroicons/user-circle-solid'
 </script>
 
 <template>
@@ -51,6 +52,18 @@ import HeroiconsFireSolid from '~icons/heroicons/fire-solid'
                 <IconSparkles class="h-6 w-6" />
                 <p class="flex items-center gap-x-2 text-lg font-bold leading-none">
                   外觀<span class="inline-block text-base font-normal">Appearance</span>
+                </p>
+              </li>
+            </router-link>
+            <router-link v-slot="{ navigate, isActive }" :to="{ name: 'Profile' }" custom>
+              <li
+                class="group flex cursor-pointer items-center gap-x-4 whitespace-nowrap rounded-lg p-3 transition hover:bg-brand-1/10 hover:text-brand-1"
+                :class="[isActive && 'bg-brand-1/10 text-brand-1']"
+                @click="navigate"
+              >
+                <HeroiconsUserCircleSolid class="h-6 w-6" />
+                <p class="flex items-center gap-x-2 text-lg font-bold leading-none">
+                  用戶設定<span class="inline-block text-base font-normal">Profile</span>
                 </p>
               </li>
             </router-link>

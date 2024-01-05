@@ -55,6 +55,7 @@ export const useLinksStore = defineStore('links', () => {
     const { data } = await supabase
       .from('profiles')
       .select(`
+        avatar_url,
         links( id, title, url ),
         theme( * )
       `)
@@ -66,6 +67,7 @@ export const useLinksStore = defineStore('links', () => {
     return {
       links: data?.[0]?.links || [],
       theme: data?.[0]?.theme,
+      avatar_url: data?.[0]?.avatar_url,
     }
   }
   async function updateLink({ id, title, url }: { id: number, title: string, url: string }) {
