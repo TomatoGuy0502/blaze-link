@@ -25,6 +25,8 @@ export const useAuthStore = defineStore('auth', () => {
   })
 
   async function register({ email, password, name }: { email: string, password: string, name: string }) {
+    // TODO: check if email is already registered
+    // TODO: check if username is already registered
     const { data: { user, session }, error } = await supabase.auth.signUp({
       email,
       password,
@@ -65,8 +67,16 @@ export const useAuthStore = defineStore('auth', () => {
   async function updateUsername(newUserName: string) {
     if (userName.value === newUserName)
       return
-    if (preservedIds.includes(newUserName))
+    if (preservedIds.includes(newUserName.toLowerCase()))
       throw new Error('This name is not available.')
+    if (await isUserExists(newUserName))
+      throw new Error('This name is not available.')
+    if (newUserName.length < 3 || newUserName.length > 20)
+      throw new Error('Username must be 3 ~ 20 characters long.')
+    if (newUserName.match(/[^a-zA-Z0-9_.-]/g))
+      throw new Error('User name can only contain letters, numbers, dot(.), dash(-) and underscore(_)')
+    if (!/^[a-zA-Z0-9_].*[a-zA-Z0-9_]$/.test(newUserName))
+      throw new Error('User name must start and end with a letter, number or underscore(_)')
     const { error } = await supabase.from('profiles').update({ user_name: newUserName, updated_at: new Date() }).match({ id: user.value?.id })
     if (error)
       throw error
@@ -114,8 +124,9 @@ export const useAuthStore = defineStore('auth', () => {
       if (error)
         throw error
     }
-    catch (error: any) {
-      console.error(error.message)
+    catch (error) {
+      if (error instanceof Error)
+        console.error(error.message)
     }
   }
   async function downloadAvatar(avatarUrl: string) {
@@ -125,8 +136,9 @@ export const useAuthStore = defineStore('auth', () => {
         throw error
       return URL.createObjectURL(data)
     }
-    catch (error: any) {
-      console.error('Error downloading image: ', error.message)
+    catch (error) {
+      if (error instanceof Error)
+        console.error('Error downloading image: ', error.message)
       return ''
     }
   }

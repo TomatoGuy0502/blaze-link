@@ -75,7 +75,7 @@ async function handleSubmit() {
     return
 
   isLoading.value = true
-  if (preservedIds.includes(name.value)) {
+  if (preservedIds.includes(name.value.toLowerCase())) {
     error.value = 'Username not available'
     isLoading.value = false
     return

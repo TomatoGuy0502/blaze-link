@@ -26,6 +26,7 @@ const formData = reactive({
 const location = useBrowserLocation()
 
 const loading = ref(false)
+// TODO: Add username validation
 async function register() {
   try {
     loading.value = true
@@ -41,7 +42,7 @@ async function register() {
     if (formData.emailError || formData.nameError || formData.passwordError)
       return
 
-    if (preservedIds.includes(formData.name)) {
+    if (preservedIds.includes(formData.name.toLowerCase())) {
       formData.nameError = 'This name is not available.'
       return
     }

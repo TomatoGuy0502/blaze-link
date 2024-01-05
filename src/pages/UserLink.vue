@@ -32,8 +32,9 @@ async function downloadAvatar(avatarUrl: string) {
       throw error
     return URL.createObjectURL(data)
   }
-  catch (error: any) {
-    console.error('Error downloading image: ', error.message)
+  catch (error) {
+    if (error instanceof Error)
+      console.error('Error downloading image: ', error.message)
     return ''
   }
 }

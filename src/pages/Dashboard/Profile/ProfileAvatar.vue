@@ -38,8 +38,9 @@ async function uploadAvatar(evt: Event) {
     authStore.profile!.avatar_url = filePath
     authStore.updateAvatar(filePath)
   }
-  catch (error: any) {
-    console.error('Error downloading image: ', error.message)
+  catch (error) {
+    if (error instanceof Error)
+      console.error('Error downloading image: ', error.message)
   }
   finally {
     uploading.value = false

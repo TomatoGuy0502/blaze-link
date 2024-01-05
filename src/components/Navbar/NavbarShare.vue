@@ -16,6 +16,8 @@ const timeoutId = ref(0)
 const canvasEl = ref<HTMLCanvasElement | null>(null)
 const userLink = computed(() => `${window.location.origin}/${authStore.userName}`)
 
+// TODO: 更新完名稱後，QRCode要重新產生
+
 onMounted(async () => {
   await QRCode.toCanvas(canvasEl.value!, userLink.value, {
     width: 240,
