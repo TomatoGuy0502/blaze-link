@@ -48,7 +48,8 @@ export function useConfirmModal() {
     try {
       !isLoading.value && (isShow.value = false)
       await cancelCallback.value()
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error)
     }
   }

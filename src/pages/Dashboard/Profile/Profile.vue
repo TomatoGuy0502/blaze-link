@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import ProfileAvatar from './ProfileAvatar.vue'
 import IconEmojiHappy from '~icons/heroicons-solid/emoji-happy/'
 import IconAtSymbol from '~icons/heroicons-solid/at-symbol/'

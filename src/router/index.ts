@@ -39,7 +39,7 @@ const routes = [
         name: 'Profile',
         meta: {
           requiresAuth: true,
-          headingChinese: '用戶設定'
+          headingChinese: '用戶設定',
         },
       },
     ],

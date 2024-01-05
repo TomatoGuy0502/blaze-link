@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, ref, toRefs, watch, withDefaults } from 'vue'
+import { ref, toRefs, withDefaults } from 'vue'
 import { useAuthStore } from '@/store/auth'
 import { useSupabase } from '@/composables/useSupabase'
 import TablerUpload from '~icons/tabler/upload'
