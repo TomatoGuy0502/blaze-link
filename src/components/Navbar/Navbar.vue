@@ -17,7 +17,7 @@ function handleNavigate(e: MouseEvent, navigate: () => void) {
     <h1 class="hidden xl:block text-3xl font-bold text-gray-700">
       {{ $route.meta.headingChinese }}
     </h1>
-    <ul class="grid grid-flow-col sm:flex xl:hidden gap-2 overflow-x-auto w-full sm:w-auto">
+    <ul class="grid grid-flow-col grid-cols-2 sm:flex xl:hidden gap-2 overflow-x-auto w-full sm:w-auto">
       <router-link v-slot="{ navigate, isActive }" :to="{ name: 'Links' }" custom>
         <li
           class="group flex justify-center cursor-pointer items-center gap-x-2 whitespace-nowrap rounded-lg p-3 transition hover:bg-brand-1/10 hover:text-brand-1"

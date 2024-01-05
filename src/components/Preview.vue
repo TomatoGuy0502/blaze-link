@@ -22,8 +22,8 @@ const showPreview = ref(false)
 
 <template>
   <div class="absolute flex md:hidden left-1/2 bottom-8 -translate-x-1/2 gap-2">
-    <div v-show="!showPreview" class="flex items-center gap-2 p-6 py-3 font-bold rounded-full bg-brand-3/10 border-2 border-brand-3/50 backdrop-filter backdrop-blur-sm shadow-md bottom-8 leading-none" @click="showPreview = true">
-      <TablerDeviceMobile class="w-6 h-6 " />Preview
+    <div v-show="!showPreview" class="flex items-center gap-2 px-4 py-2 sm:p-6 sm:py-3 font-bold rounded-full bg-brand-3/10 border-2 border-brand-3/50 backdrop-filter backdrop-blur-sm shadow-md bottom-8 leading-none" @click="showPreview = true">
+      <TablerDeviceMobile class="w-5 h-5 sm:w-6 sm:h-6" />Preview
     </div>
   </div>
   <Transition
