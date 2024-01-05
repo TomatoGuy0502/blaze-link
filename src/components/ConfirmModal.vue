@@ -31,7 +31,7 @@ const { isShow, isLoading, confirm, cancel, templateText } = useConfirmModal()
           <DialogTitle class="mb-2 text-lg font-medium leading-6 text-gray-900">
             {{ templateText.title }}
           </DialogTitle>
-          <DialogDescription class="mb-4 text-sm text-gray-500">
+          <DialogDescription class="mb-4 text-sm text-gray-500 whitespace-pre-line">
             {{ templateText.description }}
           </DialogDescription>
           <div class="flex flex-row-reverse gap-x-2">

@@ -2,7 +2,8 @@ import { reactive, ref } from 'vue'
 
 const isShow = ref(false)
 const isLoading = ref(false)
-const callback = ref<Function>(() => {})
+const confirmCallback = ref<Function>(() => {})
+const cancelCallback = ref<Function>(() => {})
 
 const templateText = reactive({
   title: '再次確認',
@@ -13,25 +14,27 @@ const templateText = reactive({
 
 export function useConfirmModal() {
   const openModal = (
-    cb: Function,
+    onConfirm: Function,
     {
       title,
       description,
       confirm,
       cancel,
     }: { title?: string, description?: string, confirm?: string, cancel?: string } = {},
+    onCancel?: Function,
   ) => {
     isShow.value = true
-    callback.value = cb
+    confirmCallback.value = onConfirm
     templateText.title = title || '再次確認'
     templateText.description = description || '即將進行此動作，確定嗎？'
     templateText.confirm = confirm || '確定'
     templateText.cancel = cancel || '取消'
+    cancelCallback.value = onCancel || (() => {})
   }
   const confirm = async () => {
     try {
       isLoading.value = true
-      await callback.value()
+      await confirmCallback.value()
     }
     catch (error) {
       console.error(error)
@@ -41,8 +44,13 @@ export function useConfirmModal() {
     }
     isShow.value = false
   }
-  const cancel = () => {
-    !isLoading.value && (isShow.value = false)
+  const cancel = async () => {
+    try {
+      !isLoading.value && (isShow.value = false)
+      await cancelCallback.value()
+    } catch (error) {
+      console.error(error)
+    }
   }
   return {
     isShow,
