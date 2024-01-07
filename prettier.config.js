@@ -5,5 +5,5 @@ export default {
   printWidth: 120,
   semi: false,
   endOfLine: 'auto',
-  plugins: [require('prettier-plugin-tailwindcss')], // 用pnpm時需要手動引入
+  plugins: ['prettier-plugin-tailwindcss'],
 }

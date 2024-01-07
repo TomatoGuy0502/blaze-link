@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import QRCode from 'qrcode'
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { useAuthStore } from '../../store/auth'
@@ -16,13 +16,16 @@ const timeoutId = ref(0)
 const canvasEl = ref<HTMLCanvasElement | null>(null)
 const userLink = computed(() => `${window.location.origin}/${authStore.userName}`)
 
-// TODO: 更新完名稱後，QRCode要重新產生
-
-onMounted(async () => {
+async function generateQRCode() {
   await QRCode.toCanvas(canvasEl.value!, userLink.value, {
     width: 240,
     margin: 0,
   })
+}
+
+onMounted(async () => {
+  await generateQRCode()
+  watch(userLink, generateQRCode)
 })
 
 function copyUrl() {
@@ -34,10 +37,13 @@ function copyUrl() {
   }, 1500)
 }
 
-function downloadQRCodePNG() {
+async function downloadQRCodePNG() {
   const link = document.createElement('a')
-  link.download = 'qrcode.png'
-  link.href = canvasEl.value!.toDataURL()
+  link.download = 'BlazeLink_qrcode.png'
+  link.href = await QRCode.toDataURL(userLink.value, {
+    width: 240,
+    margin: 2,
+  })
   link.click()
 }
 
@@ -45,11 +51,11 @@ async function downloadQRCodeSVG() {
   const svgString = await QRCode.toString(userLink.value, {
     type: 'svg',
     width: 240,
-    margin: 0,
+    margin: 2,
   })
   const blob = new Blob([svgString], { type: 'image/svg+xml' })
   const link = document.createElement('a')
-  link.download = 'qrcode.svg'
+  link.download = 'BlazeLink_qrcode.svg'
   link.href = URL.createObjectURL(blob)
   link.click()
 }
@@ -82,7 +88,7 @@ async function downloadQRCodeSVG() {
         leave-to-class="transform scale-95 opacity-0"
       >
         <PopoverPanel v-show="open" static class="absolute flex flex-col gap-2 right-0 mt-2 z-[100] rounded-md shadow p-2 bg-white origin-top-right max-[374px]:scale-[.8]">
-          <canvas ref="canvasEl" class="p-2 cursor-default" />
+          <canvas ref="canvasEl" class="p-2 cursor-default w-60 h-60" />
           <button class="flex items-center gap-2 p-2 rounded hover:bg-gray-200" @click="downloadQRCodePNG">
             <div class="flex flex-col items-start">
               <p class="font-bold text-gray-700">
