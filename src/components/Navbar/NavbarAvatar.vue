@@ -42,6 +42,7 @@ function handleLogout() {
       leave-to-class="transform scale-95 opacity-0"
     >
       <PopoverPanel
+        v-slot="{ close }"
         class="absolute right-0 mt-2 max-[374px]:w-72 w-80 z-[100] origin-top-right rounded-md bg-white p-1 shadow focus:outline-none"
       >
         <div class="mt-auto flex p-3 px-4 gap-2">
@@ -56,10 +57,9 @@ function handleLogout() {
             </p>
           </div>
         </div>
-        <!-- FIXME: should render as button -->
         <router-link
-          as="button"
           :to="{ name: 'Profile' }"
+          @click="close"
           class="flex sm:hidden items-center w-full rounded p-3 px-4 text-left hover:bg-brand-1/10 hover:text-brand-1 focus:bg-brand-1/10 focus:text-brand-1"
         >
           <TablerUserCircle class="h-6 w-6 cursor-pointer text-gray-500 mr-2" />

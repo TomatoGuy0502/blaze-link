@@ -5,8 +5,8 @@ import IconEmojiHappy from '~icons/heroicons-solid/emoji-happy/'
 import IconAtSymbol from '~icons/heroicons-solid/at-symbol/'
 import { useAuthStore } from '@/store/auth'
 import { useConfirmModal } from '@/composables/useConfirmModal'
-import TablerCircleDashed from '~icons/tabler/circle-dashed'
-import TablerCircleCheck from '~icons/tabler/circle-check'
+import UsernameCheckList from '@/components/UsernameCheckList.vue'
+import { useUsername } from '@/composables/useUsername'
 
 const authStore = useAuthStore()
 const { openModal } = useConfirmModal()
@@ -15,14 +15,13 @@ const userName = ref(authStore.userName ?? '')
 const loading = ref(false)
 const error = ref('')
 
-const isValidLength = computed(() => userName.value.length >= 3 && userName.value.length <= 20)
-const isValidCharacters = computed(() => /^[a-zA-Z0-9_.-]+$/.test(userName.value))
-const isValidStartEnd = computed(() => /^[a-zA-Z0-9_].*[a-zA-Z0-9_]$/.test(userName.value))
+const { isValidLength, isValidCharacters, isValidStartEnd } = useUsername(userName)
 const isChanged = computed(() => userName.value !== authStore.userName)
-
 const isChangeable = computed(() => isChanged.value && isValidLength.value && isValidCharacters.value && isValidStartEnd.value && !loading.value)
 
 async function handleUpdateUsername() {
+  if (!isChangeable.value || loading.value)
+    return
   loading.value = true
   error.value = ''
   openModal(
@@ -110,45 +109,7 @@ async function handleUpdateUsername() {
       <p v-if="error" class="text-red-500 text-sm mt-1">
         {{ error }}
       </p>
-      <ul class="flex flex-col gap-0.5 pl-2">
-        <li class="flex items-center gap-1 text-gray-600 text-sm">
-          <Transition name="fade" mode="out-in">
-            <TablerCircleCheck v-if="isValidLength" class="w-4 h-4 text-brand-2" />
-            <TablerCircleDashed v-else class="w-4 h-4" />
-          </Transition>
-          長度必須在 3 ~ 20 之間
-        </li>
-        <li class="flex items-center gap-1 text-gray-600 text-sm">
-          <Transition name="fade" mode="out-in">
-            <TablerCircleCheck v-if="isValidCharacters" class="w-4 h-4 text-brand-2" />
-            <TablerCircleDashed v-else class="w-4 h-4" />
-          </Transition>
-          只能包含英文、數字、底線(_)、點(.)、減號(-)
-        </li>
-        <li class="flex items-center gap-1 text-gray-600 text-sm">
-          <Transition name="fade" mode="out-in">
-            <TablerCircleCheck v-if="isValidStartEnd" class="w-4 h-4 text-brand-2" />
-            <TablerCircleDashed v-else class="w-4 h-4" />
-          </Transition>
-          開頭與結尾必須是英文、數字或底線(_)
-        </li>
-      </ul>
+      <UsernameCheckList :username="userName" />
     </section>
   </div>
 </template>
-
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.15s ease-in;
-}
-
-.fade-enter-from {
-  opacity: .2;
-  transform: rotate(-60deg);
-}
-.fade-leave-to {
-  opacity: .2;
-  transform: rotate(60deg);
-}
-</style>

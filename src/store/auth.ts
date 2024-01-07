@@ -25,8 +25,10 @@ export const useAuthStore = defineStore('auth', () => {
   })
 
   async function register({ email, password, name }: { email: string, password: string, name: string }) {
-    // TODO: check if email is already registered
-    // TODO: check if username is already registered
+    if (await isEmailExists(email))
+      throw new Error('This email is already registered.')
+    if (await isUserExists(name))
+      throw new Error('This username is already registered.')
     const { data: { user, session }, error } = await supabase.auth.signUp({
       email,
       password,
@@ -104,6 +106,10 @@ export const useAuthStore = defineStore('auth', () => {
     const { data } = await supabase.from('profiles').select('user_name').match({ user_name: userName })
     return data!.length > 0
   }
+  async function isEmailExists(email: string) {
+    const { data } = await supabase.from('profiles').select('email').match({ email })
+    return data!.length > 0
+  }
   async function isUserHasUserName() {
     const { data } = await supabase.from('profiles').select('user_name').match({ id: user.value?.id })
     return data?.[0].user_name !== null
@@ -155,6 +161,7 @@ export const useAuthStore = defineStore('auth', () => {
     createTheme,
     getUserFromToken,
     isUserExists,
+    isEmailExists,
     isUserHasUserName,
     isLoggedIn,
     userName,

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useBrowserLocation } from '@vueuse/core'
 import { useAuthStore } from '../store/auth'
-import { isValidEmail } from '../utils'
+import { isValidEmail as isValidEmailUtil } from '../utils'
 import { preservedIds } from '../router'
 import IconAtSymbol from '~icons/heroicons-solid/at-symbol/'
 import IconEmojiHappy from '~icons/heroicons-solid/emoji-happy/'
@@ -11,6 +11,9 @@ import IconKey from '~icons/heroicons-solid/key/'
 import IconLockClosed from '~icons/heroicons-solid/lock-closed/'
 import IconGoogle from '~icons/logos/google-icon'
 import HeroiconsInformationCircle20Solid from '~icons/heroicons/information-circle-20-solid'
+import UsernameCheckList from '@/components/UsernameCheckList.vue'
+import { useUsername } from '@/composables/useUsername'
+import CheckListItem from '@/components/CheckListItem.vue'
 
 const authStore = useAuthStore()
 const router = useRouter()
@@ -26,30 +29,46 @@ const formData = reactive({
 const location = useBrowserLocation()
 
 const loading = ref(false)
-// TODO: Add username validation
+
+const isValidEmail = computed(() => isValidEmailUtil(formData.email))
+const { isValidLength, isValidCharacters, isValidStartEnd } = useUsername(() => formData.name)
+const isValidPassword = computed(() => formData.password.length >= 6)
+
+// Disable register button when:
+const isRegistrable = computed(() => {
+  if (!formData.email || !isValidPassword.value)
+    return false
+  if (!isValidLength.value || !isValidCharacters.value || !isValidStartEnd.value)
+    return false
+  return true
+})
+
 async function register() {
+  if (loading.value)
+    return
   try {
     loading.value = true
     formData.emailError = ''
     formData.nameError = ''
     formData.passwordError = ''
-    if (!isValidEmail(formData.email))
-      formData.emailError = 'Please enter a valid email address.'
-    if (!formData.name)
-      formData.nameError = 'Please enter your name.'
-    if (formData.password.length < 6)
-      formData.passwordError = 'Password must be at least 6 characters'
+    if (!isValidLength.value || !isValidCharacters.value || !isValidStartEnd.value) {
+      formData.nameError = '未滿足使用者名稱規則'
+      return
+    }
+    if (!isValidEmail.value)
+      formData.emailError = '請輸入有效的電子郵件地址'
+    if (!isValidPassword.value)
+      formData.passwordError = '密碼長度至少為6個字元'
+    if (preservedIds.includes(formData.name.toLowerCase()))
+      formData.nameError = '此名稱不可使用(保留字)'
     if (formData.emailError || formData.nameError || formData.passwordError)
       return
 
-    if (preservedIds.includes(formData.name.toLowerCase())) {
-      formData.nameError = 'This name is not available.'
-      return
-    }
     if (await authStore.isUserExists(formData.name)) {
-      formData.nameError = 'This name is already taken.'
+      formData.nameError = '此名稱已被其他用戶使用'
       return
     }
+
     await authStore.register({
       email: formData.email,
       password: formData.password,
@@ -105,13 +124,14 @@ async function loginWithGoogle() {
           <label
             for="email"
             class="group flex w-full items-center gap-2 rounded-lg border border-gray-200 p-2 focus-within:border-brand-2"
+            :class="formData.emailError ? 'border-red-500 ring-red-500 ring-2' : ''"
           >
             <IconAtSymbol class="h-5 w-5 text-gray-400 group-focus-within:text-brand-2" />
             <input
               id="email"
               v-model="formData.email"
               class="w-full font-medium autofill:bg-clip-text focus:outline-none"
-              type="text"
+              type="email"
               placeholder="Your Email"
             >
           </label>
@@ -119,17 +139,11 @@ async function loginWithGoogle() {
             {{ formData.emailError }}
           </p>
         </div>
-        <!-- TODO: Add tooltip to introduce the relation between username and user links -->
-        <div class="text-left">
-          <div class="inline-flex items-center gap-0.5 mb-0.5 text-green-500">
-            <HeroiconsInformationCircle20Solid class="w-4 h-4" />
-            <p class="text-sm text-left leading-none text-nowrap">
-              This will be your share url
-            </p>
-          </div>
+        <div class="text-left flex flex-col gap-0.5">
           <label
             for="name"
             class="group flex w-full items-center gap-2 rounded-lg border border-gray-200 p-2 focus-within:border-brand-2"
+            :class="formData.nameError ? 'border-red-500 ring-red-500 ring-2' : ''"
           >
             <IconEmojiHappy class="h-5 w-5 shrink-0 text-gray-400 group-focus-within:text-brand-2" />
             <!-- FIXME: When click on string, p element will flash -->
@@ -143,15 +157,20 @@ async function loginWithGoogle() {
               v-model="formData.name"
               class="shrink-1 -ml-2 w-full font-medium transition-[width] autofill:bg-clip-text focus:outline-none"
               type="text"
-              placeholder="User ID"
+              placeholder="Username "
               autocomplete="off"
             >
           </label>
-          <p v-if="formData.nameError" class="text-red-500 text-sm text-left mt-1">
+          <p v-if="formData.nameError" class="text-red-500 text-sm text-left">
             {{ formData.nameError }}
           </p>
+          <p class="flex items-center gap-1 text-sm font-bold text-brand-2 pl-2">
+            <HeroiconsInformationCircle20Solid v-if="true" class="w-4 h-4 text-brand-2" />
+            這將會是你的分享連結的網址
+          </p>
+          <UsernameCheckList :username="formData.name" />
         </div>
-        <div>
+        <div class="flex flex-col gap-0.5">
           <label
             for="password"
             class="group flex w-full items-center gap-2 rounded-lg border border-gray-200 p-2 focus-within:border-brand-2"
@@ -168,10 +187,13 @@ async function loginWithGoogle() {
           <p v-if="formData.passwordError" class="text-red-500 text-sm text-left mt-1">
             {{ formData.passwordError }}
           </p>
+          <CheckListItem :check-condition="isValidPassword" class="pl-2">
+            長度必須大於等於 6 個字元
+          </CheckListItem>
         </div>
         <button
           class="flex w-full items-center justify-center gap-x-1 rounded-lg bg-brand-2 py-2 text-white disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
-          :disabled="loading"
+          :disabled="!isRegistrable || loading"
         >
           <IconLockClosed class="-ml-5 w-5 h-5" />
           {{ loading ? 'Loading' : 'Sign Up' }}
