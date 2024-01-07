@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../store/auth'
 import { isValidEmail } from '../utils'
@@ -19,15 +19,22 @@ const formData = reactive({
 })
 
 const loading = ref(false)
+
+const isLoginable = computed(() => {
+  if (!formData.email || !formData.password)
+    return false
+  return true
+})
+
 async function login() {
   try {
     loading.value = true
     formData.emailError = ''
     formData.passwordError = ''
     if (!isValidEmail(formData.email))
-      formData.emailError = 'Please enter a valid email address'
+      formData.emailError = '請輸入有效的電子郵件地址'
     if (formData.password.length < 6)
-      formData.passwordError = 'Password must be at least 6 characters'
+      formData.passwordError = '密碼長度至少為6個字元'
     if (formData.emailError || formData.passwordError)
       return
 
@@ -65,17 +72,17 @@ async function loginWithGoogle() {
   <div class="pattern flex h-dvh items-center justify-center p-4">
     <div class="flex w-[420px] flex-col gap-y-4 rounded-xl bg-white p-6 py-8 text-center shadow-xl text-gray-800">
       <h1 class="text-3xl font-bold">
-        Login
+        登入
       </h1>
       <p class="text-gray-400">
-        Welcome back, you've been missed!
+        歡迎回來，登入後即可開始使用！
       </p>
       <button
         class="flex w-full items-center justify-center gap-x-2 rounded-lg bg-gray-100 p-2 font-medium text-gray-500 transition hover:bg-gray-200 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
         @click="loginWithGoogle()"
       >
         <IconGoogle />
-        Sign In with Google
+        使用 Google 帳戶登入
       </button>
       <div class="relative flex h-6 items-center">
         <hr class="w-full">
@@ -95,7 +102,7 @@ async function loginWithGoogle() {
               v-model="formData.email"
               class="w-full font-medium autofill:bg-clip-text focus:outline-none"
               type="text"
-              placeholder="Your Email"
+              placeholder="電子郵件 Email"
             >
           </label>
           <p v-if="formData.emailError" class="text-red-500 text-sm text-left mt-1">
@@ -113,7 +120,7 @@ async function loginWithGoogle() {
               v-model="formData.password"
               class="w-full font-medium autofill:bg-clip-text focus:outline-none"
               type="password"
-              placeholder="Your Password"
+              placeholder="密碼 Password"
             >
           </label>
           <p v-if="formData.passwordError" class="text-red-500 text-sm text-left mt-1">
@@ -122,15 +129,15 @@ async function loginWithGoogle() {
         </div>
         <button
           class="flex items-center justify-center w-full gap-x-1 rounded-lg bg-brand-2 py-2 text-white disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
-          :disabled="loading"
+          :disabled="!isLoginable || loading"
         >
           <IconLockClosed class="-ml-5 w-5 h-5" />
-          {{ loading ? 'Loading' : 'Sign In' }}
+          {{ loading ? '登入中...' : '登入' }}
         </button>
         <p class="text-gray-400">
-          Don't have an account yet?
+          還沒有帳戶嗎？
           <router-link class="font-medium text-blue-400" :to="{ name: 'Register' }">
-            Sign Up
+            註冊
           </router-link>
         </p>
       </form>

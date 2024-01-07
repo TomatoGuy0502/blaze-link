@@ -36,7 +36,7 @@ async function handleAddLink() {
         :disabled="isLoading || isFirstTimeLoading"
         @click="handleAddLink"
       >
-        Add new link
+        新增連結
       </button>
       <LinksItem v-for="link in links" :id="link.id" :key="link.id" v-model:title="link.title" v-model:url="link.url" />
       <p

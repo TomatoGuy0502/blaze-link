@@ -19,7 +19,7 @@ import HeroiconsUserCircleSolid from '~icons/heroicons/user-circle-solid'
           as="h2"
           class="mb-4 flex cursor-pointer items-center justify-between text-xl font-bold text-gray-700"
         >
-          <span>Pages</span>
+          <span>導覽列</span>
           <IconChevronDown class="h-8 w-8 transition" :class="[!open && 'rotate-180 transform']" />
         </DisclosureButton>
         <transition

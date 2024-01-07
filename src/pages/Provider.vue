@@ -113,28 +113,28 @@ function isValidHash(hash: string) {
       <template v-if="!!authStore.userName">
         <div class="flex items-center gap-x-2 text-4xl font-bold text-brand-2">
           <IconCheck />
-          <h1>Authorized</h1>
+          <h1>登入成功</h1>
         </div>
         <p class="ext-gray-500 text-2xl font-medium">
-          Redirecting
+          重新導向中
           <span class="animate-bounce inline-block">.</span>
           <span class="animate-bounce inline-block animation-delay-[50ms]">.</span>
           <span class="animate-bounce inline-block animation-delay-100">.</span>
         </p>
         <p class="text-gray-500 text-lg">
-          Or
+          或是
           <router-link to="/dashboard/links" class="underline">
-            {{ "click here" }}
+            {{ "點擊此處" }}
           </router-link>
-          to redirect
+          重新導向
         </p>
       </template>
       <template v-else>
         <h1 class="text-4xl font-bold text-brand-2">
-          Last step
+          最後一步
         </h1>
         <p class="-mt-2 text-gray-400">
-          Input your name
+          輸入你的使用者名稱
         </p>
         <label
           for="name"
@@ -149,7 +149,7 @@ function isValidHash(hash: string) {
             v-model="name"
             class="shrink-1 -ml-2 w-full bg-transparent font-medium transition-[width] autofill:bg-clip-text focus:outline-none"
             type="text"
-            placeholder="Your Name"
+            placeholder="使用者名稱 Username"
             autocomplete="off"
           >
         </label>
@@ -159,7 +159,7 @@ function isValidHash(hash: string) {
             :disabled="isLoading"
             @click="handleSubmit"
           >
-            {{ isLoading ? 'Loading' : 'Finish' }}
+            {{ isLoading ? '處理中...' : '完成' }}
           </button>
           <p v-if="error" class="font-semibold text-red-400">
             {{ error }}

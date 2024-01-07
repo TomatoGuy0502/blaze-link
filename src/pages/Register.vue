@@ -101,17 +101,17 @@ async function loginWithGoogle() {
   <div class="pattern flex h-dvh items-center justify-center p-4">
     <div class="flex w-[420px] flex-col gap-y-3 rounded-xl bg-white p-6 py-8 text-center text-gray-800 shadow-xl">
       <h1 class="text-3xl font-bold">
-        Getting Started
+        讓我們開始吧
       </h1>
       <p class="text-gray-400">
-        Create an account to continue!
+        創建一個帳戶以繼續！
       </p>
       <button
         class="flex w-full items-center justify-center gap-x-2 rounded-lg bg-gray-100 p-2 font-medium text-gray-500 transition hover:bg-gray-200 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
         @click="loginWithGoogle()"
       >
         <IconGoogle />
-        Sign Up with Google
+        使用 Google 帳戶註冊
       </button>
       <div class="relative flex h-6 items-center">
         <hr class="w-full">
@@ -132,7 +132,7 @@ async function loginWithGoogle() {
               v-model="formData.email"
               class="w-full font-medium autofill:bg-clip-text focus:outline-none"
               type="email"
-              placeholder="Your Email"
+              placeholder="電子郵件 Email"
             >
           </label>
           <p v-if="formData.emailError" class="text-red-500 text-sm text-left mt-1">
@@ -157,7 +157,7 @@ async function loginWithGoogle() {
               v-model="formData.name"
               class="shrink-1 -ml-2 w-full font-medium transition-[width] autofill:bg-clip-text focus:outline-none"
               type="text"
-              placeholder="Username "
+              placeholder="使用者名稱 Username"
               autocomplete="off"
             >
           </label>
@@ -181,7 +181,7 @@ async function loginWithGoogle() {
               v-model="formData.password"
               class="w-full font-medium autofill:bg-clip-text focus:outline-none"
               type="password"
-              placeholder="Password"
+              placeholder="密碼 Password"
             >
           </label>
           <p v-if="formData.passwordError" class="text-red-500 text-sm text-left mt-1">
@@ -196,12 +196,12 @@ async function loginWithGoogle() {
           :disabled="!isRegistrable || loading"
         >
           <IconLockClosed class="-ml-5 w-5 h-5" />
-          {{ loading ? 'Loading' : 'Sign Up' }}
+          {{ loading ? '註冊中...' : '註冊' }}
         </button>
         <p class="text-gray-400">
-          Already have an account?
+          已經有帳戶了嗎？
           <router-link class="font-medium text-blue-400" :to="{ name: 'Login' }">
-            Sign In
+            登入
           </router-link>
         </p>
       </form>

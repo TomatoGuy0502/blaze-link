@@ -29,7 +29,7 @@ const {
   <div class="flex h-full flex-auto flex-col gap-y-4 overflow-auto rounded-t-2xl bg-gray-100 py-4 px-6 scrollbar-hide">
     <div>
       <h3 class="mb-4 text-xl font-bold text-gray-400">
-        Background Color
+        背景顏色 Background Color
       </h3>
       <ul class="relative grid grid-cols-[repeat(auto-fit,_minmax(48px,_1fr))] gap-4 rounded-xl bg-white p-6">
         <li
@@ -48,7 +48,7 @@ const {
     </div>
     <div>
       <h3 class="mb-4 text-xl font-bold text-gray-400">
-        Button Type
+        按鈕類型 Button Type
       </h3>
       <SwitchGroup as="div" class="relative inline-flex flex-row items-center gap-x-2 rounded-xl bg-white p-6">
         <SwitchLabel
@@ -83,7 +83,7 @@ const {
     </div>
     <div>
       <h3 class="mb-4 text-xl font-bold text-gray-400">
-        Button Color
+        按鈕顏色 Button Color
       </h3>
       <ul class="relative grid grid-cols-[repeat(auto-fit,_minmax(80px,_1fr))] gap-4 rounded-xl bg-white p-6">
         <li
@@ -104,7 +104,7 @@ const {
     </div>
     <div>
       <h3 class="mb-4 text-xl font-bold text-gray-400">
-        Corner
+        圓角 Corner
       </h3>
       <ul class="relative grid grid-cols-[repeat(auto-fit,_minmax(100px,_1fr))] gap-6 rounded-xl bg-white p-6">
         <li
@@ -128,7 +128,7 @@ const {
     </div>
     <div>
       <h3 class="mb-4 text-xl font-bold text-gray-400">
-        Shadow
+        陰影 Shadow
       </h3>
       <ul class="relative grid grid-cols-[repeat(auto-fit,_minmax(100px,_1fr))] gap-6 rounded-xl bg-white p-6">
         <li
