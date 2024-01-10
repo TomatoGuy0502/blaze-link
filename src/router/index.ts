@@ -3,6 +3,7 @@ import { useNProgress } from '@vueuse/integrations/useNProgress'
 import { useAuthStore } from '../store/auth'
 import { useSupabase } from '../composables/useSupabase'
 
+const Home = () => import('../pages/Home.vue')
 const Links = () => import('../pages/Dashboard/Links/Links.vue')
 const Appearance = () => import('../pages/Dashboard/Appearance.vue')
 const Dashboard = () => import('../pages/Dashboard/Dashboard.vue')
@@ -16,7 +17,7 @@ const NotFound = () => import('../pages/NotFound.vue')
 export const preservedIds = ['dashboard', 'login', 'register', 'auth']
 
 const routes = [
-  { path: '/', redirect: '/dashboard' },
+  { path: '/', component: Home, name: 'Home' },
   {
     path: '/dashboard',
     component: Dashboard,

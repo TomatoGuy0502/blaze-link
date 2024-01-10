@@ -20,12 +20,6 @@ const formData = reactive({
 
 const loading = ref(false)
 
-const isLoginable = computed(() => {
-  if (!formData.email || !formData.password)
-    return false
-  return true
-})
-
 async function login() {
   try {
     loading.value = true
@@ -129,7 +123,7 @@ async function loginWithGoogle() {
         </div>
         <button
           class="flex items-center justify-center w-full gap-x-1 rounded-lg bg-brand-2 py-2 text-white disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
-          :disabled="!isLoginable || loading"
+          :disabled="loading"
         >
           <IconLockClosed class="-ml-5 w-5 h-5" />
           {{ loading ? '登入中...' : '登入' }}

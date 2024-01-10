@@ -39,4 +39,7 @@
   .pattern {
     background-image: url('@/assets/pattern.svg');
   }
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
 }
