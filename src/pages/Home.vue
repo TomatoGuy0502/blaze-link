@@ -131,7 +131,7 @@ const styleObject = computed(() => {
             簡單管理，輕鬆分享
           </h3>
           <p class="text-lg text-gray-800">
-            在管理頁面中，快速的編輯你的連結。並將你的專屬頁面透過網址或是QRcode分享出去！
+            在管理頁面中，快速編輯你的連結。並將你的專屬頁面透過網址或是QRcode分享出去！
           </p>
           <div class="relative flex flex-1 flex-col-reverse items-center justify-center gap-3 xl:flex-row xl:gap-6">
             <div class="flex w-full max-w-72 select-none flex-col justify-stretch gap-3 rounded-lg bg-brand-4/80 p-6 shadow xl:flex-1">
