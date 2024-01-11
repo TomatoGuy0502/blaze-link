@@ -9,7 +9,7 @@ const toggleDark = useToggle(isDark)
 
 <template>
   <button
-    class="relative inline-flex items-center self-center rounded-full py-1.5 px-2 text-slate-400 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+    class="relative inline-flex items-center self-center rounded-full px-2 py-1.5 text-slate-400 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
     :class="
       isDark
         ? 'bg-slate-700 text-cyan-400 focus-visible:ring-slate-500'
@@ -27,7 +27,7 @@ const toggleDark = useToggle(isDark)
       :class="isDark ? 'scale-0 duration-500' : 'scale-100 duration-300'"
     />
     <span
-      class="absolute top-0.5 left-0.5 flex h-8 w-8 transform items-center justify-center rounded-full bg-white transition duration-500"
+      class="absolute left-0.5 top-0.5 flex h-8 w-8 transform items-center justify-center rounded-full bg-white transition duration-500"
       :class="isDark ? 'translate-x-[2.625rem]' : ''"
     >
       <IconSun

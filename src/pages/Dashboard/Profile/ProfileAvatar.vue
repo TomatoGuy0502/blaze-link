@@ -49,7 +49,7 @@ async function uploadAvatar(evt: Event) {
 </script>
 
 <template>
-  <div class="flex flex-col gap-2 items-center">
+  <div class="flex flex-col items-center gap-2">
     <img
       v-if="authStore.avatarSrc"
       :src="authStore.avatarSrc"
@@ -59,9 +59,9 @@ async function uploadAvatar(evt: Event) {
     <div v-else :style="{ height: `${size}em`, width: `${size}em` }" />
 
     <div :style="{ width: `${size}em` }">
-      <label class="block rounded-lg bg-brand-2 py-2 text-white transition disabled:bg-gray-300 p-2 px-4 cursor-pointer text-center" for="single">
+      <label class="block cursor-pointer rounded-lg bg-brand-2 p-2 px-4 text-center text-white transition disabled:bg-gray-300" for="single">
         <span v-if="uploading">Uploading...</span>
-        <span v-else class="flex justify-center items-center gap-1"><TablerUpload class="w-5 h-5" />Upload</span>
+        <span v-else class="flex items-center justify-center gap-1"><TablerUpload class="h-5 w-5" />Upload</span>
       </label>
       <input
         id="single"

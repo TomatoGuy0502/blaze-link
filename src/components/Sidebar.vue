@@ -8,10 +8,10 @@ import HeroiconsUserCircleSolid from '~icons/heroicons/user-circle-solid'
 </script>
 
 <template>
-  <div class="hidden xl:flex h-full w-72 flex-none flex-col bg-gray-100 p-4">
-    <p class="flex items-center mx-auto mb-8 gap-1 select-none">
-      <HeroiconsFireSolid class="text-brand-1 w-10 h-10" />
-      <span class="inline-block text-4xl  mb-1 font-bold text-brand-1">Blaze Link</span>
+  <div class="hidden h-full w-72 flex-none flex-col bg-gray-100 p-4 xl:flex">
+    <p class="mx-auto mb-8 flex select-none items-center gap-1">
+      <HeroiconsFireSolid class="h-10 w-10 text-brand-1" />
+      <span class="mb-1 inline-block  text-4xl font-bold text-brand-1">Blaze Link</span>
     </p>
     <nav>
       <Disclosure v-slot="{ open }" default-open>

@@ -31,12 +31,12 @@ const { isShow, isLoading, confirm, cancel, templateText } = useConfirmModal()
           <DialogTitle class="mb-2 text-lg font-medium leading-6 text-gray-900">
             {{ templateText.title }}
           </DialogTitle>
-          <DialogDescription class="mb-4 text-sm text-gray-500 whitespace-pre-line">
+          <DialogDescription class="mb-4 whitespace-pre-line text-sm text-gray-500">
             {{ templateText.description }}
           </DialogDescription>
           <div class="flex flex-row-reverse gap-x-2">
             <button
-              class="rounded border border-red-400 bg-red-400 p-4 py-2 text-white outline-none transition hover:bg-red-500 focus:ring-2 focus:ring-red-600 focus:ring-opacity-50 focus:ring-offset-1 disabled:cursor-wait disabled:bg-gray-200 disabled:text-gray-500 disabled:border-transparent"
+              class="rounded border border-red-400 bg-red-400 p-4 py-2 text-white outline-none transition hover:bg-red-500 focus:ring-2 focus:ring-red-600 focus:ring-opacity-50 focus:ring-offset-1 disabled:cursor-wait disabled:border-transparent disabled:bg-gray-200 disabled:text-gray-500"
               :disabled="isLoading"
               @click="confirm"
             >

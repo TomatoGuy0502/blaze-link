@@ -30,8 +30,8 @@ function handleLogout() {
 <template>
   <Popover v-slot="{ open }" as="div" class="relative shrink-0">
     <PopoverButton class="block outline-none">
-      <img v-if="authStore.avatarSrc" :src="authStore.avatarSrc" alt="User avatar" class="h-12 w-12 cursor-pointer rounded-full ring-offset-2 ring-brand-2" :class="{ 'ring-2': open }">
-      <IconMockAvatar v-else class="h-12 w-12 cursor-pointer rounded-full ring-offset-2 ring-brand-2" :class="{ 'ring-2': open }" />
+      <img v-if="authStore.avatarSrc" :src="authStore.avatarSrc" alt="User avatar" class="h-12 w-12 cursor-pointer rounded-full ring-brand-2 ring-offset-2" :class="{ 'ring-2': open }">
+      <IconMockAvatar v-else class="h-12 w-12 cursor-pointer rounded-full ring-brand-2 ring-offset-2" :class="{ 'ring-2': open }" />
     </PopoverButton>
     <transition
       enter-active-class="transition duration-100 ease-out"
@@ -43,36 +43,36 @@ function handleLogout() {
     >
       <PopoverPanel
         v-slot="{ close }"
-        class="absolute right-0 mt-2 max-[374px]:w-72 w-80 z-[100] origin-top-right rounded-md bg-white p-1 shadow focus:outline-none"
+        class="absolute right-0 z-[100] mt-2 w-80 origin-top-right rounded-md bg-white p-1 shadow focus:outline-none max-[374px]:w-72"
       >
-        <div class="mt-auto flex p-3 px-4 gap-2">
+        <div class="mt-auto flex gap-2 p-3 px-4">
           <img v-if="authStore.avatarSrc" :src="authStore.avatarSrc" alt="User avatar" class="h-12 w-12 rounded-full">
           <IconMockAvatar v-else class="h-12 w-12 rounded-full" />
           <div class="flex flex-1 flex-col justify-center gap-2 truncate leading-none">
             <p class="truncate font-bold text-gray-500">
               @{{ authStore.profile?.user_name }}
             </p>
-            <p class="text-gray-600 text-xs truncate">
+            <p class="truncate text-xs text-gray-600">
               {{ authStore.user?.email }}
             </p>
           </div>
         </div>
         <router-link
           :to="{ name: 'Profile' }"
+          class="flex w-full items-center rounded p-3 px-4 text-left hover:bg-brand-1/10 hover:text-brand-1 focus:bg-brand-1/10 focus:text-brand-1 sm:hidden"
           @click="close"
-          class="flex sm:hidden items-center w-full rounded p-3 px-4 text-left hover:bg-brand-1/10 hover:text-brand-1 focus:bg-brand-1/10 focus:text-brand-1"
         >
-          <TablerUserCircle class="h-6 w-6 cursor-pointer text-gray-500 mr-2" />
+          <TablerUserCircle class="mr-2 h-6 w-6 cursor-pointer text-gray-500" />
           <span>用戶設定</span>
-          <span class="inline-block text-sm ml-1">Profile</span>
+          <span class="ml-1 inline-block text-sm">Profile</span>
         </router-link>
         <button
-          class="w-full rounded p-3 px-4 text-left hover:bg-brand-1/10 hover:text-brand-1 focus:bg-brand-1/10 focus:text-brand-1 flex items-center"
+          class="flex w-full items-center rounded p-3 px-4 text-left hover:bg-brand-1/10 hover:text-brand-1 focus:bg-brand-1/10 focus:text-brand-1"
           @click="handleLogout"
         >
-          <TablerLogout class="h-6 w-6 cursor-pointer text-gray-500 mr-2" />
+          <TablerLogout class="mr-2 h-6 w-6 cursor-pointer text-gray-500" />
           <span>登出</span>
-          <span class="inline-block text-sm ml-1">Logout</span>
+          <span class="ml-1 inline-block text-sm">Logout</span>
         </button>
       </PopoverPanel>
     </transition>

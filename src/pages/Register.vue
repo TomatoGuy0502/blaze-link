@@ -115,7 +115,7 @@ async function loginWithGoogle() {
       </button>
       <div class="relative flex h-6 items-center">
         <hr class="w-full">
-        <p class="absolute top-1/2 left-1/2 -translate-y-2/4 -translate-x-2/4 bg-white px-2">
+        <p class="absolute left-1/2 top-1/2 -translate-x-2/4 -translate-y-2/4 bg-white px-2">
           or
         </p>
       </div>
@@ -135,11 +135,11 @@ async function loginWithGoogle() {
               placeholder="電子郵件 Email"
             >
           </label>
-          <p v-if="formData.emailError" class="text-red-500 text-sm text-left mt-1">
+          <p v-if="formData.emailError" class="mt-1 text-left text-sm text-red-500">
             {{ formData.emailError }}
           </p>
         </div>
-        <div class="text-left flex flex-col gap-0.5">
+        <div class="flex flex-col gap-0.5 text-left">
           <label
             for="name"
             class="group flex w-full items-center gap-2 rounded-lg border border-gray-200 p-2 focus-within:border-brand-2"
@@ -161,11 +161,11 @@ async function loginWithGoogle() {
               autocomplete="off"
             >
           </label>
-          <p v-if="formData.nameError" class="text-red-500 text-sm text-left">
+          <p v-if="formData.nameError" class="text-left text-sm text-red-500">
             {{ formData.nameError }}
           </p>
-          <p class="flex items-center gap-1 text-sm font-bold text-brand-2 pl-2">
-            <HeroiconsInformationCircle20Solid v-if="true" class="w-4 h-4 text-brand-2" />
+          <p class="flex items-center gap-1 pl-2 text-sm font-bold text-brand-2">
+            <HeroiconsInformationCircle20Solid v-if="true" class="h-4 w-4 text-brand-2" />
             這將會是你的分享連結的網址
           </p>
           <UsernameCheckList :username="formData.name" />
@@ -184,7 +184,7 @@ async function loginWithGoogle() {
               placeholder="密碼 Password"
             >
           </label>
-          <p v-if="formData.passwordError" class="text-red-500 text-sm text-left mt-1">
+          <p v-if="formData.passwordError" class="mt-1 text-left text-sm text-red-500">
             {{ formData.passwordError }}
           </p>
           <CheckListItem :check-condition="isValidPassword" class="pl-2">
@@ -195,7 +195,7 @@ async function loginWithGoogle() {
           class="flex w-full items-center justify-center gap-x-1 rounded-lg bg-brand-2 py-2 text-white disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
           :disabled="!isRegistrable || loading"
         >
-          <IconLockClosed class="-ml-5 w-5 h-5" />
+          <IconLockClosed class="-ml-5 h-5 w-5" />
           {{ loading ? '註冊中...' : '註冊' }}
         </button>
         <p class="text-gray-400">

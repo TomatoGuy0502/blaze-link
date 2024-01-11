@@ -58,16 +58,16 @@ if (res) {
 </script>
 
 <template>
-  <div v-if="userExists" class="h-dvh w-full flex flex-col overflow-auto pb-8" :class="backgroundColors[theme!.background_color!]">
+  <div v-if="userExists" class="flex h-dvh w-full flex-col overflow-auto pb-8" :class="backgroundColors[theme!.background_color!]">
     <div class="mx-auto w-full max-w-3xl">
-      <div class="sticky top-0 pt-8 backdrop-filter backdrop-blur-sm">
+      <div class="sticky top-0 pt-8 backdrop-blur-sm backdrop-filter">
         <img v-if="avatarSrc" :src="avatarSrc" alt="User avatar" class="mx-auto mb-2 h-20 w-20 rounded-full border-4 border-white">
         <IconMockAvatar v-else class="mx-auto mb-2 h-20 w-20 rounded-full border-4 border-white" />
-        <p class="text-center mb-6 font-bold text-xl">
+        <p class="mb-6 text-center text-xl font-bold">
           @{{ props.userName }}
         </p>
       </div>
-      <TransitionGroup tag="ul" name="fade" class="flex flex-col gap-y-4 text-center font-bold px-8 pb-8">
+      <TransitionGroup tag="ul" name="fade" class="flex flex-col gap-y-4 px-8 pb-8 text-center font-bold">
         <li v-for="link in links" :key="link.id">
           <a
             :href="link.url"
@@ -78,7 +78,7 @@ if (res) {
         </li>
       </TransitionGroup>
     </div>
-    <a :href="registerUrl" class="h-12 mx-auto p-4 px-6 font-bold text-gray-800 rounded-full mt-auto bg-white grid place-items-center leading-none shadow-md hover:shadow-sm transition-all">Create your Blaze Link</a>
+    <a :href="registerUrl" class="mx-auto mt-auto grid h-12 place-items-center rounded-full bg-white p-4 px-6 font-bold leading-none text-gray-800 shadow-md transition-all hover:shadow-sm">Create your Blaze Link</a>
   </div>
   <div v-else>
     User not exist

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../store/auth'
 import { isValidEmail } from '../utils'
@@ -64,7 +64,7 @@ async function loginWithGoogle() {
 
 <template>
   <div class="pattern flex h-dvh items-center justify-center p-4">
-    <div class="flex w-[420px] flex-col gap-y-4 rounded-xl bg-white p-6 py-8 text-center shadow-xl text-gray-800">
+    <div class="flex w-[420px] flex-col gap-y-4 rounded-xl bg-white p-6 py-8 text-center text-gray-800 shadow-xl">
       <h1 class="text-3xl font-bold">
         登入
       </h1>
@@ -80,7 +80,7 @@ async function loginWithGoogle() {
       </button>
       <div class="relative flex h-6 items-center">
         <hr class="w-full">
-        <p class="absolute top-1/2 left-1/2 -translate-y-2/4 -translate-x-2/4 bg-white px-2">
+        <p class="absolute left-1/2 top-1/2 -translate-x-2/4 -translate-y-2/4 bg-white px-2">
           or
         </p>
       </div>
@@ -99,7 +99,7 @@ async function loginWithGoogle() {
               placeholder="電子郵件 Email"
             >
           </label>
-          <p v-if="formData.emailError" class="text-red-500 text-sm text-left mt-1">
+          <p v-if="formData.emailError" class="mt-1 text-left text-sm text-red-500">
             {{ formData.emailError }}
           </p>
         </div>
@@ -117,15 +117,15 @@ async function loginWithGoogle() {
               placeholder="密碼 Password"
             >
           </label>
-          <p v-if="formData.passwordError" class="text-red-500 text-sm text-left mt-1">
+          <p v-if="formData.passwordError" class="mt-1 text-left text-sm text-red-500">
             {{ formData.passwordError }}
           </p>
         </div>
         <button
-          class="flex items-center justify-center w-full gap-x-1 rounded-lg bg-brand-2 py-2 text-white disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
+          class="flex w-full items-center justify-center gap-x-1 rounded-lg bg-brand-2 py-2 text-white disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
           :disabled="loading"
         >
-          <IconLockClosed class="-ml-5 w-5 h-5" />
+          <IconLockClosed class="-ml-5 h-5 w-5" />
           {{ loading ? '登入中...' : '登入' }}
         </button>
         <p class="text-gray-400">

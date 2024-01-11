@@ -62,21 +62,21 @@ async function downloadQRCodeSVG() {
 </script>
 
 <template>
-  <div class="ml-auto flex items-center bg-brand-2/15 p-2 px-4 rounded-full lg:rounded-lg gap-2 cursor-pointer" @click="copyUrl">
-    <TablerShare class="text-brand-2 w-6 h-6" />
-    <p class="hidden md:block text-gray-800 font-medium whitespace-nowrap text-sm lg:text-base">
+  <div class="ml-auto flex cursor-pointer items-center gap-2 rounded-full bg-brand-2/15 p-2 px-4 lg:rounded-lg" @click="copyUrl">
+    <TablerShare class="h-6 w-6 text-brand-2" />
+    <p class="hidden whitespace-nowrap text-sm font-medium text-gray-800 md:block lg:text-base">
       {{ userLink }}
     </p>
-    <div class="p-1.5 rounded-full bg-white">
+    <div class="rounded-full bg-white p-1.5">
       <Transition name="fade" mode="out-in">
-        <TablerCopyCheck v-if="showCopied" class="text-brand-2 w-5 h-5" />
-        <TablerCopy v-else class="text-gray-600 w-5 h-5" />
+        <TablerCopyCheck v-if="showCopied" class="h-5 w-5 text-brand-2" />
+        <TablerCopy v-else class="h-5 w-5 text-gray-600" />
       </Transition>
     </div>
     <Popover v-slot="{ open }" class="relative" @click.stop>
       <PopoverButton as="template">
-        <div class="p-1.5 rounded-full bg-white">
-          <TablerQrcode class="text-gray-600 w-5 h-5" />
+        <div class="rounded-full bg-white p-1.5">
+          <TablerQrcode class="h-5 w-5 text-gray-600" />
         </div>
       </PopoverButton>
       <transition
@@ -87,9 +87,9 @@ async function downloadQRCodeSVG() {
         leave-from-class="transform scale-100 opacity-100"
         leave-to-class="transform scale-95 opacity-0"
       >
-        <PopoverPanel v-show="open" static class="absolute flex flex-col gap-2 right-0 mt-2 z-[100] rounded-md shadow p-2 bg-white origin-top-right max-[374px]:scale-[.8]">
-          <canvas ref="canvasEl" class="p-2 cursor-default w-60 h-60" />
-          <button class="flex items-center gap-2 p-2 rounded hover:bg-gray-200" @click="downloadQRCodePNG">
+        <PopoverPanel v-show="open" static class="absolute right-0 z-[100] mt-2 flex origin-top-right flex-col gap-2 rounded-md bg-white p-2 shadow max-[374px]:scale-[.8]">
+          <canvas ref="canvasEl" class="h-60 w-60 cursor-default p-2" />
+          <button class="flex items-center gap-2 rounded p-2 hover:bg-gray-200" @click="downloadQRCodePNG">
             <div class="flex flex-col items-start">
               <p class="font-bold text-gray-700">
                 Download PNG
@@ -101,9 +101,9 @@ async function downloadQRCodeSVG() {
             <p class="ml-auto text-xs text-gray-400">
               .PNG
             </p>
-            <TablerDownload class="w-6 h-6 text-gray-700" />
+            <TablerDownload class="h-6 w-6 text-gray-700" />
           </button>
-          <button class="flex items-center gap-2 p-2 rounded hover:bg-gray-200" @click="downloadQRCodeSVG">
+          <button class="flex items-center gap-2 rounded p-2 hover:bg-gray-200" @click="downloadQRCodeSVG">
             <div class="flex flex-col items-start">
               <p class="font-bold text-gray-700">
                 Download SVG
@@ -115,7 +115,7 @@ async function downloadQRCodeSVG() {
             <p class="ml-auto text-xs text-gray-400">
               .SVG
             </p>
-            <TablerDownload class="w-6 h-6 text-gray-700" />
+            <TablerDownload class="h-6 w-6 text-gray-700" />
           </button>
         </PopoverPanel>
       </transition>

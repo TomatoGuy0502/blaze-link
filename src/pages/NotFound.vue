@@ -3,15 +3,15 @@
 
 <template>
   <div class="pattern flex h-dvh items-center justify-center">
-    <div class="bg-gray-800/50 w-full">
-      <div class="flex flex-col max-w-[1200px] text-center p-8 md:p-12 rounded-xl mx-auto">
-        <p class="font-black text-4xl md:text-6xl text-white">
+    <div class="w-full bg-gray-800/50">
+      <div class="mx-auto flex max-w-[1200px] flex-col rounded-xl p-8 text-center md:p-12">
+        <p class="text-4xl font-black text-white md:text-6xl">
           Oops!
         </p>
-        <h1 class="font-black text-[120px] md:text-[140px] leading-none text-white mb-8">
+        <h1 class="mb-8 text-[120px] font-black leading-none text-white md:text-[140px]">
           404
         </h1>
-        <p class=" font-black text-3xl md:text-5xl text-white/90">
+        <p class=" text-3xl font-black text-white/90 md:text-5xl">
           It seems we took a wrong turn somewhere. Let's <router-link to="/" class="underline">
             get you back
           </router-link> on track

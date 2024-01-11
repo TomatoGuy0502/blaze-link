@@ -13,50 +13,50 @@ function handleNavigate(e: MouseEvent, navigate: () => void) {
 </script>
 
 <template>
-  <div class="flex-wrap-reverse sm:flex-nowrap relative flex items-center gap-4 md:gap-x-8 xl:rounded-bl-2xl bg-gray-100 py-2 px-4 md:py-4 md:px-6">
-    <HeroiconsFireSolid class="hidden sm:block xl:hidden text-brand-1 w-10 h-10 shrink-0" />
-    <h1 class="hidden xl:block text-3xl font-bold text-gray-700">
+  <div class="relative flex flex-wrap-reverse items-center gap-4 bg-gray-100 px-4 py-2 sm:flex-nowrap md:gap-x-8 md:px-6 md:py-4 xl:rounded-bl-2xl">
+    <HeroiconsFireSolid class="hidden h-10 w-10 shrink-0 text-brand-1 sm:block xl:hidden" />
+    <h1 class="hidden text-3xl font-bold text-gray-700 xl:block">
       {{ $route.meta.headingChinese }}
     </h1>
-    <ul class="grid grid-flow-col grid-cols-2 sm:flex xl:hidden gap-2 overflow-x-auto w-full sm:w-auto">
+    <ul class="grid w-full grid-flow-col grid-cols-2 gap-2 overflow-x-auto sm:flex sm:w-auto xl:hidden">
       <router-link v-slot="{ navigate, isActive }" :to="{ name: 'Links' }" custom>
         <li
-          class="group flex justify-center cursor-pointer items-center gap-x-2 whitespace-nowrap rounded-lg p-3 transition hover:bg-brand-1/10 hover:text-brand-1"
+          class="group flex cursor-pointer items-center justify-center gap-x-2 whitespace-nowrap rounded-lg p-3 transition hover:bg-brand-1/10 hover:text-brand-1"
           :class="[isActive ? 'bg-brand-1/10 text-brand-1' : 'text-gray-500']"
           @click.self="handleNavigate($event, navigate)"
         >
-          <IconCursorClick class="h-6 w-6 pointer-events-none" />
-          <p class="flex items-center gap-x-2 text-lg font-bold leading-none pointer-events-none">
+          <IconCursorClick class="pointer-events-none h-6 w-6" />
+          <p class="pointer-events-none flex items-center gap-x-2 text-lg font-bold leading-none">
             編輯連結
           </p>
         </li>
       </router-link>
       <router-link v-slot="{ navigate, isActive }" :to="{ name: 'Appearance' }" custom>
         <li
-          class="group flex justify-center cursor-pointer items-center gap-x-2 whitespace-nowrap rounded-lg p-3 transition hover:bg-brand-1/10 hover:text-brand-1"
+          class="group flex cursor-pointer items-center justify-center gap-x-2 whitespace-nowrap rounded-lg p-3 transition hover:bg-brand-1/10 hover:text-brand-1"
           :class="[isActive ? 'bg-brand-1/10 text-brand-1' : 'text-gray-500']"
           @click.self="handleNavigate($event, navigate)"
         >
-          <IconSparkles class="h-6 w-6 pointer-events-none" />
-          <p class="flex items-center gap-x-2 text-lg font-bold leading-none pointer-events-none">
+          <IconSparkles class="pointer-events-none h-6 w-6" />
+          <p class="pointer-events-none flex items-center gap-x-2 text-lg font-bold leading-none">
             外觀
           </p>
         </li>
       </router-link>
       <router-link v-slot="{ navigate, isActive }" :to="{ name: 'Profile' }" custom>
         <li
-          class="hidden sm:flex group justify-center cursor-pointer items-center gap-x-2 whitespace-nowrap rounded-lg p-3 transition hover:bg-brand-1/10 hover:text-brand-1"
+          class="group hidden cursor-pointer items-center justify-center gap-x-2 whitespace-nowrap rounded-lg p-3 transition hover:bg-brand-1/10 hover:text-brand-1 sm:flex"
           :class="[isActive ? 'bg-brand-1/10 text-brand-1' : 'text-gray-500']"
           @click.self="handleNavigate($event, navigate)"
         >
-          <HeroiconsUserCircleSolid class="h-6 w-6 pointer-events-none" />
-          <p class="flex items-center gap-x-2 text-lg font-bold leading-none pointer-events-none">
+          <HeroiconsUserCircleSolid class="pointer-events-none h-6 w-6" />
+          <p class="pointer-events-none flex items-center gap-x-2 text-lg font-bold leading-none">
             用戶設定
           </p>
         </li>
       </router-link>
     </ul>
-    <HeroiconsFireSolid class="block sm:hidden text-brand-1 w-10 h-10 shrink-0" />
+    <HeroiconsFireSolid class="block h-10 w-10 shrink-0 text-brand-1 sm:hidden" />
     <NavbarShare />
     <NavbarAvatar />
   </div>

@@ -117,11 +117,11 @@ function isValidHash(hash: string) {
         </div>
         <p class="ext-gray-500 text-2xl font-medium">
           重新導向中
-          <span class="animate-bounce inline-block">.</span>
-          <span class="animate-bounce inline-block animation-delay-[50ms]">.</span>
-          <span class="animate-bounce inline-block animation-delay-100">.</span>
+          <span class="inline-block animate-bounce">.</span>
+          <span class="inline-block animate-bounce animation-delay-[50ms]">.</span>
+          <span class="inline-block animate-bounce animation-delay-100">.</span>
         </p>
-        <p class="text-gray-500 text-lg">
+        <p class="text-lg text-gray-500">
           或是
           <router-link to="/dashboard/links" class="underline">
             {{ "點擊此處" }}

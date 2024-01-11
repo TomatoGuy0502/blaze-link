@@ -21,7 +21,7 @@ async function handleAddLink() {
 </script>
 
 <template>
-  <div class="flex h-full flex-auto flex-col gap-y-4 overflow-hidden rounded-tr-2xl xl:rounded-t-2xl bg-gray-100 py-4 px-6">
+  <div class="flex h-full flex-auto flex-col gap-y-4 overflow-hidden rounded-tr-2xl bg-gray-100 px-6 py-4 xl:rounded-t-2xl">
     <h2 class="text-xl font-bold text-gray-400">
       Edit
     </h2>

@@ -26,7 +26,7 @@ const {
 </script>
 
 <template>
-  <div class="flex h-full flex-auto flex-col gap-y-4 overflow-auto rounded-t-2xl bg-gray-100 py-4 px-6 scrollbar-hide">
+  <div class="flex h-full flex-auto flex-col gap-y-4 overflow-auto rounded-t-2xl bg-gray-100 px-6 py-4 scrollbar-hide">
     <div>
       <h3 class="mb-4 text-xl font-bold text-gray-400">
         背景顏色 Background Color
@@ -65,7 +65,7 @@ const {
           <span class="sr-only"> Filled or Outlined</span>
           <span
             :class="isFilled ? 'translate-x-0' : 'translate-x-10'"
-            class="pointer-events-none absolute top-0.5 left-0.5 h-8 w-8 transform rounded-full bg-white transition duration-300 ease-in-out"
+            class="pointer-events-none absolute left-0.5 top-0.5 h-8 w-8 transform rounded-full bg-white transition duration-300 ease-in-out"
           />
         </Switch>
         <SwitchLabel

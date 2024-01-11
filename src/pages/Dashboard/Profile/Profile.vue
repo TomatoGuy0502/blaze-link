@@ -51,18 +51,18 @@ async function handleUpdateUsername() {
 </script>
 
 <template>
-  <div class="flex h-full flex-auto flex-col gap-y-4 overflow-auto rounded-t-2xl bg-gray-100 py-4 px-6 scrollbar-hide">
+  <div class="flex h-full flex-auto flex-col gap-y-4 overflow-auto rounded-t-2xl bg-gray-100 px-6 py-4 scrollbar-hide">
     <h2 class="text-xl font-bold text-gray-400">
       Profile
     </h2>
     <section>
-      <h3 class="text-lg font-bold text-gray-400 mb-1">
+      <h3 class="mb-1 text-lg font-bold text-gray-400">
         Avatar
       </h3>
       <ProfileAvatar size="12" />
     </section>
     <section>
-      <h3 class="text-lg font-bold text-gray-400 mb-1">
+      <h3 class="mb-1 text-lg font-bold text-gray-400">
         Email
       </h3>
       <label
@@ -74,7 +74,7 @@ async function handleUpdateUsername() {
           id="email"
           disabled
           :value="authStore.user?.email"
-          class="w-full font-medium autofill:bg-clip-text focus:outline-none bg-transparent text-gray-400"
+          class="w-full bg-transparent font-medium text-gray-400 autofill:bg-clip-text focus:outline-none"
           type="text"
           placeholder="Your Email"
         >
@@ -93,20 +93,20 @@ async function handleUpdateUsername() {
           <input
             id="userName"
             v-model="userName"
-            class="w-full font-medium autofill:bg-clip-text focus:outline-none bg-transparent text-gray-800"
+            class="w-full bg-transparent font-medium text-gray-800 autofill:bg-clip-text focus:outline-none"
             type="text"
             placeholder="User Name"
           >
         </label>
         <button
-          class="block rounded-r-lg bg-brand-2 py-2 text-white transition disabled:bg-gray-300 disabled:cursor-not-allowed p-2 px-4 cursor-pointer text-center"
+          class="block cursor-pointer rounded-r-lg bg-brand-2 p-2 px-4 text-center text-white transition disabled:cursor-not-allowed disabled:bg-gray-300"
           :disabled="!isChangeable"
           @click="handleUpdateUsername"
         >
           Update
         </button>
       </div>
-      <p v-if="error" class="text-red-500 text-sm mt-1">
+      <p v-if="error" class="mt-1 text-sm text-red-500">
         {{ error }}
       </p>
       <UsernameCheckList :username="userName" />
