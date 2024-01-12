@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Dialog, DialogDescription, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
-import { useConfirmModal } from '../composables/useConfirmModal'
+import { useConfirmModal } from '@/composables/useConfirmModal'
 
 const { isShow, isLoading, confirm, cancel, templateText } = useConfirmModal()
 </script>

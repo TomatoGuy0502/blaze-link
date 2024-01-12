@@ -2,8 +2,8 @@
 import { useBrowserLocation } from '@vueuse/core'
 import { ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useAuthStore } from '../store/auth'
-import { preservedIds } from '../router'
+import { useAuthStore } from '@/store/auth'
+import { preservedIds } from '@/router'
 import IconEmojiHappy from '~icons/heroicons-solid/emoji-happy/'
 import IconCheck from '~icons/heroicons-outline/check-circle'
 

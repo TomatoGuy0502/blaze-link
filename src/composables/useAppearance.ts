@@ -1,9 +1,9 @@
 import type { Ref } from 'vue'
 import { computed, readonly, ref, watch } from 'vue'
-import { useAuthStore } from '../store/auth'
-import { backgroundColors, buttonColors, radiusList, shadowList } from '../data'
-import { getButtonClass } from '../utils'
 import { useSupabase } from './useSupabase'
+import { useAuthStore } from '@/store/auth'
+import { backgroundColors, buttonColors, radiusList, shadowList } from '@/data'
+import { getButtonClass } from '@/utils'
 
 const { supabase } = useSupabase()
 const authStore = useAuthStore()

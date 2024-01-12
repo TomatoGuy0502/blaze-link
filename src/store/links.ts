@@ -1,8 +1,8 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import { useSupabase } from '../composables/useSupabase'
-import { isValidUrl } from '../utils'
 import { useAuthStore } from './auth'
+import { useSupabase } from '@/composables/useSupabase'
+import { isValidUrl } from '@/utils'
 
 const { supabase } = useSupabase()
 

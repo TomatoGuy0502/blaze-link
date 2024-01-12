@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
-import { useAuthStore } from '../store/auth'
 import type { Database } from '../../database.types'
+import { useAuthStore } from '@/store/auth'
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string

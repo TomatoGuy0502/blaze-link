@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useVModels } from '@vueuse/core'
-import { useLinksStore } from '../../../store/links'
-import { useConfirmModal } from '../../../composables/useConfirmModal'
-import { isValidUrl as _isValidUrl } from '../../../utils'
+import { useLinksStore } from '@/store/links'
+import { useConfirmModal } from '@/composables/useConfirmModal'
+import { isValidUrl as _isValidUrl } from '@/utils'
 import IconTrash from '~icons/heroicons-outline/trash/'
 import IconPencilAlt from '~icons/heroicons-solid/pencil-alt/'
 

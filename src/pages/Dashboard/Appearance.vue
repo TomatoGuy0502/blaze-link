@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useTitle } from '@vueuse/core'
 import { Switch, SwitchGroup, SwitchLabel } from '@headlessui/vue'
-import { useAppearance } from '../../composables/useAppearance'
+import { useAppearance } from '@/composables/useAppearance'
 import IconsSquare from '~icons/akar-icons/square'
 import IconsSquareFill from '~icons/akar-icons/square-fill'
 

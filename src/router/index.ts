@@ -1,18 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useNProgress } from '@vueuse/integrations/useNProgress'
-import { useAuthStore } from '../store/auth'
-import { useSupabase } from '../composables/useSupabase'
+import { useAuthStore } from '@/store/auth'
+import { useSupabase } from '@/composables/useSupabase'
 
-const Home = () => import('../pages/Home.vue')
-const Links = () => import('../pages/Dashboard/Links/Links.vue')
-const Appearance = () => import('../pages/Dashboard/Appearance.vue')
-const Dashboard = () => import('../pages/Dashboard/Dashboard.vue')
-const Profile = () => import('../pages/Dashboard/Profile/Profile.vue')
-const Register = () => import('../pages/Register.vue')
-const Login = () => import('../pages/Login.vue')
-const Provider = () => import('../pages/Provider.vue')
-const UserLink = () => import('../pages/UserLink.vue')
-const NotFound = () => import('../pages/NotFound.vue')
+const Home = () => import('@/pages/Home.vue')
+const Links = () => import('@/pages/Dashboard/Links/Links.vue')
+const Appearance = () => import('@/pages/Dashboard/Appearance.vue')
+const Dashboard = () => import('@/pages/Dashboard/Dashboard.vue')
+const Profile = () => import('@/pages/Dashboard/Profile/Profile.vue')
+const Register = () => import('@/pages/Register.vue')
+const Login = () => import('@/pages/Login.vue')
+const Provider = () => import('@/pages/Provider.vue')
+const UserLink = () => import('@/pages/UserLink.vue')
+const NotFound = () => import('@/pages/NotFound.vue')
 
 export const preservedIds = ['dashboard', 'login', 'register', 'auth']
 

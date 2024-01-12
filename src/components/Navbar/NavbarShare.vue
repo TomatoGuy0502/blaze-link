@@ -2,7 +2,7 @@
 import { computed, onMounted, ref, watch } from 'vue'
 import QRCode from 'qrcode'
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
-import { useAuthStore } from '../../store/auth'
+import { useAuthStore } from '@/store/auth'
 import TablerShare from '~icons/tabler/share'
 import TablerCopy from '~icons/tabler/copy'
 import TablerCopyCheck from '~icons/tabler/copy-check'

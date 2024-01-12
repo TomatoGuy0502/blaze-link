@@ -1,9 +1,9 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import type { User } from '@supabase/supabase-js'
 import { computed, ref, watch } from 'vue'
-import { useSupabase } from '../composables/useSupabase'
 import type { Tables } from '../../database.types'
-import { getURL } from '../utils'
+import { useSupabase } from '@/composables/useSupabase'
+import { getURL } from '@/utils'
 import { preservedIds } from '@/router'
 
 const { supabase } = useSupabase()

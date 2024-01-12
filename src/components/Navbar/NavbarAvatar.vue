@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { useRouter } from 'vue-router'
-import { useConfirmModal } from '../../composables/useConfirmModal'
-import { useAuthStore } from '../../store/auth'
+import { useConfirmModal } from '@/composables/useConfirmModal'
+import { useAuthStore } from '@/store/auth'
 import TablerLogout from '~icons/tabler/logout'
 import IconMockAvatar from '@/assets/mock-avatar.svg'
 import TablerUserCircle from '~icons/tabler/user-circle'

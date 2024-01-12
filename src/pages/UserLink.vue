@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useTitle } from '@vueuse/core'
-import { useLinksStore } from '../store/links'
-import { getButtonClass, isValidUrl } from '../utils'
-import { backgroundColors } from '../data'
 import type { Tables } from '../../database.types'
+import { useLinksStore } from '@/store/links'
+import { getButtonClass, isValidUrl } from '@/utils'
+import { backgroundColors } from '@/data'
 
 import IconMockAvatar from '@/assets/mock-avatar.svg'
 import { useSupabase } from '@/composables/useSupabase'

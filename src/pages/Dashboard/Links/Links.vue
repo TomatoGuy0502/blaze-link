@@ -2,9 +2,9 @@
 import { useTitle } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
-import { useLinksStore } from '../../../store/links'
 import LinksItem from './LinksItem.vue'
 import LinksItemMock from './LinksItemMock.vue'
+import { useLinksStore } from '@/store/links'
 
 useTitle('Links | BlazeLink')
 

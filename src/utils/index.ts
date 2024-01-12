@@ -1,5 +1,5 @@
-import type { backgroundColors, radiusList, shadowList } from '../data'
-import { buttonColors } from '../data'
+import type { backgroundColors, radiusList, shadowList } from '@/data'
+import { buttonColors } from '@/data'
 
 export function isValidUrl(url: string) {
   const urlReg = /^(((http|https):\/\/)|(\/)|(..\/))(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/

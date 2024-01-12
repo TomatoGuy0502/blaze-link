@@ -6,7 +6,6 @@ A Linktree-like website for your social media links.
 
 - [ ] Add CI/CD
 - [ ] Error message handling(Toast)
-- [ ] Unified icon set
 - [x] Add TailwindCSS Eslint plugin
 - [x] Add Landing page
 - [x] Fix user links order

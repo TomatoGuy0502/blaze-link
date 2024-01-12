@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuthStore } from '../store/auth'
-import { isValidEmail } from '../utils'
+import { useAuthStore } from '@/store/auth'
+import { isValidEmail } from '@/utils'
 import IconAtSymbol from '~icons/heroicons-solid/at-symbol/'
 import IconKey from '~icons/heroicons-solid/key/'
 import IconGoogle from '~icons/logos/google-icon'
