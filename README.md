@@ -4,8 +4,6 @@ A Linktree-like website for your social media links.
 
 ## TODO
 
-- [ ] Add CI/CD
-- [ ] Error message handling(Toast)
 - [x] Add TailwindCSS Eslint plugin
 - [x] Add Landing page
 - [x] Fix user links order
