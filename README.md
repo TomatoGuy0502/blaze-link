@@ -25,7 +25,7 @@
 - [VueUse](https://vueuse.org/) - 提供實用的Vue組合式函數
 - [tailwindcss](https://github.com/tailwindlabs/tailwindcss) - CSS框架
 - [UnoCSS](https://github.com/unocss/unocss) - 提供純CSS Icon
-- [Headlees UI](https://github.com/tailwindlabs/headlessui) - 無樣式的UI元件
+- [Headless UI](https://github.com/tailwindlabs/headlessui) - 無樣式的UI元件
 - [Supabase](https://github.com/supabase/supabase) - 開源後端平台，提供身分驗證/資料庫/RESTful API
 - [node-qrcode](https://github.com/soldair/node-qrcode) - QRCode生成
 
